@@ -10,6 +10,8 @@
 
 
 volatile static uint32_t s_delay;
+volatile static uint32_t counter;
+volatile static bool flag = false;
 
 extern "C" void Systick_Handler(void);
 extern "C" void RIT_IRQHandler(void);
