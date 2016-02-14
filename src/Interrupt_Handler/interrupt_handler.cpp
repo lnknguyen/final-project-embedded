@@ -2,6 +2,6 @@
 
 extern "C" {
 	void SysTick_Handler(void){
-	
+		flag = true;
 	}
 }
