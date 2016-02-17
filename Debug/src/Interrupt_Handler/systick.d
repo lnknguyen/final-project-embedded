@@ -1,5 +1,5 @@
-src/final_project.o src/final_project.d: ../src/final_project.cpp \
- /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_board_nxp_lpcxpresso_1549/inc/board.h \
+src/Interrupt_Handler/systick.o src/Interrupt_Handler/systick.d: \
+ ../src/Interrupt_Handler/systick.cpp ../src/Interrupt_Handler/systick.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/chip.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/lpc_types.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/sys_config.h \
@@ -46,20 +46,9 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/spi_15xx.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/i2cm_15xx.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/i2c_common_15xx.h \
- /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/i2cs_15xx.h \
- /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_board_nxp_lpcxpresso_1549/inc/board_api.h \
- /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/lpc_types.h \
- ../src/LCD/LiquidCrystal.h ../src/LCD/lcd_port.h ../src/LCD/MenuItem.h \
- ../src/LCD/PropertyEdit.h ../src/LCD/IntegerEdit.h ../src/LCD/BarGraph.h \
- ../src/LCD/LiquidCrystal.h \
- /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/eeprom.h \
- /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/iap.h \
- ../src/LCD/SimpleMenu.h ../src/LCD/MenuItem.h ../src/LCD/BarGraph.h \
- ../src/Button_Handler/DebouncedInput.h \
- ../src/Button_Handler/DigitalIoPin.h ../src/Button_Handler/PinEvent.h \
- ../src/Interrupt_Handler/systick.h
+ /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/i2cs_15xx.h
 
-/Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_board_nxp_lpcxpresso_1549/inc/board.h:
+../src/Interrupt_Handler/systick.h:
 
 /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/chip.h:
 
@@ -154,39 +143,3 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
 /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/i2c_common_15xx.h:
 
 /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/i2cs_15xx.h:
-
-/Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_board_nxp_lpcxpresso_1549/inc/board_api.h:
-
-/Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/lpc_types.h:
-
-../src/LCD/LiquidCrystal.h:
-
-../src/LCD/lcd_port.h:
-
-../src/LCD/MenuItem.h:
-
-../src/LCD/PropertyEdit.h:
-
-../src/LCD/IntegerEdit.h:
-
-../src/LCD/BarGraph.h:
-
-../src/LCD/LiquidCrystal.h:
-
-/Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/eeprom.h:
-
-/Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/iap.h:
-
-../src/LCD/SimpleMenu.h:
-
-../src/LCD/MenuItem.h:
-
-../src/LCD/BarGraph.h:
-
-../src/Button_Handler/DebouncedInput.h:
-
-../src/Button_Handler/DigitalIoPin.h:
-
-../src/Button_Handler/PinEvent.h:
-
-../src/Interrupt_Handler/systick.h:

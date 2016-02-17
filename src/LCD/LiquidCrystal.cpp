@@ -24,9 +24,6 @@
 // Note, however, that resetting the Arduino doesn't reset the LCD, so we
 // can't assume that its in that state when a sketch starts (and the
 // LiquidCrystal constructor is called).
-LiquidCrystal::LiquidCrystal(){
-	 init(1, 8, 255, 9, 10, 11, 12, 13, 0, 0, 0, 0);
-}
 
 LiquidCrystal::LiquidCrystal(uint8_t rs, uint8_t rw, uint8_t enable,
 			     uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
@@ -314,17 +311,22 @@ void LiquidCrystal::write8bits(uint8_t value) {
 }
 
 void LiquidCrystal::Print(std::string& str){
-	for (uint8_t i=0; i<str.length(); i++)
-			write(str[i]);
+	for (int i=0; i<str.length(); i++)
+		write(str[i]);
 }
 
 void LiquidCrystal::Print(char *ch){
-	for (uint8_t i=0; i< strlen(ch); i++)
-			write(ch[i]);
+	for (int i=0; i< strlen(ch); i++)
+		write(ch[i]);
 }
 
 LiquidCrystal& LiquidCrystal::Instance(){
-	static LiquidCrystal inst;
+	static LiquidCrystal inst(8,9,10,11,12,13);
+	inst.begin(16,2);
+	inst.clear();
 	return inst;
+
 }
+
+
 

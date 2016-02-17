@@ -5,6 +5,7 @@
  *      Author: nguyenluong
  */
 
+#include <stdint.h>
 #ifndef INTERRUPT_HANDLER_INTERRUPT_HANDLER_H_
 #define INTERRUPT_HANDLER_INTERRUPT_HANDLER_H_
 
@@ -13,10 +14,10 @@ volatile static uint32_t s_delay;
 volatile static uint32_t counter;
 volatile static bool flag = false;
 
-extern "C" void Systick_Handler(void);
+//extern "C" void Systick_Handler(void);
 extern "C" void RIT_IRQHandler(void);
 
-extern void Sleep(uint32_t delay);
+//extern void Sleep(uint32_t delay);
 
 
 #endif /* INTERRUPT_HANDLER_INTERRUPT_HANDLER_H_ */
