@@ -9,12 +9,12 @@
 #define INTEGEREDIT_H_
 
 #include <iostream>
-#include "PropertyEdit.h"
 #include "BarGraph.h"
-#include "LiquidCrystal.h"
+#include "../LCD/LiquidCrystal.h"
 #include "eeprom.h"
 #include "iap.h"
 #include <string>
+#include "../Protocol/PropertyEdit.h"
 
 
 
@@ -46,7 +46,7 @@ private:
 	int upper_lim;
 	int lower_lim;
 	BarGraph bg;
-	uint32_t buffer[NUM_BYTES_TO_READ_WRITE / sizeof(uint32_t)];
+
 };
 
 #endif /* INTEGEREDIT_H_ */

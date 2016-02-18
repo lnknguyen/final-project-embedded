@@ -9,7 +9,7 @@
 #define BARGRAPH_H_
 
 #ifndef LiquidCrystal_h
-#include "LiquidCrystal.h"
+#include "../LCD/LiquidCrystal.h"
 #endif
 
 class BarGraph {

@@ -49,14 +49,25 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/i2cs_15xx.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_board_nxp_lpcxpresso_1549/inc/board_api.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/lpc_types.h \
- ../src/LCD/LiquidCrystal.h ../src/LCD/lcd_port.h ../src/LCD/MenuItem.h \
- ../src/LCD/PropertyEdit.h ../src/LCD/IntegerEdit.h ../src/LCD/BarGraph.h \
- ../src/LCD/LiquidCrystal.h \
+ ../src/LCD/LiquidCrystal.h ../src/LCD/lcd_port.h \
+ ../src/UI_Helper/MenuItem.h ../src/UI_Helper/../Protocol/PropertyEdit.h \
+ ../src/UI_Helper/IntegerEdit.h ../src/UI_Helper/BarGraph.h \
+ ../src/UI_Helper/../LCD/LiquidCrystal.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/eeprom.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/iap.h \
- ../src/LCD/SimpleMenu.h ../src/LCD/MenuItem.h ../src/LCD/BarGraph.h \
- ../src/Button_Handler/DebouncedInput.h \
+ ../src/UI_Helper/SimpleMenu.h ../src/UI_Helper/MenuItem.h \
+ ../src/UI_Helper/BarGraph.h ../src/Button_Handler/DebouncedInput.h \
  ../src/Button_Handler/DigitalIoPin.h ../src/Button_Handler/PinEvent.h \
+ ../src/Protocol/SceneProtocol.h \
+ ../src/Protocol/../UI_Helper/SimpleMenu.h \
+ ../src/Protocol/../UI_Helper/MenuItem.h \
+ ../src/Protocol/../UI_Helper/StaticItem.h \
+ ../src/Protocol/../UI_Helper/BarGraph.h \
+ ../src/Protocol/../UI_Helper/../LCD/LiquidCrystal.h \
+ ../src/Protocol/../UI_Helper/../Protocol/PropertyEdit.h \
+ ../src/Protocol/../UI_Helper/IntegerEdit.h \
+ ../src/Protocol/../UI_Helper/BarGraph.h ../src/Menu_Scene/menu_scene.h \
+ ../src/Menu_Scene/../Protocol/SceneProtocol.h \
  ../src/Interrupt_Handler/systick.h
 
 /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_board_nxp_lpcxpresso_1549/inc/board.h:
@@ -163,30 +174,52 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
 
 ../src/LCD/lcd_port.h:
 
-../src/LCD/MenuItem.h:
+../src/UI_Helper/MenuItem.h:
 
-../src/LCD/PropertyEdit.h:
+../src/UI_Helper/../Protocol/PropertyEdit.h:
 
-../src/LCD/IntegerEdit.h:
+../src/UI_Helper/IntegerEdit.h:
 
-../src/LCD/BarGraph.h:
+../src/UI_Helper/BarGraph.h:
 
-../src/LCD/LiquidCrystal.h:
+../src/UI_Helper/../LCD/LiquidCrystal.h:
 
 /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/eeprom.h:
 
 /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/iap.h:
 
-../src/LCD/SimpleMenu.h:
+../src/UI_Helper/SimpleMenu.h:
 
-../src/LCD/MenuItem.h:
+../src/UI_Helper/MenuItem.h:
 
-../src/LCD/BarGraph.h:
+../src/UI_Helper/BarGraph.h:
 
 ../src/Button_Handler/DebouncedInput.h:
 
 ../src/Button_Handler/DigitalIoPin.h:
 
 ../src/Button_Handler/PinEvent.h:
+
+../src/Protocol/SceneProtocol.h:
+
+../src/Protocol/../UI_Helper/SimpleMenu.h:
+
+../src/Protocol/../UI_Helper/MenuItem.h:
+
+../src/Protocol/../UI_Helper/StaticItem.h:
+
+../src/Protocol/../UI_Helper/BarGraph.h:
+
+../src/Protocol/../UI_Helper/../LCD/LiquidCrystal.h:
+
+../src/Protocol/../UI_Helper/../Protocol/PropertyEdit.h:
+
+../src/Protocol/../UI_Helper/IntegerEdit.h:
+
+../src/Protocol/../UI_Helper/BarGraph.h:
+
+../src/Menu_Scene/menu_scene.h:
+
+../src/Menu_Scene/../Protocol/SceneProtocol.h:
 
 ../src/Interrupt_Handler/systick.h:

@@ -74,17 +74,7 @@ void IntegerEdit::save() {
 
 }
 
-void IntegerEdit::load(){
-	uint8_t *ptr = (uint8_t *) buffer;
-	uint8_t ret_code;
-	ret_code = Chip_EEPROM_Read(EEPROM_ADDRESS, ptr, NUM_BYTES_TO_READ_WRITE);
-	value = (int&)ptr;
-	if (ret_code != IAP_CMD_SUCCESS)
-	{
 
-		std::cout<<ret_code<<std::endl;
-	}
-}
 int IntegerEdit::getValue() {
 	return value;
 }

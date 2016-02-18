@@ -8,6 +8,8 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include src/UI_Helper/subdir.mk
+-include src/Menu_Scene/subdir.mk
 -include src/LCD/subdir.mk
 -include src/Interrupt_Handler/subdir.mk
 -include src/Button_Handler/subdir.mk

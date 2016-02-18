@@ -27,5 +27,7 @@ SUBDIRS := \
 src/Button_Handler \
 src/Interrupt_Handler \
 src/LCD \
+src/Menu_Scene \
+src/UI_Helper \
 src \
 
