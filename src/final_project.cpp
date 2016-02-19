@@ -4,10 +4,9 @@
 	Author      : $(author)
 	Version     :
 	Copyright   : $(copyright)
-	Description : main definition hahaha
+	Description : main definition
 	===============================================================================
 */
-
 
 #if defined (__USE_LPCOPEN)
 	#if defined(NO_BOARD_LIB)
