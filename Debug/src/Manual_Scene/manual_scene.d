@@ -9,8 +9,6 @@ src/Manual_Scene/manual_scene.o src/Manual_Scene/manual_scene.d: \
  ../src/Manual_Scene/../Protocol/../UI_Helper/BarGraph.h \
  ../src/Manual_Scene/../Protocol/../UI_Helper/../LCD/LiquidCrystal.h \
  ../src/Manual_Scene/../Protocol/../UI_Helper/IntegerEdit.h \
- /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/eeprom.h \
- /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/iap.h \
  ../src/Manual_Scene/../Protocol/../UI_Helper/BarGraph.h \
  ../src/Manual_Scene/../Protocol/../Button_Handler/DebouncedInput.h \
  ../src/Manual_Scene/../Protocol/../Button_Handler/DigitalIoPin.h \
@@ -35,10 +33,6 @@ src/Manual_Scene/manual_scene.o src/Manual_Scene/manual_scene.d: \
 ../src/Manual_Scene/../Protocol/../UI_Helper/../LCD/LiquidCrystal.h:
 
 ../src/Manual_Scene/../Protocol/../UI_Helper/IntegerEdit.h:
-
-/Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/eeprom.h:
-
-/Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/iap.h:
 
 ../src/Manual_Scene/../Protocol/../UI_Helper/BarGraph.h:
 

@@ -51,14 +51,10 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/lpc_types.h \
  ../src/LCD/LiquidCrystal.h ../src/LCD/lcd_port.h \
  ../src/UI_Helper/MenuItem.h ../src/UI_Helper/../Protocol/PropertyEdit.h \
- ../src/UI_Helper/IntegerEdit.h ../src/UI_Helper/BarGraph.h \
- ../src/UI_Helper/../LCD/LiquidCrystal.h \
- /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/eeprom.h \
- /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/iap.h \
+ ../src/UI_Helper/IntegerEdit.h ../src/UI_Helper/../LCD/LiquidCrystal.h \
+ ../src/UI_Helper/TextEdit.h ../src/UI_Helper/../UI_Helper/TextEdit.h \
  ../src/UI_Helper/SimpleMenu.h ../src/UI_Helper/MenuItem.h \
- ../src/UI_Helper/BarGraph.h ../src/Button_Handler/DebouncedInput.h \
- ../src/Button_Handler/DigitalIoPin.h ../src/Button_Handler/PinEvent.h \
- ../src/Protocol/SceneProtocol.h \
+ ../src/UI_Helper/BarGraph.h ../src/Protocol/SceneProtocol.h \
  ../src/Protocol/../UI_Helper/SimpleMenu.h \
  ../src/Protocol/../UI_Helper/MenuItem.h \
  ../src/Protocol/../UI_Helper/StaticItem.h \
@@ -68,11 +64,8 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
  ../src/Protocol/../UI_Helper/IntegerEdit.h \
  ../src/Protocol/../UI_Helper/BarGraph.h \
  ../src/Protocol/../Button_Handler/DebouncedInput.h \
+ ../src/Protocol/../Button_Handler/DigitalIoPin.h \
  ../src/Protocol/../Interrupt_Handler/systick.h \
- ../src/Menu_Scene/menu_scene.h \
- ../src/Menu_Scene/../Protocol/SceneProtocol.h \
- ../src/Menu_Scene/../Manual_Scene/manual_scene.h \
- ../src/Menu_Scene/../Manual_Scene/../Protocol/SceneProtocol.h \
  ../src/Interrupt_Handler/systick.h
 
 /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_board_nxp_lpcxpresso_1549/inc/board.h:
@@ -185,25 +178,17 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
 
 ../src/UI_Helper/IntegerEdit.h:
 
-../src/UI_Helper/BarGraph.h:
-
 ../src/UI_Helper/../LCD/LiquidCrystal.h:
 
-/Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/eeprom.h:
+../src/UI_Helper/TextEdit.h:
 
-/Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/iap.h:
+../src/UI_Helper/../UI_Helper/TextEdit.h:
 
 ../src/UI_Helper/SimpleMenu.h:
 
 ../src/UI_Helper/MenuItem.h:
 
 ../src/UI_Helper/BarGraph.h:
-
-../src/Button_Handler/DebouncedInput.h:
-
-../src/Button_Handler/DigitalIoPin.h:
-
-../src/Button_Handler/PinEvent.h:
 
 ../src/Protocol/SceneProtocol.h:
 
@@ -225,14 +210,8 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
 
 ../src/Protocol/../Button_Handler/DebouncedInput.h:
 
+../src/Protocol/../Button_Handler/DigitalIoPin.h:
+
 ../src/Protocol/../Interrupt_Handler/systick.h:
-
-../src/Menu_Scene/menu_scene.h:
-
-../src/Menu_Scene/../Protocol/SceneProtocol.h:
-
-../src/Menu_Scene/../Manual_Scene/manual_scene.h:
-
-../src/Menu_Scene/../Manual_Scene/../Protocol/SceneProtocol.h:
 
 ../src/Interrupt_Handler/systick.h:

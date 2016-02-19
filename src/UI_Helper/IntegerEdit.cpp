@@ -7,19 +7,17 @@
 
 #include "IntegerEdit.h"
 #include <cstdio>
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+using namespace std;
 
-IntegerEdit::IntegerEdit(LiquidCrystal& lcd_,BarGraph& bg_, std::string editTitle): lcd(lcd_), bg(bg_),title(editTitle) {
-	value = 0;
-	edit = 0;
-	focus = false;
-	upper_lim = 0;
-	lower_lim = 0;
-}
-
-IntegerEdit::IntegerEdit(LiquidCrystal& lcd_,BarGraph& bg_, std::string editTitle,int lower, int upper): lcd(lcd_), bg(bg_),
-		title(editTitle),lower_lim(lower), upper_lim(upper) {
-	value = 0;
-	edit = 0;
+IntegerEdit::IntegerEdit(LiquidCrystal& lcd_, std::string editTitle, int value): lcd(lcd_), title(editTitle),value(value) {
+	if (value <=upperLimit && value >= lowerLimit){
+		setValue(value);
+	} else{
+		setValue(lowerLimit);
+	}
 	focus = false;
 }
 
@@ -27,13 +25,15 @@ IntegerEdit::~IntegerEdit() {
 }
 
 void IntegerEdit::increment() {
-	if(edit<upper_lim)
+	if (edit <=upperLimit-1){
 		edit++;
+	}
 }
 
 void IntegerEdit::decrement() {
-	if(edit>lower_lim)
+	if (edit >=lowerLimit+1){
 		edit--;
+	}
 }
 
 void IntegerEdit::accept() {
@@ -53,25 +53,24 @@ void IntegerEdit::display() {
 	lcd.clear();
 	lcd.setCursor(0,0);
 	lcd.Print(title);
-	lcd.setCursor(0,1);
-	char s[10];
+	stringstream lcd_display;
 	if(focus) {
-		snprintf(s, 10,"[%2d]", edit);
+		lcd.setCursor(6,1);
+		lcd_display << "["<< edit <<"]" ;
 	}
 	else {
-		snprintf(s, 10,"%2d", edit);
+		lcd.setCursor(7,1);
+		lcd_display <<edit ;
 	}
-	lcd.Print(s);
-	bg.draw(edit*50/upper_lim);
+	string str = lcd_display.str();
+	lcd.Print(str);
 }
 
 
 void IntegerEdit::save() {
 	// set current value to be same as edit value
-
 	value = edit;
-		// todo: save current value for example to EEPROM for permanent storage
-
+	// todo: save current value for example to EEPROM for permanent storage
 }
 
 
@@ -79,11 +78,6 @@ int IntegerEdit::getValue() {
 	return value;
 }
 void IntegerEdit::setValue(int value) {
-	if(value>upper_lim)
-		edit = upper_lim;
-	else if (value<lower_lim)
-		edit = lower_lim;
-	else
-		edit = value;
+	edit = value;
 	save();
 }

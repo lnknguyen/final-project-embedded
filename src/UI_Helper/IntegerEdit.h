@@ -8,23 +8,12 @@
 #ifndef INTEGEREDIT_H_
 #define INTEGEREDIT_H_
 
-#include <iostream>
-#include "BarGraph.h"
-#include "../LCD/LiquidCrystal.h"
-#include "eeprom.h"
-#include "iap.h"
-#include <string>
 #include "../Protocol/PropertyEdit.h"
+#include "../LCD/LiquidCrystal.h"
 
-
-
-#define EEPROM_ADDRESS 0x00000100
-#define NUM_BYTES_TO_READ_WRITE 32
-
-class IntegerEdit: public PropertyEdit {
+class IntegerEdit:public PropertyEdit {
 public:
-	IntegerEdit(LiquidCrystal& lcd_, BarGraph& bg, std::string editTitle);
-	IntegerEdit(LiquidCrystal& lcd_, BarGraph& bg, std::string editTitle, int upper, int lower);
+	IntegerEdit(LiquidCrystal& lcd_, std::string editTitle, int value);
 	virtual ~IntegerEdit();
 	void increment();
 	void decrement();
@@ -32,7 +21,6 @@ public:
 	void cancel();
 	void setFocus(bool focus);
 	void display();
-	void load();
 	int getValue();
 	void setValue(int value);
 private:
@@ -43,10 +31,8 @@ private:
 	int value;
 	int edit;
 	bool focus;
-	int upper_lim;
-	int lower_lim;
-	BarGraph bg;
-
+	int upperLimit = 100;
+	int lowerLimit = 0;
 };
 
 #endif /* INTEGEREDIT_H_ */
