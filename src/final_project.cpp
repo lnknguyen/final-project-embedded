@@ -16,6 +16,8 @@
 #endif
 #endif
 
+#include <vector>
+
 #include "LCD/LiquidCrystal.h"
 #include "LCD/lcd_port.h"
 #include "UI_Helper/MenuItem.h"
@@ -62,7 +64,7 @@ int main(void) {
 	//LiquidCrystal lcd(8,9,10,11,12,13);
 	//lcd.begin(16,2);
 	//lcd.clear();
-/*
+	/*
 	SimpleMenu menu;
 	BarGraph bg( LiquidCrystal::Instance(),50,false);
 
@@ -75,39 +77,30 @@ int main(void) {
 	pressure.setValue(69);
 
 	menu.event(MenuItem::show);
-
+*/
 	DebouncedInput up_btn(4,100);
 	DebouncedInput down_btn(5,100);
 	DebouncedInput ok_btn(6,100);
 	DebouncedInput back_btn(7,100);
 
 	PinEvent up(up_btn),down(down_btn),ok(ok_btn),back(back_btn);
-*/
 
-	SimpleMenu menu;
-	MenuScene scene;
-	scene.setup(menu);
-	//scene.show();
-	menu.event(MenuItem::show);
+	std::vector<DebouncedInput> btn;
+	btn.push_back(up_btn);
+	btn.push_back(down_btn);
+	btn.push_back(ok_btn);
+	btn.push_back(back_btn);
 
-	while(1) {/*
-		if (down_btn.read()){
-			menu.event(MenuItem::down);
-			Sleep(100);
-		}
-		if (up_btn.read()){
-			menu.event(MenuItem::up);
-			Sleep(100);
-		}
-		if (ok_btn.read()){
-			menu.event(MenuItem::ok);
-			Sleep(100);
-		}
-		if (back_btn.read()){
-			menu.event(MenuItem::back);
-			Sleep(100);
-		}
-*/
+	SimpleMenu* menu = new SimpleMenu();
+
+	MenuScene* scene = new MenuScene(menu,btn);
+	scene->setup();
+	scene->show();
+	//menu.event(MenuItem::show);
+
+	while(1) {
+		scene->start();
+
 	}
 	return 0 ;
 }

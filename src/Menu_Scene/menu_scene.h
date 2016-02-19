@@ -9,18 +9,25 @@
 #define MENU_SCENE_MENU_SCENE_H_
 
 #include "../Protocol/SceneProtocol.h"
-
+#include "../Manual_Scene/manual_scene.h"
+#include <vector>
 class MenuScene : public SceneProtocol{
 private:
-	//SimpleMenu& s_menu;
+	SimpleMenu* menu;
+	std::vector<DebouncedInput> button;
 public:
-	MenuScene(){}
+	MenuScene(SimpleMenu* menu_, std::vector<DebouncedInput> button_);
 	virtual ~MenuScene(){}
-	void setup(SimpleMenu& menu);
+	void start();
+	void setup();
 	void Next_scene();
 	void Prev_scene();
 	void display();
 	void show();
+	void up();
+	void down();
+	void ok();
+	void left();
 };
 
 

@@ -66,8 +66,13 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
  ../src/Protocol/../UI_Helper/../LCD/LiquidCrystal.h \
  ../src/Protocol/../UI_Helper/../Protocol/PropertyEdit.h \
  ../src/Protocol/../UI_Helper/IntegerEdit.h \
- ../src/Protocol/../UI_Helper/BarGraph.h ../src/Menu_Scene/menu_scene.h \
+ ../src/Protocol/../UI_Helper/BarGraph.h \
+ ../src/Protocol/../Button_Handler/DebouncedInput.h \
+ ../src/Protocol/../Interrupt_Handler/systick.h \
+ ../src/Menu_Scene/menu_scene.h \
  ../src/Menu_Scene/../Protocol/SceneProtocol.h \
+ ../src/Menu_Scene/../Manual_Scene/manual_scene.h \
+ ../src/Menu_Scene/../Manual_Scene/../Protocol/SceneProtocol.h \
  ../src/Interrupt_Handler/systick.h
 
 /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_board_nxp_lpcxpresso_1549/inc/board.h:
@@ -218,8 +223,16 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
 
 ../src/Protocol/../UI_Helper/BarGraph.h:
 
+../src/Protocol/../Button_Handler/DebouncedInput.h:
+
+../src/Protocol/../Interrupt_Handler/systick.h:
+
 ../src/Menu_Scene/menu_scene.h:
 
 ../src/Menu_Scene/../Protocol/SceneProtocol.h:
+
+../src/Menu_Scene/../Manual_Scene/manual_scene.h:
+
+../src/Menu_Scene/../Manual_Scene/../Protocol/SceneProtocol.h:
 
 ../src/Interrupt_Handler/systick.h:
