@@ -1,10 +1,10 @@
 #include "LiquidCrystal.h"
 
-#include "lcd_port.h"
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
 //#include "Arduino.h"
+#include "lcd_port.h"
 
 // When the display powers up, it is configured as follows:
 //
@@ -309,24 +309,18 @@ void LiquidCrystal::write8bits(uint8_t value) {
   
   pulseEnable();
 }
+void LiquidCrystal::Print(std::string& s){
+	char* print_str = new char[s.size() + 1];
+	std::copy(s.begin(), s.end(), print_str);
 
-void LiquidCrystal::Print(std::string& str){
-	for (int i=0; i<str.length(); i++)
-		write(str[i]);
+	for(int i=0; i < s.length(); i++){
+		Print(&print_str[i]);
+	}
+	delete print_str;
 }
-
-void LiquidCrystal::Print(char *ch){
-	for (int i=0; i< strlen(ch); i++)
-		write(ch[i]);
+void LiquidCrystal::Print(char *s){
+	uint8_t s_Write;
+	memcpy(&s_Write,s,sizeof(uint8_t));
+	write(s_Write);
 }
-
-LiquidCrystal& LiquidCrystal::Instance(){
-	static LiquidCrystal inst(8,9,10,11,12,13);
-	inst.begin(16,2);
-	inst.clear();
-	return inst;
-
-}
-
-
 

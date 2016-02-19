@@ -43,7 +43,6 @@ volatile static int menuLayout = 0;
 static const uint8_t buttonport[] = {1,0,0,0};
 static const uint8_t buttonpins[] = {9,29,9,10};
 
-
 void InitButton(void)
 {
 	int idx;

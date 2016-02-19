@@ -22,25 +22,8 @@ extern "C" {
  * @brief	Handle interrupt from SysTick timer
  * @return	Nothing
  */
-void SysTick_Handler(void)
-{
-	systicks++;
-	if(counter > 0) counter--;
+static volatile bool semaphore;
+void SysTick_Handler(void){
+	semaphore = true;
 }
-#ifdef __cplusplus
-}
-#endif
-
-unsigned int GetSysticks()
-{
-	return systicks;
-}
-
-
-void Sleep(unsigned int ms)
-{
-	counter = ms + 1; // add one to guarantee specified wait time
-	while(counter > 0) {
-		__WFI();
-	}
 }

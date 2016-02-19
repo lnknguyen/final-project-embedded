@@ -1,12 +1,11 @@
 #ifndef LiquidCrystal_h
 #define LiquidCrystal_h
 
-#include <cstddef>
 #include <inttypes.h>
-//#include "Print.h"
-
 #include <iostream>
-#include <string.h>
+//#include "Print.h"
+#include <cstddef>
+using namespace std;
 // commands
 #define LCD_CLEARDISPLAY 0x01
 #define LCD_RETURNHOME 0x02
@@ -45,71 +44,67 @@
 #define LCD_5x10DOTS 0x04
 #define LCD_5x8DOTS 0x00
 
-class LiquidCrystal {
-private:
-	LiquidCrystal(uint8_t rs, uint8_t enable,
-			uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
-			uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7);
-	LiquidCrystal(uint8_t rs, uint8_t rw, uint8_t enable,
-			uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
-			uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7);
-	LiquidCrystal(uint8_t rs, uint8_t rw, uint8_t enable,
-			uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3);
-
-
-	void init(uint8_t fourbitmode, uint8_t rs, uint8_t rw, uint8_t enable,
-			uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
-			uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7);
+class LiquidCrystal{
 public:
-	LiquidCrystal(uint8_t rs, uint8_t enable,
-				uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3);
-	static LiquidCrystal& Instance();
-	void begin(uint8_t cols, uint8_t rows, uint8_t charsize = LCD_5x8DOTS);
+  LiquidCrystal(uint8_t rs, uint8_t enable,
+		uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
+		uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7);
+  LiquidCrystal(uint8_t rs, uint8_t rw, uint8_t enable,
+		uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
+		uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7);
+  LiquidCrystal(uint8_t rs, uint8_t rw, uint8_t enable,
+		uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3);
+  LiquidCrystal(uint8_t rs, uint8_t enable,
+		uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3);
 
-	void clear();
-	void home();
+  void init(uint8_t fourbitmode, uint8_t rs, uint8_t rw, uint8_t enable,
+	    uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
+	    uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7);
 
-	void noDisplay();
-	void display();
-	void noBlink();
-	void blink();
-	void noCursor();
-	void cursor();
-	void scrollDisplayLeft();
-	void scrollDisplayRight();
-	void leftToRight();
-	void rightToLeft();
-	void autoscroll();
-	void noAutoscroll();
+  void begin(uint8_t cols, uint8_t rows, uint8_t charsize = LCD_5x8DOTS);
 
-	void createChar(uint8_t, uint8_t[]);
-	void setCursor(uint8_t, uint8_t);
-	virtual size_t write(uint8_t);
-	void command(uint8_t);
+  void clear();
+  void home();
 
-	void Print(std::string& s);
-	void Print(char *s);
-	//void Print(const char* s);
+  void noDisplay();
+  void display();
+  void noBlink();
+  void blink();
+  void noCursor();
+  void cursor();
+  void scrollDisplayLeft();
+  void scrollDisplayRight();
+  void leftToRight();
+  void rightToLeft();
+  void autoscroll();
+  void noAutoscroll();
 
-	// using Print::write;
+  void createChar(uint8_t, uint8_t[]);
+  void setCursor(uint8_t, uint8_t);
+  virtual size_t write(uint8_t);
+  void command(uint8_t);
+
+  //using Print::write;
+  void Print(std::string& s);
+  void Print(char *s);
 private:
-	void send(uint8_t, uint8_t);
-	void write4bits(uint8_t);
-	void write8bits(uint8_t);
-	void pulseEnable();
+  void send(uint8_t, uint8_t);
+  void write4bits(uint8_t);
+  void write8bits(uint8_t);
+  void pulseEnable();
 
-	uint8_t _rs_pin; // LOW: command.  HIGH: character.
-	uint8_t _rw_pin; // LOW: write to LCD.  HIGH: read from LCD.
-	uint8_t _enable_pin; // activated by a HIGH pulse.
-	uint8_t _data_pins[8];
+  uint8_t _rs_pin; // LOW: command.  HIGH: character.
+  uint8_t _rw_pin; // LOW: write to LCD.  HIGH: read from LCD.
+  uint8_t _enable_pin; // activated by a HIGH pulse.
+  uint8_t _data_pins[8];
 
-	uint8_t _displayfunction;
-	uint8_t _displaycontrol;
-	uint8_t _displaymode;
+  uint8_t _displayfunction;
+  uint8_t _displaycontrol;
+  uint8_t _displaymode;
 
-	uint8_t _initialized;
+  uint8_t _initialized;
 
-	uint8_t _numlines,_currline;
+  uint8_t _numlines,_currline;
 };
 
 #endif

@@ -20,7 +20,6 @@ public:
 private:
 	std::vector<MenuItem *> items;
 	int position;
-	int count;
 };
 
 #endif /* SIMPLEMENU_H_ */

@@ -15,7 +15,7 @@ MenuItem::~MenuItem() {
 
 }
 
-bool MenuItem::event(menuEvent e) {
+bool MenuItem::event(menuEvent e){
 	bool handled = true;
 	switch(e) {
 	case ok:

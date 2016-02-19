@@ -17,7 +17,6 @@ SimpleMenu::~SimpleMenu() {
 
 void SimpleMenu::addItem(MenuItem *item) {
 	items.push_back(item);
-	count++;
 }
 
 void SimpleMenu::event(MenuItem::menuEvent e) {

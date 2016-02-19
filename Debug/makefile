@@ -9,11 +9,8 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include src/UI_Helper/subdir.mk
--include src/Menu_Scene/subdir.mk
--include src/Manual_Scene/subdir.mk
 -include src/LCD/subdir.mk
 -include src/Interrupt_Handler/subdir.mk
--include src/Button_Handler/subdir.mk
 -include src/subdir.mk
 -include subdir.mk
 -include objects.mk
@@ -50,7 +47,7 @@ all: final_project.axf
 final_project.axf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU C++ Linker'
-	arm-none-eabi-c++ -nostdlib -L"/Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_board_nxp_lpcxpresso_1549/Debug" -L"/Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/Debug" -Xlinker -Map="final_project.map" -Xlinker --gc-sections -mcpu=cortex-m3 -mthumb -T "final_project_Debug.ld" -o "final_project.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-c++ -nostdlib -L"C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_board_nxp_lpcxpresso_1549\Debug" -L"C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_chip_15xx\Debug" -Xlinker -Map="final_project.map" -Xlinker --gc-sections -mcpu=cortex-m3 -mthumb -T "final_project_Debug.ld" -o "final_project.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build

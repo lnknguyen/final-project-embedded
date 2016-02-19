@@ -27,7 +27,7 @@ public:
 	void increment() {}
 	void decrement() {}
 	void accept();
-	void cancel(){}
+	void cancel();
 	void setFocus(bool focus);
 	void display();
 	void load();

@@ -24,11 +24,8 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-src/Button_Handler \
 src/Interrupt_Handler \
 src/LCD \
-src/Manual_Scene \
-src/Menu_Scene \
 src/UI_Helper \
 src \
 

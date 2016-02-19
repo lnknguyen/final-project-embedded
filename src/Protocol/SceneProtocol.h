@@ -14,10 +14,6 @@
 #include "../UI_Helper/IntegerEdit.h"
 #include "../UI_Helper/BarGraph.h"
 
-#include "../Button_Handler/DebouncedInput.h"
-
-#include "../Interrupt_Handler/systick.h"
-
 class SceneProtocol{
 public:
 	SceneProtocol() {}
