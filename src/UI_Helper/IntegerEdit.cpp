@@ -49,6 +49,10 @@ void IntegerEdit::setFocus(bool focus) {
 	this->focus = focus;
 }
 
+string IntegerEdit::name(){
+	return title;
+}
+
 void IntegerEdit::display() {
 	lcd.clear();
 	lcd.setCursor(0,0);

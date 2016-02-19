@@ -6,15 +6,22 @@
  */
 
 #include "MenuItem.h"
+#include <cstdio>
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+using namespace std;
 
-MenuItem::MenuItem(PropertyEdit& property): focus(false), pe(property) {
+MenuItem::MenuItem(PropertyEdit& property): focus(false), pe(property){
 
 }
 
 MenuItem::~MenuItem() {
 
 }
-
+string MenuItem::childName(){
+	return pe.name();
+}
 bool MenuItem::event(menuEvent e){
 	bool handled = true;
 	switch(e) {
@@ -51,7 +58,6 @@ bool MenuItem::event(menuEvent e){
 		break;
 	}
 	if(handled) pe.display();
-
 	return handled;
 }
 

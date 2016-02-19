@@ -23,10 +23,8 @@
 #include "UI_Helper/TextEdit.h"
 #include "UI_Helper/SimpleMenu.h"
 #include "UI_Helper/BarGraph.h"
-
-
-#include "Protocol/SceneProtocol.h"
-
+#include "UI_Helper/ComplexMenu.h"
+#include "UI_Helper/ComplexItem.h"
 #include "Interrupt_Handler/systick.h"
 
 #include <cr_section_macros.h>
@@ -63,7 +61,6 @@ int isPressed(void){
 		return 3;
 	}
 	else if ( Chip_GPIO_GetPinState(LPC_GPIO, 0, 10)==1){
-		menuLayout=0;
 		return 4;
 	}
 	else {
@@ -109,10 +106,14 @@ int main(void) {
 	lcd.begin(16, 2);
 	lcd.setCursor(0,0);
 	int k;
-	SimpleMenu menu,menuAuto;
 
-	TextEdit autoMode(lcd, std::string("Auto Mode"), std::string("Default Setting"));
-	menuAuto.addItem(new MenuItem(autoMode));
+	ComplexMenu mainMenu;
+
+	SimpleMenu menu(lcd, "Auto Mode");
+	SimpleMenu menuAuto(lcd, "Default Setting");
+	SimpleMenu menuTime(lcd, "Time Setting");
+
+	//TextEdit autoMode(lcd, std::string("Auto Mode"), std::string("Default Setting"));
 
 	IntegerEdit temperature(lcd, std::string("Temperature"), 21);
 	IntegerEdit pressure(lcd, std::string("Pressure"),80);
@@ -123,52 +124,28 @@ int main(void) {
 	menu.addItem(new MenuItem(pressure));
 	menu.addItem(new MenuItem(humidity));
 	menu.addItem(new MenuItem(brightness));
-	printScreen(lcd);
+
+	mainMenu.addItem(new ComplexItem(menu));
+	mainMenu.addItem(new ComplexItem(menuAuto));
+	mainMenu.addItem(new ComplexItem(menuTime));
+
 	while(1) {
 		k = isPressed();
-		if(k>0){
+		if(k >0) {
 			preventOverlap++;
 			if(preventOverlap==1){
-				lcd.clear();
-			}
-			if(menuLayout==0){
-				printScreen(lcd);
-				if(k ==1 || k ==2){
-					if(preventOverlap==1){
-						lcd.clear();
-						menuAuto.event(MenuItem::back);
-						menu.event(MenuItem::back);
-						menuLayout = k;
-						if(k==2){
-							menu.event(MenuItem::down);
-						}
-					}
+
+				if(k==1){
+					mainMenu.baseEvent(ComplexItem::up);
 				}
-			}
-			if(menuLayout==1){
-				if(preventOverlap==1){
-					if(k==1 || k==2||k==3){
-						menuAuto.event(MenuItem::ok);
-					}
-					else if(k==4){
-						menuAuto.event(MenuItem::back);
-					}
+				else if(k==2){
+					mainMenu.baseEvent(ComplexItem::down);
 				}
-			}
-			if(menuLayout==2){
-				if(preventOverlap==1 || preventOverlap>300000){
-					if(k==1){
-						menu.event(MenuItem::ok);
-					}
-					else if(k==2){
-						menu.event(MenuItem::up);
-					}
-					else if(k==3){
-						menu.event(MenuItem::down);
-					}
-					else if(k==4){
-						menu.event(MenuItem::back);
-					}
+				else if(k==3){
+					mainMenu.baseEvent(ComplexItem::ok);
+				}
+				else if(k==4){
+					mainMenu.baseEvent(ComplexItem::back);
 				}
 			}
 		}

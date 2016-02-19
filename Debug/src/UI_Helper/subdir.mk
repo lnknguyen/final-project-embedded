@@ -5,26 +5,29 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../src/UI_Helper/BarGraph.cpp \
+../src/UI_Helper/ComplexItem.cpp \
+../src/UI_Helper/ComplexMenu.cpp \
 ../src/UI_Helper/IntegerEdit.cpp \
 ../src/UI_Helper/MenuItem.cpp \
 ../src/UI_Helper/SimpleMenu.cpp \
-../src/UI_Helper/StaticItem.cpp \
 ../src/UI_Helper/TextEdit.cpp 
 
 OBJS += \
 ./src/UI_Helper/BarGraph.o \
+./src/UI_Helper/ComplexItem.o \
+./src/UI_Helper/ComplexMenu.o \
 ./src/UI_Helper/IntegerEdit.o \
 ./src/UI_Helper/MenuItem.o \
 ./src/UI_Helper/SimpleMenu.o \
-./src/UI_Helper/StaticItem.o \
 ./src/UI_Helper/TextEdit.o 
 
 CPP_DEPS += \
 ./src/UI_Helper/BarGraph.d \
+./src/UI_Helper/ComplexItem.d \
+./src/UI_Helper/ComplexMenu.d \
 ./src/UI_Helper/IntegerEdit.d \
 ./src/UI_Helper/MenuItem.d \
 ./src/UI_Helper/SimpleMenu.d \
-./src/UI_Helper/StaticItem.d \
 ./src/UI_Helper/TextEdit.d 
 
 

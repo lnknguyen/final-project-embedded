@@ -6,13 +6,54 @@
  */
 
 #include "SimpleMenu.h"
+#include <cstdio>
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+using namespace std;
 
-SimpleMenu::SimpleMenu() {
+SimpleMenu::SimpleMenu(LiquidCrystal& lcd,std::string giveName):lcd(lcd),name(giveName){
 	position = 0;
 }
 
 SimpleMenu::~SimpleMenu() {
 	// TODO Auto-generated destructor stub
+}
+void SimpleMenu::increment() {
+	if (position <=itemsNumber()-1){
+		position++;
+	}
+}
+
+void SimpleMenu::decrement() {
+	if (position >=1){
+		position--;
+	}
+}
+
+void SimpleMenu::display() {
+	lcd.clear();
+	stringstream lcd_display;
+	if(focus) {
+		//menu.event(MenuItem::down);
+		lcd.setCursor(0,1);
+		lcd_display <<"Access OK!";
+	}
+	else {
+		lcd.setCursor(0,0);
+		lcd.Print(name);
+
+	}
+	string str = lcd_display.str();
+	lcd.Print(str);
+}
+
+void SimpleMenu::setFocus(bool focus) {
+	this->focus = focus;
+}
+
+int SimpleMenu::itemsNumber(){
+	return items.size();
 }
 
 void SimpleMenu::addItem(MenuItem *item) {

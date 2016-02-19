@@ -10,7 +10,6 @@
 
 #include "../UI_Helper/SimpleMenu.h"
 #include "../UI_Helper/MenuItem.h"
-#include "../UI_Helper/StaticItem.h"
 #include "../UI_Helper/IntegerEdit.h"
 #include "../UI_Helper/BarGraph.h"
 

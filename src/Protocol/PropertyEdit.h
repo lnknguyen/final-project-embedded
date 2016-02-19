@@ -8,6 +8,7 @@
 #ifndef PROPERTYEDIT_H_
 #define PROPERTYEDIT_H_
 
+#include <string>
 class PropertyEdit {
 public:
 	PropertyEdit() {};
@@ -18,6 +19,7 @@ public:
 	virtual void cancel() = 0;
 	virtual void setFocus(bool focus) = 0;
 	virtual void display() = 0;
+	virtual std::string name() =0;
 };
 
 #endif /* PROPERTYEDIT_H_ */

@@ -10,6 +10,7 @@
 
 #include "../Protocol/PropertyEdit.h"
 #include "../LCD/LiquidCrystal.h"
+#include <string>
 
 class IntegerEdit:public PropertyEdit {
 public:
@@ -23,6 +24,7 @@ public:
 	void display();
 	int getValue();
 	void setValue(int value);
+	string name();
 private:
 	void save();
 	void displayEditValue();

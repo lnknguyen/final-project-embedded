@@ -9,8 +9,6 @@
 #define MENUITEM_H_
 
 #include "../Protocol/PropertyEdit.h"
-
-
 class MenuItem {
 public:
 	enum menuEvent {
@@ -18,14 +16,15 @@ public:
 		down,
 		ok,
 		back,
-		show
+		show,
 	};
 	MenuItem(PropertyEdit& property);
 	virtual ~MenuItem();
 	virtual bool event(menuEvent e);
+	std::string childName();
 private:
 	bool focus;
-	PropertyEdit& pe;
+	PropertyEdit& pe ;
 };
 
 #endif /* MENUITEM_H_ */

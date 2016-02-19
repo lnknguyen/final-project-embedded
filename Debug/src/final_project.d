@@ -54,16 +54,10 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
  ../src/UI_Helper/IntegerEdit.h ../src/UI_Helper/../LCD/LiquidCrystal.h \
  ../src/UI_Helper/TextEdit.h ../src/UI_Helper/../UI_Helper/TextEdit.h \
  ../src/UI_Helper/SimpleMenu.h ../src/UI_Helper/MenuItem.h \
- ../src/UI_Helper/BarGraph.h ../src/Protocol/SceneProtocol.h \
- ../src/Protocol/../UI_Helper/SimpleMenu.h \
- ../src/Protocol/../UI_Helper/MenuItem.h \
- ../src/Protocol/../UI_Helper/StaticItem.h \
- ../src/Protocol/../UI_Helper/BarGraph.h \
- ../src/Protocol/../UI_Helper/../LCD/LiquidCrystal.h \
- ../src/Protocol/../UI_Helper/../Protocol/PropertyEdit.h \
- ../src/Protocol/../UI_Helper/IntegerEdit.h \
- ../src/Protocol/../UI_Helper/BarGraph.h \
- ../src/Interrupt_Handler/systick.h
+ ../src/UI_Helper/BarGraph.h ../src/UI_Helper/ComplexMenu.h \
+ ../src/UI_Helper/ComplexItem.h \
+ ../src/UI_Helper/../UI_Helper/SimpleMenu.h \
+ ../src/UI_Helper/ComplexItem.h ../src/Interrupt_Handler/systick.h
 
 C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_board_nxp_lpcxpresso_1549\inc/board.h:
 
@@ -187,22 +181,12 @@ C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_chip_15xx\inc/lpc_typ
 
 ../src/UI_Helper/BarGraph.h:
 
-../src/Protocol/SceneProtocol.h:
+../src/UI_Helper/ComplexMenu.h:
 
-../src/Protocol/../UI_Helper/SimpleMenu.h:
+../src/UI_Helper/ComplexItem.h:
 
-../src/Protocol/../UI_Helper/MenuItem.h:
+../src/UI_Helper/../UI_Helper/SimpleMenu.h:
 
-../src/Protocol/../UI_Helper/StaticItem.h:
-
-../src/Protocol/../UI_Helper/BarGraph.h:
-
-../src/Protocol/../UI_Helper/../LCD/LiquidCrystal.h:
-
-../src/Protocol/../UI_Helper/../Protocol/PropertyEdit.h:
-
-../src/Protocol/../UI_Helper/IntegerEdit.h:
-
-../src/Protocol/../UI_Helper/BarGraph.h:
+../src/UI_Helper/ComplexItem.h:
 
 ../src/Interrupt_Handler/systick.h:
