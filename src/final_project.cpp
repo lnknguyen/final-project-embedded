@@ -91,15 +91,12 @@ int main(void) {
 	btn.push_back(ok_btn);
 	btn.push_back(back_btn);
 
-	SimpleMenu* menu = new SimpleMenu();
 
-	MenuScene* scene = new MenuScene(menu,btn);
-	scene->setup();
-	scene->show();
+
 	//menu.event(MenuItem::show);
 
 	while(1) {
-		scene->start();
+
 
 	}
 	return 0 ;

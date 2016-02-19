@@ -14,22 +14,6 @@
 
 #include <vector>
 class ManualScene : public SceneProtocol{
-private:
-	SimpleMenu& menu;
-	std::vector<DebouncedInput> button;
-public:
-	ManualScene(SimpleMenu& menu_, std::vector<DebouncedInput> button_);
-	virtual ~ManualScene(){}
-	void start();
-	void setup();
-	void Next_scene();
-	void Prev_scene();
-	void display();
-	void show();
-	void up();
-	void down();
-	void ok();
-	void left();
 };
 
 
