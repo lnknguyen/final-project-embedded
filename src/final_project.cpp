@@ -9,8 +9,6 @@
 */
 
 
-
-
 #if defined (__USE_LPCOPEN)
 	#if defined(NO_BOARD_LIB)
 		#include "chip.h"
