@@ -19,7 +19,7 @@ MenuItem::MenuItem(PropertyEdit& property): focus(false), pe(property){
 MenuItem::~MenuItem() {
 
 }
-string MenuItem::childName(){
+string MenuItem::name(){
 	return pe.name();
 }
 bool MenuItem::event(menuEvent e){

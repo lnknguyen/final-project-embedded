@@ -10,11 +10,11 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+
 using namespace std;
 
 TextEdit::TextEdit(LiquidCrystal& lcd_, std::string mode, std::string modeExplain): lcd(lcd_), mode(mode),modeExplain(modeExplain) {
 	focus = false;
-	current = 1;
 }
 
 TextEdit::~TextEdit() {
@@ -55,4 +55,8 @@ void TextEdit::display() {
 
 	string str = lcd_display.str();
 	lcd.Print(str);
+}
+
+string TextEdit::name(){
+	return modeExplain;
 }

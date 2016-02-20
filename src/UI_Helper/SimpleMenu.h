@@ -9,6 +9,7 @@
 #define SIMPLEMENU_H_
 #include <vector>
 
+
 #include "MenuItem.h"
 #include "../LCD/LiquidCrystal.h"
 
@@ -23,12 +24,15 @@ public:
 	void increment();
 	void decrement();
 	void display();
+	std::string childName(int index);
 private:
 	LiquidCrystal& lcd;
 	bool focus;
+	bool lock;
 	std::string name;
 	std::vector<MenuItem *> items;
 	int position;
+	int index=0;
 };
 
 #endif /* SIMPLEMENU_H_ */

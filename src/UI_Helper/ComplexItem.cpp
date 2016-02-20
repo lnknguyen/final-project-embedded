@@ -23,10 +23,11 @@ bool ComplexItem::baseEvent(menuBaseEvent e){
 	switch(e) {
 	case ok:
 		if(focus) {
-			mn.display();
+			mn.event(MenuItem::ok);
 			focus = false;
 		}
 		else {
+			mn.event(MenuItem::back);
 			focus = true;
 		}
 		mn.setFocus(focus);
@@ -36,6 +37,7 @@ bool ComplexItem::baseEvent(menuBaseEvent e){
 			focus = false;
 		}
 		else {
+			mn.event(MenuItem::back);
 			handled = false;
 		}
 		mn.setFocus(focus);
@@ -44,11 +46,15 @@ bool ComplexItem::baseEvent(menuBaseEvent e){
 		mn.setFocus(focus);
 		break;
 	case up:
-		if(focus){}
+		if(focus){
+			mn.event(MenuItem::up);
+		}
 		else handled = false;
 		break;
 	case down:
-		if(focus){}
+		if(focus){
+			mn.event(MenuItem::down);
+		}
 		else handled = false;
 		break;
 	}

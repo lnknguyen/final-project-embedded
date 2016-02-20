@@ -69,14 +69,9 @@ int isPressed(void){
 	}
 }
 
-void printScreen(LiquidCrystal &lcd){
-	lcd.setCursor(0,0);
-	std::string print;
-	print ="1.Auto mode";
-	lcd.Print(print);
+void printScreen(LiquidCrystal &lcd,std::string a){
 	lcd.setCursor(0,1);
-	print ="2.Setting";
-	lcd.Print(print);
+	lcd.Print(a);
 }
 
 
@@ -110,25 +105,36 @@ int main(void) {
 	ComplexMenu mainMenu;
 
 	SimpleMenu menu(lcd, "Auto Mode");
-	SimpleMenu menuAuto(lcd, "Default Setting");
+	SimpleMenu menuAuto(lcd, "Manual Setting");
 	SimpleMenu menuTime(lcd, "Time Setting");
 
-	//TextEdit autoMode(lcd, std::string("Auto Mode"), std::string("Default Setting"));
+	TextEdit autoMode(lcd, std::string("Auto Mode"), std::string("Default Setting"));
 
 	IntegerEdit temperature(lcd, std::string("Temperature"), 21);
 	IntegerEdit pressure(lcd, std::string("Pressure"),80);
 	IntegerEdit humidity(lcd, std::string("Humidity"),40);
 	IntegerEdit brightness(lcd, std::string("Brightness"),10);
 
-	menu.addItem(new MenuItem(temperature));
-	menu.addItem(new MenuItem(pressure));
-	menu.addItem(new MenuItem(humidity));
-	menu.addItem(new MenuItem(brightness));
+	IntegerEdit timeModeEx1(lcd, std::string("Time Mode"), 21);
+	IntegerEdit timeModeEx2(lcd, std::string("Time Mode"),80);
+
+
+	menu.addItem(new MenuItem(autoMode));
+
+	menuAuto.addItem(new MenuItem(temperature));
+	menuAuto.addItem(new MenuItem(pressure));
+	menuAuto.addItem(new MenuItem(humidity));
+	menuAuto.addItem(new MenuItem(brightness));
+
+	menuTime.addItem(new MenuItem(timeModeEx1));
+	menuTime.addItem(new MenuItem(timeModeEx2));
 
 	mainMenu.addItem(new ComplexItem(menu));
 	mainMenu.addItem(new ComplexItem(menuAuto));
 	mainMenu.addItem(new ComplexItem(menuTime));
 
+
+	//printScreen(lcd, menu.childName());
 	while(1) {
 		k = isPressed();
 		if(k >0) {

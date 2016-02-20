@@ -5,12 +5,13 @@
  *      Author: krl
  */
 
-#ifndef TextEdit_H_
-#define TextEdit_H_
+#ifndef TEXTEDIT_H_
+#define TEXTEDIT_H_
 
 #include "../Protocol/PropertyEdit.h"
 #include "../LCD/LiquidCrystal.h"
-#include "../UI_Helper/TextEdit.h"
+#include <string>
+
 class TextEdit:public PropertyEdit {
 public:
 	TextEdit(LiquidCrystal& lcd_, std::string mode, std::string modeExplain);
@@ -19,17 +20,18 @@ public:
 	void decrement();
 	void accept();
 	void cancel();
-	void goBack();
 	void setFocus(bool focus);
 	void display();
-	//void add(IntegerEdit *blabla){};
+	string name();
 private:
+	void save();
 	void displayEditValue();
 	LiquidCrystal& lcd;
 	std::string mode;
 	std::string modeExplain;
+	int value;
+	int edit;
 	bool focus;
-	int current;
 };
 
-#endif /* TextEdit_H_ */
+#endif /* TEXTEDIT_H_ */

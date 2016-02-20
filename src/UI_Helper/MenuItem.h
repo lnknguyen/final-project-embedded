@@ -21,7 +21,7 @@ public:
 	MenuItem(PropertyEdit& property);
 	virtual ~MenuItem();
 	virtual bool event(menuEvent e);
-	std::string childName();
+	std::string name();
 private:
 	bool focus;
 	PropertyEdit& pe ;

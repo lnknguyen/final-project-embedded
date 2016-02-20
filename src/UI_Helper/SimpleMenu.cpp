@@ -10,6 +10,7 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+#include <string>
 using namespace std;
 
 SimpleMenu::SimpleMenu(LiquidCrystal& lcd,std::string giveName):lcd(lcd),name(giveName){
@@ -35,11 +36,13 @@ void SimpleMenu::display() {
 	lcd.clear();
 	stringstream lcd_display;
 	if(focus) {
+		lock = true;
 		//menu.event(MenuItem::down);
 		lcd.setCursor(0,1);
-		lcd_display <<"Access OK!";
+		lcd_display << childName(index);
 	}
 	else {
+		lock = false;
 		lcd.setCursor(0,0);
 		lcd.Print(name);
 
@@ -55,6 +58,9 @@ void SimpleMenu::setFocus(bool focus) {
 int SimpleMenu::itemsNumber(){
 	return items.size();
 }
+string SimpleMenu::childName(int index){
+	return items[index]->name();
+}
 
 void SimpleMenu::addItem(MenuItem *item) {
 	items.push_back(item);
@@ -64,8 +70,17 @@ void SimpleMenu::event(MenuItem::menuEvent e) {
 	if(items.size() <= 0) return;
 
 	if(!items[position]->event(e)) {
-		if(e == MenuItem::up) position++;
-		else if(e == MenuItem::down) position--;
+		if(e == MenuItem::up) {
+			position++;
+			index++;
+		}
+
+		else if(e == MenuItem::down){
+			position--;
+			index++;
+		}
+		if(index < 0) index = items.size() - 1;
+		if(index >= (int) items.size()) index = 0;
 
 		if(position < 0) position = items.size() - 1;
 		if(position >= (int) items.size()) position = 0;
