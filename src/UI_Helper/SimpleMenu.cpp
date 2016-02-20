@@ -37,9 +37,9 @@ void SimpleMenu::display() {
 	stringstream lcd_display;
 	if(focus) {
 		lock = true;
-		//menu.event(MenuItem::down);
+		items[index]->event(MenuItem::ok);
 		lcd.setCursor(0,1);
-		lcd_display << childName(index);
+		//lcd_display << childName(index);
 	}
 	else {
 		lock = false;
