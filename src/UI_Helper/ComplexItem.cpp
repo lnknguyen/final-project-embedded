@@ -22,25 +22,22 @@ bool ComplexItem::baseEvent(menuBaseEvent e){
 	bool handled = true;
 	switch(e) {
 	case ok:
-		if(focus) {
+		if(focus){
 			mn.event(MenuItem::ok);
-			focus = false;
-		}
-		else {
-			mn.event(MenuItem::back);
-			focus = true;
+		}else{
+			focus =true;
 		}
 		mn.setFocus(focus);
 		break;
 	case back:
-		if(focus) {
+		if(mn.returnFocus()){
+			mn.event(MenuItem::ok);
+		}else{
 			focus = false;
-		}
-		else {
 			mn.event(MenuItem::back);
-			handled = false;
 		}
-		mn.setFocus(focus);
+		mn.setFocus(false);
+		handled = false;
 		break;
 	case show:
 		mn.setFocus(focus);

@@ -32,20 +32,20 @@ void SimpleMenu::decrement() {
 	}
 }
 
+bool SimpleMenu::returnFocus(){
+	return items[index]->returnFocus();
+}
+
 void SimpleMenu::display() {
 	lcd.clear();
+	lcd.setCursor(0,0);
 	stringstream lcd_display;
 	if(focus) {
-		lock = true;
-		items[index]->event(MenuItem::ok);
-		lcd.setCursor(0,1);
-		//lcd_display << childName(index);
+		//lcd_display<<items[index]->name();
+		items[index]->event(MenuItem::show);
 	}
 	else {
-		lock = false;
-		lcd.setCursor(0,0);
 		lcd.Print(name);
-
 	}
 	string str = lcd_display.str();
 	lcd.Print(str);
@@ -74,7 +74,6 @@ void SimpleMenu::event(MenuItem::menuEvent e) {
 			position++;
 			index++;
 		}
-
 		else if(e == MenuItem::down){
 			position--;
 			index++;

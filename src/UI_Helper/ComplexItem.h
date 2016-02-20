@@ -25,6 +25,7 @@ public:
 	bool getFocus();
 private:
 	bool focus;
+	bool lock;
 	SimpleMenu& mn ;
 };
 

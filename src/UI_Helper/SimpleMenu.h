@@ -21,6 +21,7 @@ public:
 	void event(MenuItem::menuEvent e);
 	int itemsNumber();
 	void setFocus(bool focus);
+	bool returnFocus();
 	void increment();
 	void decrement();
 	void display();
@@ -28,7 +29,6 @@ public:
 private:
 	LiquidCrystal& lcd;
 	bool focus;
-	bool lock;
 	std::string name;
 	std::vector<MenuItem *> items;
 	int position;

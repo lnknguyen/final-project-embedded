@@ -21,6 +21,7 @@ public:
 	MenuItem(PropertyEdit& property);
 	virtual ~MenuItem();
 	virtual bool event(menuEvent e);
+	virtual bool returnFocus();
 	std::string name();
 private:
 	bool focus;

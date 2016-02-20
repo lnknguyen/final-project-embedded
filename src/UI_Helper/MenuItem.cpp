@@ -22,6 +22,10 @@ MenuItem::~MenuItem() {
 string MenuItem::name(){
 	return pe.name();
 }
+
+bool MenuItem::returnFocus(){
+	return this->focus;
+}
 bool MenuItem::event(menuEvent e){
 	bool handled = true;
 	switch(e) {
