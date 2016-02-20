@@ -31,12 +31,12 @@ bool ComplexItem::baseEvent(menuBaseEvent e){
 		break;
 	case back:
 		if(mn.returnFocus()){
+			mn.cancel();
 			mn.event(MenuItem::ok);
 		}else{
 			focus = false;
 			mn.event(MenuItem::back);
 		}
-		mn.setFocus(false);
 		handled = false;
 		break;
 	case show:

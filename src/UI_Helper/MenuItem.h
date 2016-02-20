@@ -22,6 +22,7 @@ public:
 	virtual ~MenuItem();
 	virtual bool event(menuEvent e);
 	virtual bool returnFocus();
+	virtual void cancel();
 	std::string name();
 private:
 	bool focus;

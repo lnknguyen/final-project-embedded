@@ -25,6 +25,7 @@ public:
 	void increment();
 	void decrement();
 	void display();
+	void cancel();
 	std::string childName(int index);
 private:
 	LiquidCrystal& lcd;

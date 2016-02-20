@@ -70,7 +70,9 @@ int isPressed(void){
 }
 
 void printScreen(LiquidCrystal &lcd,std::string a){
-	lcd.setCursor(0,1);
+	int length = a.length();
+	length = (16-length)/2;
+	lcd.setCursor(length,0);
 	lcd.Print(a);
 }
 
@@ -115,8 +117,8 @@ int main(void) {
 	IntegerEdit humidity(lcd, std::string("Humidity"),40);
 	IntegerEdit brightness(lcd, std::string("Brightness"),10);
 
-	IntegerEdit timeModeEx1(lcd, std::string("Time Mode"), 21);
-	IntegerEdit timeModeEx2(lcd, std::string("Time Mode"),80);
+	IntegerEdit timeModeEx1(lcd, std::string("Time Mode 1"), 21);
+	IntegerEdit timeModeEx2(lcd, std::string("Time Mode 2"),80);
 
 
 	menu.addItem(new MenuItem(autoMode));
@@ -134,7 +136,7 @@ int main(void) {
 	mainMenu.addItem(new ComplexItem(menuTime));
 
 
-	//printScreen(lcd, menu.childName());
+	printScreen(lcd, "Welcome!");
 	while(1) {
 		k = isPressed();
 		if(k >0) {

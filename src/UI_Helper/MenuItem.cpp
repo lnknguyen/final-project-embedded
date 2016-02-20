@@ -26,6 +26,9 @@ string MenuItem::name(){
 bool MenuItem::returnFocus(){
 	return this->focus;
 }
+void MenuItem::cancel(){
+	pe.cancel();
+}
 bool MenuItem::event(menuEvent e){
 	bool handled = true;
 	switch(e) {

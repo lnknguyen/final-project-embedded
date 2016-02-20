@@ -33,7 +33,11 @@ void SimpleMenu::decrement() {
 }
 
 bool SimpleMenu::returnFocus(){
-	return items[index]->returnFocus();
+	return items[position]->returnFocus();
+}
+
+void SimpleMenu::cancel(){
+	items[position]->cancel();
 }
 
 void SimpleMenu::display() {
@@ -42,7 +46,7 @@ void SimpleMenu::display() {
 	stringstream lcd_display;
 	if(focus) {
 		//lcd_display<<items[index]->name();
-		items[index]->event(MenuItem::show);
+		items[position]->event(MenuItem::show);
 	}
 	else {
 		lcd.Print(name);
@@ -58,8 +62,8 @@ void SimpleMenu::setFocus(bool focus) {
 int SimpleMenu::itemsNumber(){
 	return items.size();
 }
-string SimpleMenu::childName(int index){
-	return items[index]->name();
+string SimpleMenu::childName(int position){
+	return items[position]->name();
 }
 
 void SimpleMenu::addItem(MenuItem *item) {
@@ -72,14 +76,10 @@ void SimpleMenu::event(MenuItem::menuEvent e) {
 	if(!items[position]->event(e)) {
 		if(e == MenuItem::up) {
 			position++;
-			index++;
 		}
 		else if(e == MenuItem::down){
 			position--;
-			index++;
 		}
-		if(index < 0) index = items.size() - 1;
-		if(index >= (int) items.size()) index = 0;
 
 		if(position < 0) position = items.size() - 1;
 		if(position >= (int) items.size()) position = 0;
