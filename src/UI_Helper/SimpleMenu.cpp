@@ -41,7 +41,7 @@ void SimpleMenu::cancel(){
 }
 
 void SimpleMenu::display() {
-	lcd.clear();
+	//lcd.clear();
 	lcd.setCursor(0,0);
 	stringstream lcd_display;
 	if(focus) {
@@ -49,6 +49,8 @@ void SimpleMenu::display() {
 		items[position]->event(MenuItem::show);
 	}
 	else {
+		lcd.clear();
+		lcd.setCursor(0,0);
 		lcd.Print(name);
 	}
 	string str = lcd_display.str();

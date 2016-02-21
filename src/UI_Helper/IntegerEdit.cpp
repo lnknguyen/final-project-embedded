@@ -54,20 +54,24 @@ string IntegerEdit::name(){
 }
 
 void IntegerEdit::display() {
-	lcd.clear();
-	lcd.setCursor(0,0);
-	lcd.Print(title);
+	//lcd.clear();
 	stringstream lcd_display;
 	if(focus) {
+		if(edit==9 ||edit ==99 ||edit ==1){
+			lcd.clear();
+		}
 		lcd.setCursor(6,1);
 		lcd_display << "["<< edit <<"]" ;
 	}
 	else {
+		lcd.clear();
 		lcd.setCursor(7,1);
 		lcd_display <<edit ;
 	}
 	string str = lcd_display.str();
 	lcd.Print(str);
+	lcd.setCursor(0,0);
+	lcd.Print(title);
 }
 
 

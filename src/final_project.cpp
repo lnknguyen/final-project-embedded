@@ -141,7 +141,7 @@ int main(void) {
 		k = isPressed();
 		if(k >0) {
 			preventOverlap++;
-			if(preventOverlap==1){
+			if(preventOverlap==1 || preventOverlap >500000){
 
 				if(k==1){
 					mainMenu.baseEvent(ComplexItem::up);
@@ -150,10 +150,10 @@ int main(void) {
 					mainMenu.baseEvent(ComplexItem::down);
 				}
 				else if(k==3){
-					mainMenu.baseEvent(ComplexItem::ok);
+					if(preventOverlap==1) mainMenu.baseEvent(ComplexItem::ok);
 				}
 				else if(k==4){
-					mainMenu.baseEvent(ComplexItem::back);
+					if(preventOverlap==1) mainMenu.baseEvent(ComplexItem::back);
 				}
 			}
 		}
