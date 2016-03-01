@@ -16,6 +16,8 @@ TemperatureSensor::TemperatureSensor(){
 	a0 = 0;
 	d0 = 0;
 }
+float TemperatureSensor::toHz(){
+}
 
 float TemperatureSensor::toValue(){
 	a0 = Chip_ADC_GetDataReg(LPC_ADC0, 0);
