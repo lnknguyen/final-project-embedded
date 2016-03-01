@@ -1,5 +1,5 @@
 /*
- * TemperatureSensor.h
+ * PressureSensor.h
  *
  *  Created on: Mar 1, 2016
  *      Author: nguyenluong

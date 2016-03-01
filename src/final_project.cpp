@@ -92,6 +92,20 @@ int main(void) {
 		#endif
 	#endif
 
+	Chip_ADC_Init(LPC_ADC0, 0);
+	Chip_ADC_SetClockRate(LPC_ADC0, ADC_MAX_SAMPLE_RATE);
+	Chip_ADC_SetupSequencer(LPC_ADC0, ADC_SEQA_IDX, (ADC_SEQ_CTRL_CHANSEL(0) | ADC_SEQ_CTRL_CHANSEL(3) | ADC_SEQ_CTRL_MODE_EOS));
+	Chip_ADC_SetADC0Input(LPC_ADC0, 0);
+	Chip_ADC_SetTrim(LPC_ADC0, ADC_TRIM_VRANGE_HIGHV);
+	Chip_SWM_EnableFixedPin(SWM_FIXED_ADC0_0);
+	Chip_SWM_EnableFixedPin(SWM_FIXED_ADC0_3);
+	Chip_ADC_StartCalibration(LPC_ADC0);
+	while (!(Chip_ADC_IsCalibrationDone(LPC_ADC0))) {}
+	Chip_ADC_ClearFlags(LPC_ADC0, Chip_ADC_GetFlags(LPC_ADC0));
+	Chip_ADC_EnableInt(LPC_ADC0, ADC_INTEN_SEQA_ENABLE);
+	NVIC_EnableIRQ(ADC0_SEQA_IRQn);
+	Chip_ADC_EnableSequencer(LPC_ADC0, ADC_SEQA_IDX);
+
 	uint32_t sysTickRate;
 	InitButton();
 	Chip_Clock_SetSysTickClockDiv(1);

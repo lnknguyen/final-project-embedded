@@ -15,10 +15,6 @@ public:
 	virtual ~SensorInterface() {};
 	virtual float toHz() =0;
 	virtual float toValue() =0;
-
-
 };
-
-
 
 #endif /* SCENE_CONTROLLER_SENSORINTERFACE_H_ */
