@@ -1,5 +1,6 @@
-src/Interrupt_Handler/systick.o src/Interrupt_Handler/systick.d: \
- ../src/Interrupt_Handler/systick.cpp ../src/Interrupt_Handler/systick.h \
+src/Sensor/PressureSensor.o src/Sensor/PressureSensor.d: \
+ ../src/Sensor/PressureSensor.cpp ../src/Sensor/PressureSensor.h \
+ ../src/Sensor/SensorInterface.h ../src/Sensor/I2C.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/chip.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/lpc_types.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/sys_config.h \
@@ -46,9 +47,14 @@ src/Interrupt_Handler/systick.o src/Interrupt_Handler/systick.d: \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/spi_15xx.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/i2cm_15xx.h \
  /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/i2c_common_15xx.h \
- /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/i2cs_15xx.h
+ /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/i2cs_15xx.h \
+ ../src/Sensor/../Interrupt_Handler/systick.h
 
-../src/Interrupt_Handler/systick.h:
+../src/Sensor/PressureSensor.h:
+
+../src/Sensor/SensorInterface.h:
+
+../src/Sensor/I2C.h:
 
 /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/chip.h:
 
@@ -143,3 +149,5 @@ src/Interrupt_Handler/systick.o src/Interrupt_Handler/systick.d: \
 /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/i2c_common_15xx.h:
 
 /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/inc/i2cs_15xx.h:
+
+../src/Sensor/../Interrupt_Handler/systick.h:

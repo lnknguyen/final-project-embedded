@@ -26,6 +26,7 @@ C_DEPS :=
 SUBDIRS := \
 src/Interrupt_Handler \
 src/LCD \
+src/Sensor \
 src/UI_Helper \
 src \
 

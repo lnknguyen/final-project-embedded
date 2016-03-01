@@ -7,7 +7,7 @@
 #include "systick.h"
 #include "chip.h"
 
-static volatile unsigned int counter;
+static volatile unsigned int s_delay;
 static volatile unsigned int systicks;
 
 /*
@@ -25,5 +25,11 @@ extern "C" {
 static volatile bool semaphore;
 void SysTick_Handler(void){
 	semaphore = true;
+	if(s_delay) s_delay--;
 }
+}
+
+void Sleep(uint16_t delay){
+	s_delay = delay;
+	while(s_delay);
 }
