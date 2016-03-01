@@ -6,6 +6,8 @@
  */
 
 #include "PressureSensor.h"
+
+#define SCALE_FACTOR 240.0
 PressureSensor::PressureSensor(I2C& i2c_): i2c(i2c_){
 
 	readPressureCmd = 0xF1;
@@ -23,7 +25,8 @@ float PressureSensor::toValue(){
 				//DEBUGOUT("Error reading pressure.\r\n");
 			}
 			Sleep(1000);
-		}
+	return pressure/SCALE_FACTOR;
+}
 
 
 
