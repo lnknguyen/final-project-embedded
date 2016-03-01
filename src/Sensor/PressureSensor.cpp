@@ -8,6 +8,7 @@
 #include "PressureSensor.h"
 
 #define SCALE_FACTOR 240.0
+#define SENSOR_ADDR 0x40
 PressureSensor::PressureSensor(I2C& i2c_): i2c(i2c_){
 
 	readPressureCmd = 0xF1;
@@ -15,16 +16,17 @@ PressureSensor::PressureSensor(I2C& i2c_): i2c(i2c_){
 }
 
 float PressureSensor::toValue(){
-	if (i2c.transaction(0x40, &readPressureCmd, 1, pressureData, 3)) {
+	if (i2c.transaction(SENSOR_ADDR, &readPressureCmd, 1, pressureData, 3)) {
 				/* Output temperature. */
 				pressure = (pressureData[0] << 8) | pressureData[1];
+	}
+	else {
+				//DEBUGOUT("Error reading pressure.\r\n")
+		assert(pressureData!=NULL);
 
-				//printf("Pressure read over I2C is %.1f Pa\r\n",	pressure/240.0);
-			}
-			else {
-				//DEBUGOUT("Error reading pressure.\r\n");
-			}
-			Sleep(1000);
+
+	}
+	Sleep(1000);
 	return pressure/SCALE_FACTOR;
 }
 

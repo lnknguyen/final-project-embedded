@@ -8,6 +8,7 @@
 #ifndef SCENE_CONTROLLER_SENSORINTERFACE_H_
 #define SCENE_CONTROLLER_SENSORINTERFACE_H_
 
+#include <assert.h>
 class SensorInterface{
 public:
 	SensorInterface() {}
