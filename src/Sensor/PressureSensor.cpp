@@ -23,12 +23,12 @@ float PressureSensor::toValue(){
 	else {
 				//DEBUGOUT("Error reading pressure.\r\n")
 		assert(pressureData!=NULL);
-
-
 	}
 	Sleep(1000);
 	return pressure/SCALE_FACTOR;
 }
 
 
-
+float PressureSensor::toHz(){
+	return 0.0;
+}

@@ -27,6 +27,8 @@
 #include "UI_Helper/ComplexItem.h"
 #include "Interrupt_Handler/systick.h"
 
+#include "Sensor/I2C.h"
+#include "Sensor/PressureSensor.h"
 #include <cr_section_macros.h>
 #include <iostream>
 #include <sstream>
@@ -135,9 +137,10 @@ int main(void) {
 	mainMenu.addItem(new ComplexItem(menuAuto));
 	mainMenu.addItem(new ComplexItem(menuTime));
 
-
+	I2C i2c(0,10000);
+	PressureSensor pr_sen(i2c);
 	printScreen(lcd, "Welcome!");
-	while(1) {
+	while(1) {/*
 		k = isPressed();
 		if(k >0) {
 			preventOverlap++;
@@ -156,7 +159,8 @@ int main(void) {
 					if(preventOverlap==1) mainMenu.baseEvent(ComplexItem::back);
 				}
 			}
-		}
+		}*/
+		printf("Value: %f",pr_sen.toValue());
 	}
 	return 0 ;
 }

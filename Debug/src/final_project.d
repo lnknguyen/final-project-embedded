@@ -56,7 +56,10 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
  ../src/UI_Helper/MenuItem.h ../src/UI_Helper/BarGraph.h \
  ../src/UI_Helper/ComplexMenu.h ../src/UI_Helper/ComplexItem.h \
  ../src/UI_Helper/../UI_Helper/SimpleMenu.h \
- ../src/UI_Helper/ComplexItem.h ../src/Interrupt_Handler/systick.h
+ ../src/UI_Helper/ComplexItem.h ../src/Interrupt_Handler/systick.h \
+ ../src/Sensor/I2C.h ../src/Sensor/PressureSensor.h \
+ ../src/Sensor/SensorInterface.h ../src/Sensor/I2C.h \
+ ../src/Sensor/../Interrupt_Handler/systick.h
 
 /Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_board_nxp_lpcxpresso_1549/inc/board.h:
 
@@ -187,3 +190,13 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
 ../src/UI_Helper/ComplexItem.h:
 
 ../src/Interrupt_Handler/systick.h:
+
+../src/Sensor/I2C.h:
+
+../src/Sensor/PressureSensor.h:
+
+../src/Sensor/SensorInterface.h:
+
+../src/Sensor/I2C.h:
+
+../src/Sensor/../Interrupt_Handler/systick.h:
