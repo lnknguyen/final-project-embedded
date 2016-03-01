@@ -19,7 +19,6 @@ public:
 	float toValue();
 	float toHz();
 private:
-	uint8_t temperatureData[3];
 	int16_t temperature;
 	uint32_t a0,d0;
 };

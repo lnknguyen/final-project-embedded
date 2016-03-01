@@ -13,8 +13,7 @@ static volatile unsigned int s_delay;
 static volatile unsigned int systicks;
 static volatile bool adcdone = false;
 static volatile bool adcstart = false;
-static uint32_t counterHz =0;
-static int TICKRATE_HZ = 100;
+static volatile int counter = 0;
 TemperatureSensor temperature;
 
 /*
@@ -33,12 +32,13 @@ static volatile bool semaphore;
 uint32_t a0,d0,a3,d3;
 void SysTick_Handler(void){
 	semaphore = true;
+	counter++;
 	if(s_delay) s_delay--;
-	counterHz++;
-	if(counterHz >= TICKRATE_HZ){
-		counterHz = 0;
+	if (counter > 100){
+		counter = 0;
 		temperature.toValue();
 	}
+
 }
 }
 

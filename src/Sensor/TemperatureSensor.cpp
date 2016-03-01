@@ -17,12 +17,12 @@ TemperatureSensor::TemperatureSensor(){
 	d0 = 0;
 }
 float TemperatureSensor::toHz(){
+	return 0;
 }
 
 float TemperatureSensor::toValue(){
 	a0 = Chip_ADC_GetDataReg(LPC_ADC0, 0);
 	d0 = ADC_DR_RESULT(a0);
 	printf("a0 = %08X, d0 = %d\n", a0, d0);
-	Sleep(1000);
 	return temperature;
 }

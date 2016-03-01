@@ -14,6 +14,10 @@ PressureSensor::PressureSensor(I2C& i2c_): i2c(i2c_){
 	pressure = 0;
 }
 
+float PressureSensor::toHz(){
+	return 0;
+}
+
 float PressureSensor::toValue(){
 	if (i2c.transaction(SENSOR_ADDR, &readPressureCmd, 1, pressureData, 3)) {
 		/* Output temperature. */
@@ -22,7 +26,7 @@ float PressureSensor::toValue(){
 		//DEBUGOUT("Error reading pressure.\r\n")
 		assert(pressureData!=NULL);
 	}
-	Sleep(1000);
+	//Sleep(1000);
 	return pressure/SCALE_FACTOR;
 }
 
