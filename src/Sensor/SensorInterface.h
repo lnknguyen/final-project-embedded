@@ -14,7 +14,7 @@ public:
 	SensorInterface() {}
 	virtual ~SensorInterface() {};
 	virtual float toHz() =0;
-	virtual float toValue() =0;
+	virtual int toValue() =0;
 };
 
 #endif /* SCENE_CONTROLLER_SENSORINTERFACE_H_ */

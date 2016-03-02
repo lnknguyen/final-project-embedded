@@ -16,7 +16,7 @@ class TemperatureSensor : public SensorInterface{
 public:
 	TemperatureSensor();
 	virtual ~TemperatureSensor() {};
-	float toValue();
+	int toValue();
 	float toHz();
 private:
 	int16_t temperature;

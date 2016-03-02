@@ -26,6 +26,7 @@
 #include "UI_Helper/ComplexMenu.h"
 #include "UI_Helper/ComplexItem.h"
 #include "Interrupt_Handler/systick.h"
+#include "Sensor/TemperatureSensor.h"
 
 #include <cr_section_macros.h>
 #include <iostream>
@@ -76,6 +77,25 @@ void printScreen(LiquidCrystal &lcd,std::string a){
 	lcd.Print(a);
 }
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+void ADC0A_IRQHandler(void)
+{
+	uint32_t pending;
+
+	/* Get pending interrupts */
+	pending = Chip_ADC_GetFlags(LPC_ADC0);
+
+	/* Sequence A completion interrupt */
+	if (pending & ADC_FLAGS_SEQA_INT_MASK) {
+		//adcdone = true;
+	}
+
+	/* Clear any pending interrupts */
+	Chip_ADC_ClearFlags(LPC_ADC0, pending);
+}
+}
 
 int main(void) {
 
@@ -92,7 +112,7 @@ int main(void) {
 		#endif
 	#endif
 
-	/*Chip_ADC_Init(LPC_ADC0, 0);
+	Chip_ADC_Init(LPC_ADC0, 0);
 	Chip_ADC_SetClockRate(LPC_ADC0, ADC_MAX_SAMPLE_RATE);
 	Chip_ADC_SetupSequencer(LPC_ADC0, ADC_SEQA_IDX, (ADC_SEQ_CTRL_CHANSEL(0) | ADC_SEQ_CTRL_CHANSEL(3) | ADC_SEQ_CTRL_MODE_EOS));
 	Chip_ADC_SetADC0Input(LPC_ADC0, 0);
@@ -104,7 +124,7 @@ int main(void) {
 	Chip_ADC_ClearFlags(LPC_ADC0, Chip_ADC_GetFlags(LPC_ADC0));
 	Chip_ADC_EnableInt(LPC_ADC0, ADC_INTEN_SEQA_ENABLE);
 	NVIC_EnableIRQ(ADC0_SEQA_IRQn);
-	Chip_ADC_EnableSequencer(LPC_ADC0, ADC_SEQA_IDX);*/
+	Chip_ADC_EnableSequencer(LPC_ADC0, ADC_SEQA_IDX);
 
 	uint32_t sysTickRate;
 	InitButton();
@@ -149,14 +169,15 @@ int main(void) {
 	mainMenu.addItem(new ComplexItem(menuAuto));
 	mainMenu.addItem(new ComplexItem(menuTime));
 
-
+	TemperatureSensor temperatureSensor;
 	printScreen(lcd, "Welcome!");
 	while(1) {
+		Chip_ADC_StartSequencer(LPC_ADC0, ADC_SEQA_IDX);
+		temperature.setValue(temperatureSensor.toValue());
 		k = isPressed();
 		if(k >0) {
 			preventOverlap++;
 			if(preventOverlap==1 || preventOverlap >500000){
-
 				if(k==1){
 					mainMenu.baseEvent(ComplexItem::up);
 				}

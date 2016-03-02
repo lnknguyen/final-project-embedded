@@ -11,10 +11,6 @@
 
 static volatile unsigned int s_delay;
 static volatile unsigned int systicks;
-static volatile bool adcdone = false;
-static volatile bool adcstart = false;
-static volatile int counter = 0;
-TemperatureSensor temperature;
 
 /*
  * Note: Systick handler must be declared with C-linkage otherwise the linker
@@ -29,18 +25,12 @@ extern "C" {
  * @return	Nothing
  */
 static volatile bool semaphore;
-uint32_t a0,d0,a3,d3;
 void SysTick_Handler(void){
 	semaphore = true;
-	counter++;
 	if(s_delay) s_delay--;
-	if (counter > 100){
-		counter = 0;
-		temperature.toValue();
-	}
+}
+}
 
-}
-}
 
 void Sleep(uint16_t delay){
 	s_delay = delay;
