@@ -1,18 +1,19 @@
 /*
- * IntegerEdit.cpp
+ * ValueEdit.cpp
  *
  *  Created on: 2.2.2016
  *      Author: krl
  */
 
-#include "IntegerEdit.h"
 #include <cstdio>
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+
+#include "ValueEdit.h"
 using namespace std;
 
-IntegerEdit::IntegerEdit(LiquidCrystal& lcd_, std::string editTitle, int value): lcd(lcd_), title(editTitle),value(value) {
+ValueEdit::ValueEdit(LiquidCrystal& lcd_, std::string editTitle, int value): lcd(lcd_), title(editTitle),value(value) {
 	if (value <=upperLimit && value >= lowerLimit){
 		setValue(value);
 	} else{
@@ -21,39 +22,39 @@ IntegerEdit::IntegerEdit(LiquidCrystal& lcd_, std::string editTitle, int value):
 	focus = false;
 }
 
-IntegerEdit::~IntegerEdit() {
+ValueEdit::~ValueEdit() {
 }
 
-void IntegerEdit::increment() {
+void ValueEdit::increment() {
 	if (edit <=upperLimit-1){
 		edit++;
 	}
 }
 
-void IntegerEdit::decrement() {
+void ValueEdit::decrement() {
 	if (edit >=lowerLimit+1){
 		edit--;
 	}
 }
 
-void IntegerEdit::accept() {
+void ValueEdit::accept() {
 	save();
 }
 
-void IntegerEdit::cancel() {
+void ValueEdit::cancel() {
 	edit = value;
 }
 
 
-void IntegerEdit::setFocus(bool focus) {
+void ValueEdit::setFocus(bool focus) {
 	this->focus = focus;
 }
 
-string IntegerEdit::name(){
+string ValueEdit::name(){
 	return title;
 }
 
-void IntegerEdit::display() {
+void ValueEdit::display() {
 	//lcd.clear();
 	stringstream lcd_display;
 	if(focus) {
@@ -75,17 +76,17 @@ void IntegerEdit::display() {
 }
 
 
-void IntegerEdit::save() {
+void ValueEdit::save() {
 	// set current value to be same as edit value
 	value = edit;
 	// todo: save current value for example to EEPROM for permanent storage
 }
 
 
-int IntegerEdit::getValue() {
+int ValueEdit::getValue() {
 	return value;
 }
-void IntegerEdit::setValue(int value) {
+void ValueEdit::setValue(int value) {
 	edit = value;
 	save();
 }

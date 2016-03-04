@@ -1,40 +1,39 @@
 /*
- * IntegerEdit.h
+ * RunningMode.h
  *
  *  Created on: 2.2.2016
  *      Author: krl
  */
 
-#ifndef INTEGEREDIT_H_
-#define INTEGEREDIT_H_
+#ifndef RUNNINGMODE_H_
+#define RUNNINGMODE_H_
 
 #include "../Protocol/PropertyEdit.h"
 #include "../LCD/LiquidCrystal.h"
 #include <string>
 
-class IntegerEdit:public PropertyEdit {
+class RunningMode:public PropertyEdit {
 public:
-	IntegerEdit(LiquidCrystal& lcd_, std::string editTitle, int value);
-	virtual ~IntegerEdit();
+	RunningMode(LiquidCrystal& lcd_, int value);
+	virtual ~RunningMode();
 	void increment();
 	void decrement();
 	void accept();
 	void cancel();
 	void setFocus(bool focus);
 	void display();
-	int getValue();
+	void displayValue(int value);
 	void setValue(int value);
-	string name();
+	std::string name();
 private:
+	std::string run ="Run now?";
+	std::string running = "Running...";
 	void save();
 	void displayEditValue();
 	LiquidCrystal& lcd;
-	std::string title;
 	int value;
 	int edit;
 	bool focus;
-	int upperLimit = 100;
-	int lowerLimit = 0;
 };
 
-#endif /* INTEGEREDIT_H_ */
+#endif /* RUNNINGMODE_H_ */

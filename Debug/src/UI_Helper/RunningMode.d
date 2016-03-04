@@ -1,9 +1,9 @@
-src/UI_Helper/IntegerEdit.o src/UI_Helper/IntegerEdit.d: \
- ../src/UI_Helper/IntegerEdit.cpp ../src/UI_Helper/IntegerEdit.h \
+src/UI_Helper/RunningMode.o src/UI_Helper/RunningMode.d: \
+ ../src/UI_Helper/RunningMode.cpp ../src/UI_Helper/RunningMode.h \
  ../src/UI_Helper/../Protocol/PropertyEdit.h \
  ../src/UI_Helper/../LCD/LiquidCrystal.h
 
-../src/UI_Helper/IntegerEdit.h:
+../src/UI_Helper/RunningMode.h:
 
 ../src/UI_Helper/../Protocol/PropertyEdit.h:
 

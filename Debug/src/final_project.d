@@ -51,8 +51,8 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
  C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_chip_15xx\inc/lpc_types.h \
  ../src/LCD/LiquidCrystal.h ../src/LCD/lcd_port.h \
  ../src/UI_Helper/MenuItem.h ../src/UI_Helper/../Protocol/PropertyEdit.h \
- ../src/UI_Helper/IntegerEdit.h ../src/UI_Helper/../LCD/LiquidCrystal.h \
- ../src/UI_Helper/TextEdit.h ../src/UI_Helper/SimpleMenu.h \
+ ../src/UI_Helper/ValueEdit.h ../src/UI_Helper/../LCD/LiquidCrystal.h \
+ ../src/UI_Helper/RunningMode.h ../src/UI_Helper/SimpleMenu.h \
  ../src/UI_Helper/MenuItem.h ../src/UI_Helper/BarGraph.h \
  ../src/UI_Helper/ComplexMenu.h ../src/UI_Helper/ComplexItem.h \
  ../src/UI_Helper/../UI_Helper/SimpleMenu.h \
@@ -168,11 +168,11 @@ C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_chip_15xx\inc/lpc_typ
 
 ../src/UI_Helper/../Protocol/PropertyEdit.h:
 
-../src/UI_Helper/IntegerEdit.h:
+../src/UI_Helper/ValueEdit.h:
 
 ../src/UI_Helper/../LCD/LiquidCrystal.h:
 
-../src/UI_Helper/TextEdit.h:
+../src/UI_Helper/RunningMode.h:
 
 ../src/UI_Helper/SimpleMenu.h:
 

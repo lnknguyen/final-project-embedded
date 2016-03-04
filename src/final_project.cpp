@@ -19,8 +19,8 @@
 #include "LCD/LiquidCrystal.h"
 #include "LCD/lcd_port.h"
 #include "UI_Helper/MenuItem.h"
-#include "UI_Helper/IntegerEdit.h"
-#include "UI_Helper/TextEdit.h"
+#include "UI_Helper/ValueEdit.h"
+#include "UI_Helper/RunningMode.h"
 #include "UI_Helper/SimpleMenu.h"
 #include "UI_Helper/BarGraph.h"
 #include "UI_Helper/ComplexMenu.h"
@@ -69,6 +69,15 @@ int isPressed(void){
 		return -1;
 	}
 }
+
+#ifdef __cplusplus
+    extern "C"
+    {
+#endif
+    	char *  itoa ( int value, char * str, int base );
+#ifdef __cplusplus
+    }
+#endif
 
 void printScreen(LiquidCrystal &lcd,std::string a){
 	int length = a.length();
@@ -140,40 +149,36 @@ int main(void) {
 
 	ComplexMenu mainMenu;
 
-	SimpleMenu menu(lcd, "Auto Mode");
-	SimpleMenu menuAuto(lcd, "Manual Setting");
-	SimpleMenu menuTime(lcd, "Time Setting");
+	SimpleMenu menuTemp(lcd, "Temperature");
+	SimpleMenu menuPress(lcd, "Pressure");
+	SimpleMenu menuCO(lcd, "CO2");
 
-	TextEdit autoMode(lcd, std::string("Auto Mode"), std::string("Default Setting"));
+	RunningMode runningTemp(lcd,21);
+	RunningMode runningPress(lcd,80);
+	RunningMode runningCO(lcd,40);
 
-	IntegerEdit temperature(lcd, std::string("Temperature"), 21);
-	IntegerEdit pressure(lcd, std::string("Pressure"),80);
-	IntegerEdit humidity(lcd, std::string("Humidity"),40);
-	IntegerEdit brightness(lcd, std::string("Brightness"),10);
+	ValueEdit temperature(lcd, std::string("Temperature"), 21);
+	ValueEdit pressure(lcd, std::string("Pressure"),80);
+	ValueEdit co(lcd, std::string("CO2"),40);
 
-	IntegerEdit timeModeEx1(lcd, std::string("Time Mode 1"), 21);
-	IntegerEdit timeModeEx2(lcd, std::string("Time Mode 2"),80);
+	menuTemp.addItem(new MenuItem(temperature));
+	menuTemp.addItem(new MenuItem(runningTemp));
+	menuPress.addItem(new MenuItem(pressure));
+	menuPress.addItem(new MenuItem(runningPress));
+	menuCO.addItem(new MenuItem(co));
+	menuCO.addItem(new MenuItem(runningCO));
 
-
-	menu.addItem(new MenuItem(autoMode));
-
-	menuAuto.addItem(new MenuItem(temperature));
-	menuAuto.addItem(new MenuItem(pressure));
-	menuAuto.addItem(new MenuItem(humidity));
-	menuAuto.addItem(new MenuItem(brightness));
-
-	menuTime.addItem(new MenuItem(timeModeEx1));
-	menuTime.addItem(new MenuItem(timeModeEx2));
-
-	mainMenu.addItem(new ComplexItem(menu));
-	mainMenu.addItem(new ComplexItem(menuAuto));
-	mainMenu.addItem(new ComplexItem(menuTime));
+	mainMenu.addItem(new ComplexItem(menuTemp));
+	mainMenu.addItem(new ComplexItem(menuPress));
+	mainMenu.addItem(new ComplexItem(menuCO));
 
 	TemperatureSensor temperatureSensor;
 	printScreen(lcd, "Welcome!");
 	while(1) {
 		Chip_ADC_StartSequencer(LPC_ADC0, ADC_SEQA_IDX);
-		temperature.setValue(temperatureSensor.toValue());
+		runningTemp.setValue(temperature.getValue());
+		runningTemp.displayValue(temperatureSensor.toValue());
+		//display current Temp
 		k = isPressed();
 		if(k >0) {
 			preventOverlap++;
