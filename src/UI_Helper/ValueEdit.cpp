@@ -29,7 +29,7 @@ void ValueEdit::increment() {
 	if (edit <=upperLimit-0.1 ){
 		edit=edit + 0.1;
 	} else if(99.9<= edit && edit <=99.91){
-		edit = 0; // because 0.1 is actually 0.998...
+		edit = 100;
 	}
 }
 
