@@ -14,7 +14,7 @@
 
 using namespace std;
 
-RunningMode::RunningMode(LiquidCrystal& lcd_,int value): lcd(lcd_), value(value) {
+RunningMode::RunningMode(LiquidCrystal& lcd_,float value): lcd(lcd_), value(value) {
 	focus = false;
 }
 
@@ -38,6 +38,7 @@ void RunningMode::setFocus(bool focus) {
 }
 
 void RunningMode::display() {
+	/*display the layout only value, use in the state machine*/
 	lcd.clear();
 	lcd.setCursor(0,0);
 	if(focus) {
@@ -47,33 +48,41 @@ void RunningMode::display() {
 	}
 	stringstream lcd_display;
 	lcd.setCursor(0,1);
-	lcd_display << value;
+	lcd_display << std::fixed <<std::setprecision(1)<<value;;
 	string str = lcd_display.str();
 	lcd.Print(str);
 
 }
 
-void RunningMode::setValue(int value) {
+void RunningMode::setValue(float value) {
+	/*display set value in main loop*/
 	this->value = value;
 	if(focus){
 		//handle the code for RPM here.
 		stringstream lcd_display;
-		lcd.setCursor(10,1);
-		lcd_display << value;
+		if(value<=9){
+			lcd.setCursor(13,1);
+		} else if(value >9 && value <=99){
+			lcd.setCursor(12,1);
+		} else if(value>99){
+			lcd.setCursor(11,1);
+		}
+		lcd_display << std::fixed <<std::setprecision(1)<<value;
 		string str = lcd_display.str();
 		lcd.Print(str);
 	}
 }
 
-void RunningMode::displayValue(int value) {
+void RunningMode::displayValue(float value) {
+	/*display current value in main loop*/
 	if(focus){
 		if(this->value!=value){
-			if(value==9 ||value ==99 ||value ==1){
+			if((9.8<= edit && edit <=10) || (99.8<= edit && edit <=100) ||(0.8<= edit && edit <=1)){
 				lcd.clear();
 			}
 			stringstream lcd_display;
 			lcd.setCursor(0,1);
-			lcd_display << value;
+			lcd_display << std::fixed <<std::setprecision(1)<<value;
 			string str = lcd_display.str();
 			lcd.Print(str);
 		}

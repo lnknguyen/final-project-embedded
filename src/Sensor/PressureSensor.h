@@ -17,7 +17,7 @@ public:
 	PressureSensor(I2C &i2c);
 	virtual ~PressureSensor() {};
 	float toHz();
-	int toValue();
+	float toValue();
 private:
 	uint8_t pressureData[3];
 	uint8_t readPressureCmd ;

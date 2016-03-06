@@ -9,11 +9,11 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-
+#include <math.h>
 #include "ValueEdit.h"
 using namespace std;
 
-ValueEdit::ValueEdit(LiquidCrystal& lcd_, std::string editTitle, int value): lcd(lcd_), title(editTitle),value(value) {
+ValueEdit::ValueEdit(LiquidCrystal& lcd_, std::string editTitle, float value): lcd(lcd_), title(editTitle),value(value) {
 	if (value <=upperLimit && value >= lowerLimit){
 		setValue(value);
 	} else{
@@ -26,14 +26,18 @@ ValueEdit::~ValueEdit() {
 }
 
 void ValueEdit::increment() {
-	if (edit <=upperLimit-1){
-		edit++;
+	if (edit <=upperLimit-0.1 ){
+		edit=edit + 0.1;
+	} else if(99.9<= edit && edit <=99.91){
+		edit = 0; // because 0.1 is actually 0.998...
 	}
 }
 
 void ValueEdit::decrement() {
-	if (edit >=lowerLimit+1){
-		edit--;
+	if (edit >=lowerLimit+0.1){
+		edit=edit - 0.1;
+	} else if(0.09<= edit && edit <=0.1){
+		edit = 0; // because 0.1 is actually 0.998...
 	}
 }
 
@@ -58,16 +62,16 @@ void ValueEdit::display() {
 	//lcd.clear();
 	stringstream lcd_display;
 	if(focus) {
-		if(edit==9 ||edit ==99 ||edit ==1){
+		if((9.8<= edit && edit <=10) || (99.8<= edit && edit <=100) ||(0.8<= edit && edit <=1)){
 			lcd.clear();
 		}
-		lcd.setCursor(6,1);
-		lcd_display << "["<< edit <<"]" ;
+		lcd.setCursor(5,1);
+		lcd_display << "["<< std::fixed <<std::setprecision(1)<<edit <<"]" ;
 	}
 	else {
 		lcd.clear();
-		lcd.setCursor(7,1);
-		lcd_display <<edit ;
+		lcd.setCursor(6,1);
+		lcd_display << std::fixed <<std::setprecision(1)<<edit ;
 	}
 	string str = lcd_display.str();
 	lcd.Print(str);
@@ -83,10 +87,10 @@ void ValueEdit::save() {
 }
 
 
-int ValueEdit::getValue() {
+float ValueEdit::getValue() {
 	return value;
 }
-void ValueEdit::setValue(int value) {
+void ValueEdit::setValue(float value) {
 	edit = value;
 	save();
 }

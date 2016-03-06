@@ -15,8 +15,8 @@
 float temperatureArray[] = {0,10,20,25,30,40,50,60,70,80,90,100};
 float resistorMin[] = {1603,1748,1901,1980,2057,2217,2383,2557,2737,2924,3118,3318};
 float resistorMax[] = {1630,1772,1922,2000,2080,2245,2417,2597,2785,2980,3182,3392};
-float tempMin = -100;
-float tempMax = 200;
+float tempMin = 0;
+float tempMax = 100;
 int count_temp_sections = sizeof(temperatureArray)/sizeof(float);
 float resistor = 1500;
 
@@ -29,7 +29,7 @@ float TemperatureSensor::toHz(){
 	return 0;
 }
 
-int TemperatureSensor::toValue(){
+float TemperatureSensor::toValue(){
 
 	a0 = Chip_ADC_GetDataReg(LPC_ADC0, 0);
 	d0 = ADC_DR_RESULT(a0);
@@ -52,8 +52,7 @@ int TemperatureSensor::toValue(){
 	if (resistance > resistorMax[count_temp_sections-1]){
 		temp = tempMax;
 	}
-	printf("min = %.2f, max = %.2f, resistance = %.2f, temp = %.2f \n",  tempMin, tempMax,resistance, temp);
+	//printf("min = %.2f, max = %.2f, resistance = %.2f, temp = %.2f \n",  tempMin, tempMax,resistance, temp);
 	//Sleep(100);
-	return (int)temp;
-	//printf("temp = %.2f \n", temp);
+	return temp;
 }
