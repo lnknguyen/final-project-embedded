@@ -8,10 +8,12 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include src/UI_Helper/subdir.mk
 -include src/Sensor/subdir.mk
 -include src/LCD/subdir.mk
--include src/Interrupt_Handler/subdir.mk
+-include src/InterruptHandler/subdir.mk
+-include src/GUI/subdir.mk
+-include src/Controller/subdir.mk
+-include src/ABBDrive/subdir.mk
 -include src/subdir.mk
 -include subdir.mk
 -include objects.mk
@@ -42,25 +44,25 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: final_project.axf
+all: project.axf
 
 # Tool invocations
-final_project.axf: $(OBJS) $(USER_OBJS)
+project.axf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU C++ Linker'
-	arm-none-eabi-c++ -nostdlib -L"/Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_board_nxp_lpcxpresso_1549/Debug" -L"/Users/nguyenluong/Documents/LPCXpresso_8.0.0/workspace/lpc_chip_15xx/Debug" -Xlinker -Map="final_project.map" -Xlinker --gc-sections -mcpu=cortex-m3 -mthumb -T "final_project_Debug.ld" -o "final_project.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-c++ -nostdlib -L"/Users/vinhxu/Desktop/Workspace/lpc_board_nxp_lpcxpresso_1549/Debug" -L"/Users/vinhxu/Desktop/Workspace/lpc_chip_15xx/Debug" -Xlinker -Map="project.map" -Xlinker --gc-sections -mcpu=cortex-m3 -mthumb -T "project_Debug.ld" -o "project.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) final_project.axf
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) project.axf
 	-@echo ' '
 
 post-build:
 	-@echo 'Performing post-build steps'
-	-arm-none-eabi-size "final_project.axf"; # arm-none-eabi-objcopy -v -O binary "final_project.axf" "final_project.bin" ; # checksum -p LPC1549 -d "final_project.bin";
+	-arm-none-eabi-size "project.axf"; # arm-none-eabi-objcopy -v -O binary "project.axf" "project.bin" ; # checksum -p LPC1549 -d "project.bin";
 	-@echo ' '
 
 .PHONY: all clean dependents

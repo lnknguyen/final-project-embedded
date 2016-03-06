@@ -24,9 +24,11 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-src/Interrupt_Handler \
+src/ABBDrive \
+src/Controller \
+src/GUI \
+src/InterruptHandler \
 src/LCD \
 src/Sensor \
-src/UI_Helper \
 src \
 
