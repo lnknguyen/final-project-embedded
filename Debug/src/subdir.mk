@@ -10,6 +10,7 @@ CPP_SRCS += \
 
 C_SRCS += \
 ../src/crp.c \
+../src/retarget_itm.c \
 ../src/sysinit.c 
 
 OBJS += \
@@ -17,6 +18,7 @@ OBJS += \
 ./src/cr_startup_lpc15xx.o \
 ./src/crp.o \
 ./src/final_project.o \
+./src/retarget_itm.o \
 ./src/sysinit.o 
 
 CPP_DEPS += \
@@ -26,6 +28,7 @@ CPP_DEPS += \
 
 C_DEPS += \
 ./src/crp.d \
+./src/retarget_itm.d \
 ./src/sysinit.d 
 
 

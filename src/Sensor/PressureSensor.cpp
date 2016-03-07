@@ -9,6 +9,7 @@
 
 #define SCALE_FACTOR 240.0
 #define SENSOR_ADDR 0x40
+
 PressureSensor::PressureSensor(I2C& i2c_): i2c(i2c_){
 	readPressureCmd = 0xF1;
 	pressure = 0;
@@ -29,6 +30,3 @@ float PressureSensor::toValue(){
 	//Sleep(1000);
 	return pressure/SCALE_FACTOR;
 }
-
-
-

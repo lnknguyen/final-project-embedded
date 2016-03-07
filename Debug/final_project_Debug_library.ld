@@ -5,7 +5,7 @@
  * Generated linker script file for LPC1549
  * Created from library.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.23
- * LPCXpresso v8.0.0 [Build 526] [2015-11-23]  on Mar 6, 2016 9:59:25 PM
+ * LPCXpresso v8.0.0 [Build 526] [2015-11-23]  on Mar 7, 2016 1:21:11 PM
  */
 
 GROUP (
@@ -13,7 +13,7 @@ GROUP (
   libc.a
   libstdc++.a
   libm.a
-  libcr_newlib_semihost.a
+  libcr_newlib_nohost.a
   crti.o
   crtn.o
   crtbegin.o

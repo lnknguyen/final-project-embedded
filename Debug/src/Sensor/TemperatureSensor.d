@@ -1,7 +1,7 @@
 src/Sensor/TemperatureSensor.o src/Sensor/TemperatureSensor.d: \
  ../src/Sensor/TemperatureSensor.cpp ../src/Sensor/TemperatureSensor.h \
  ../src/Sensor/SensorInterface.h \
- ../src/Sensor/../Interrupt_Handler/systick.h \
+ ../src/Sensor/../InterruptHandler/systick.h \
  C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_chip_15xx\inc/chip.h \
  C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_chip_15xx\inc/lpc_types.h \
  C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_chip_15xx\inc/sys_config.h \
@@ -54,7 +54,7 @@ src/Sensor/TemperatureSensor.o src/Sensor/TemperatureSensor.d: \
 
 ../src/Sensor/SensorInterface.h:
 
-../src/Sensor/../Interrupt_Handler/systick.h:
+../src/Sensor/../InterruptHandler/systick.h:
 
 C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_chip_15xx\inc/chip.h:
 

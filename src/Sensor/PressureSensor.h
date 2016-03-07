@@ -9,9 +9,10 @@
 #define SENSOR_PRESSURESENSOR_H_
 
 #include <stdint.h>
+
+#include "../InterruptHandler/systick.h"
 #include "SensorInterface.h"
 #include "I2C.h"
-#include "../Interrupt_Handler/systick.h"
 class PressureSensor : public SensorInterface{
 public:
 	PressureSensor(I2C &i2c);
@@ -21,7 +22,7 @@ public:
 private:
 	uint8_t pressureData[3];
 	uint8_t readPressureCmd ;
-	int16_t pressure;
+	float pressure;
 	I2C& i2c;
 };
 

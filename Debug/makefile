@@ -8,10 +8,12 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include src/UI_Helper/subdir.mk
 -include src/Sensor/subdir.mk
 -include src/LCD/subdir.mk
--include src/Interrupt_Handler/subdir.mk
+-include src/InterruptHandler/subdir.mk
+-include src/GUI/subdir.mk
+-include src/Controller/subdir.mk
+-include src/ABBDrive/subdir.mk
 -include src/subdir.mk
 -include subdir.mk
 -include objects.mk

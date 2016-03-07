@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 #include "SensorInterface.h"
-#include "../Interrupt_Handler/systick.h"
+#include "../InterruptHandler/systick.h"
 
 class TemperatureSensor : public SensorInterface{
 public:
@@ -19,8 +19,8 @@ public:
 	float toValue();
 	float toHz();
 private:
-	int16_t temperature;
+	float temperature;
 	uint32_t a0,d0;
 };
 
-#endif /* SENSOR_PRESSURESENSOR_H_ */
+#endif /* TEMPERATURESENSOR_H_ */

@@ -18,29 +18,34 @@
 
 #include "LCD/LiquidCrystal.h"
 #include "LCD/lcd_port.h"
-#include "UI_Helper/MenuItem.h"
-#include "UI_Helper/ValueEdit.h"
-#include "UI_Helper/RunningMode.h"
-#include "UI_Helper/SimpleMenu.h"
-#include "UI_Helper/BarGraph.h"
-#include "UI_Helper/ComplexMenu.h"
-#include "UI_Helper/ComplexItem.h"
-#include "Interrupt_Handler/systick.h"
+#include "GUI/MenuItem.h"
+#include "GUI/ValueEdit.h"
+#include "GUI/RunningMode.h"
+#include "GUI/SimpleMenu.h"
+#include "GUI/BarGraph.h"
+#include "GUI/ComplexMenu.h"
+#include "GUI/ComplexItem.h"
+#include "InterruptHandler/systick.h"
 #include "Sensor/TemperatureSensor.h"
+#include "Sensor/PressureSensor.h"
+#include "Sensor/CO2Sensor.h"
+#include "ABBDrive/ABBDrive.h"
+#include "Controller/Controller.h"
 
 #include <cr_section_macros.h>
 #include <iostream>
 #include <sstream>
 #include <iomanip>
 #include <string>
+#include <cstdio>
 
 
 #define TICKRATE_HZ (100)
 #define MAXBUTTONS 4
 volatile static int preventOverlap = 0;
 volatile static int menuLayout = 0;
-static const uint8_t buttonport[] = {1,0,0,0};
-static const uint8_t buttonpins[] = {9,29,9,10};
+static const uint8_t buttonport[] = {0,0,1,0};
+static const uint8_t buttonpins[] = {10,16,3,0};
 
 void InitButton(void)
 {
@@ -52,16 +57,16 @@ void InitButton(void)
 }
 
 int isPressed(void){
-	if(Chip_GPIO_GetPinState(LPC_GPIO, 1, 9)==1){
+	if(Chip_GPIO_GetPinState(LPC_GPIO, buttonport[0], buttonpins[0])==1){
 		return 1;
 	}
-	else if(Chip_GPIO_GetPinState(LPC_GPIO, 0, 29)==1){
+	else if(Chip_GPIO_GetPinState(LPC_GPIO, buttonport[1], buttonpins[1])==1){
 		return 2;
 	}
-	else if (Chip_GPIO_GetPinState(LPC_GPIO, 0, 9)==1){
+	else if (Chip_GPIO_GetPinState(LPC_GPIO, buttonport[2], buttonpins[2])==1){
 		return 3;
 	}
-	else if ( Chip_GPIO_GetPinState(LPC_GPIO, 0, 10)==1){
+	else if ( Chip_GPIO_GetPinState(LPC_GPIO, buttonport[3], buttonpins[3])==1){
 		return 4;
 	}
 	else {
@@ -119,6 +124,7 @@ int main(void) {
 			Chip_RIT_Enable(LPC_RITIMER);
 			NVIC_EnableIRQ(RITIMER_IRQn);
 		#endif
+
 	#endif
 
 	Chip_ADC_Init(LPC_ADC0, 0);
@@ -140,7 +146,7 @@ int main(void) {
 	Chip_Clock_SetSysTickClockDiv(1);
 	sysTickRate = Chip_Clock_GetSysTickClockRate();
 	SysTick_Config(sysTickRate / TICKRATE_HZ);
-
+	I2C i2c(0, 100000);
 
 	LiquidCrystal lcd(8, 9, 10, 11, 12, 13);
 	lcd.begin(16, 2);
@@ -149,40 +155,68 @@ int main(void) {
 
 	ComplexMenu mainMenu;
 
-	SimpleMenu menuTemp(lcd, "Temperature");
-	SimpleMenu menuPress(lcd, "Pressure");
-	SimpleMenu menuCO(lcd, "CO2");
+	SimpleMenu menuTemperature(lcd, "Temperature");
+	SimpleMenu menuPressure(lcd, "Pressure");
+	SimpleMenu menuCO2(lcd, "CO2");
 
-	RunningMode runningTemp(lcd,21);
-	RunningMode runningPress(lcd,80);
-	RunningMode runningCO(lcd,40);
+	RunningMode runningTemperature(lcd,21);
+	RunningMode runningPressure(lcd,80);
+	RunningMode runningCO2(lcd,40);
 
-	ValueEdit temperature(lcd, std::string("Temperature"), 21);
-	ValueEdit pressure(lcd, std::string("Pressure"),80);
-	ValueEdit co(lcd, std::string("CO2"),40);
+	ValueEdit temperatureDesired(lcd, std::string("Temperature"), 21);
+	ValueEdit pressureDesired(lcd, std::string("Pressure"),80);
+	ValueEdit co2Desired(lcd, std::string("CO2"),40);
 
-	menuTemp.addItem(new MenuItem(temperature));
-	menuTemp.addItem(new MenuItem(runningTemp));
-	menuPress.addItem(new MenuItem(pressure));
-	menuPress.addItem(new MenuItem(runningPress));
-	menuCO.addItem(new MenuItem(co));
-	menuCO.addItem(new MenuItem(runningCO));
+	menuTemperature.addItem(new MenuItem(temperatureDesired));
+	menuTemperature.addItem(new MenuItem(runningTemperature));
+	menuPressure.addItem(new MenuItem(pressureDesired));
+	menuPressure.addItem(new MenuItem(runningPressure));
+	menuCO2.addItem(new MenuItem(co2Desired));
+	menuCO2.addItem(new MenuItem(runningCO2));
 
-	mainMenu.addItem(new ComplexItem(menuTemp));
-	mainMenu.addItem(new ComplexItem(menuPress));
-	mainMenu.addItem(new ComplexItem(menuCO));
+	mainMenu.addItem(new ComplexItem(menuTemperature));
+	mainMenu.addItem(new ComplexItem(menuPressure));
+	mainMenu.addItem(new ComplexItem(menuCO2));
 
 	TemperatureSensor temperatureSensor;
+	PressureSensor pressureSensor(i2c);
+	CO2Sensor co2Sensor;
+
+	/*
+	ABBDrive abbDrive;
+	abbDrive.init();
+	int freq;
+	*/
+	Controller controller(2,1);
+
+	printf("Start\n");
+	int temperatureDifference;
+
 	printScreen(lcd, "Welcome!");
 	while(1) {
+		/*abbDrive.setFrequency(12.5);
+		freq = abbDrive.getFrequency();
+		printf("Freq: %d\n", freq);
+		printf("CO2: %d\n", co2.getValue());*/
+
 		Chip_ADC_StartSequencer(LPC_ADC0, ADC_SEQA_IDX);
-		runningTemp.setValue(temperature.getValue());
-		runningTemp.displayValue(temperatureSensor.toValue());
-		//display current Temp
+
+		runningTemperature.setDesiredValue(temperatureDesired.getValue());
+		runningTemperature.displaySensorValue(temperatureSensor.toValue());
+		temperatureDifference = temperatureDesired.getValue()-temperatureSensor.toValue();
+		runningTemperature.displayDifferenceValue(temperatureDifference);
+		runningTemperature.displayIncrementValue(controller.increment(temperatureDifference));
+
+		runningPressure.setDesiredValue(pressureDesired.getValue());
+		runningPressure.displaySensorValue(pressureSensor.toValue());
+
+		runningCO2.setDesiredValue(co2Desired.getValue());
+		runningCO2.displaySensorValue(co2Sensor.toValue());
+
 		k = isPressed();
 		if(k >0) {
 			preventOverlap++;
-			if(preventOverlap==1 || preventOverlap >5000){
+			if(preventOverlap==1 || preventOverlap >7){
 				if(k==1){
 					mainMenu.baseEvent(ComplexItem::up);
 				}
@@ -197,6 +231,7 @@ int main(void) {
 				}
 			}
 		}
+		Sleep(10);
 	}
 	return 0 ;
 }

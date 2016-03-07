@@ -49,16 +49,21 @@ src/final_project.o src/final_project.d: ../src/final_project.cpp \
  C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_chip_15xx\inc/i2cs_15xx.h \
  C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_board_nxp_lpcxpresso_1549\inc/board_api.h \
  C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_chip_15xx\inc/lpc_types.h \
- ../src/LCD/LiquidCrystal.h ../src/LCD/lcd_port.h \
- ../src/UI_Helper/MenuItem.h ../src/UI_Helper/../Protocol/PropertyEdit.h \
- ../src/UI_Helper/ValueEdit.h ../src/UI_Helper/../LCD/LiquidCrystal.h \
- ../src/UI_Helper/RunningMode.h ../src/UI_Helper/SimpleMenu.h \
- ../src/UI_Helper/MenuItem.h ../src/UI_Helper/BarGraph.h \
- ../src/UI_Helper/ComplexMenu.h ../src/UI_Helper/ComplexItem.h \
- ../src/UI_Helper/../UI_Helper/SimpleMenu.h \
- ../src/UI_Helper/ComplexItem.h ../src/Interrupt_Handler/systick.h \
+ ../src/LCD/LiquidCrystal.h ../src/LCD/lcd_port.h ../src/GUI/MenuItem.h \
+ ../src/GUI/../Protocol/PropertyEdit.h ../src/GUI/ValueEdit.h \
+ ../src/GUI/../LCD/LiquidCrystal.h ../src/GUI/RunningMode.h \
+ ../src/GUI/SimpleMenu.h ../src/GUI/../GUI/MenuItem.h \
+ ../src/GUI/BarGraph.h ../src/GUI/ComplexMenu.h \
+ ../src/GUI/../GUI/ComplexItem.h ../src/GUI/../GUI/../GUI/SimpleMenu.h \
+ ../src/GUI/ComplexItem.h ../src/InterruptHandler/systick.h \
  ../src/Sensor/TemperatureSensor.h ../src/Sensor/SensorInterface.h \
- ../src/Sensor/../Interrupt_Handler/systick.h
+ ../src/Sensor/../InterruptHandler/systick.h \
+ ../src/Sensor/PressureSensor.h ../src/Sensor/I2C.h \
+ ../src/Sensor/CO2Sensor.h ../src/ABBDrive/ABBDrive.h \
+ ../src/ABBDrive/ModbusMaster.h ../src/ABBDrive/word.h \
+ ../src/ABBDrive/../ABBDrive/SerialPort.h \
+ ../src/ABBDrive/../InterruptHandler/systick.h \
+ ../src/Controller/Controller.h
 
 C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_board_nxp_lpcxpresso_1549\inc/board.h:
 
@@ -164,34 +169,52 @@ C:\Users\Phan\Documents\LPCXpresso_8.0.0_526\workspace\lpc_chip_15xx\inc/lpc_typ
 
 ../src/LCD/lcd_port.h:
 
-../src/UI_Helper/MenuItem.h:
+../src/GUI/MenuItem.h:
 
-../src/UI_Helper/../Protocol/PropertyEdit.h:
+../src/GUI/../Protocol/PropertyEdit.h:
 
-../src/UI_Helper/ValueEdit.h:
+../src/GUI/ValueEdit.h:
 
-../src/UI_Helper/../LCD/LiquidCrystal.h:
+../src/GUI/../LCD/LiquidCrystal.h:
 
-../src/UI_Helper/RunningMode.h:
+../src/GUI/RunningMode.h:
 
-../src/UI_Helper/SimpleMenu.h:
+../src/GUI/SimpleMenu.h:
 
-../src/UI_Helper/MenuItem.h:
+../src/GUI/../GUI/MenuItem.h:
 
-../src/UI_Helper/BarGraph.h:
+../src/GUI/BarGraph.h:
 
-../src/UI_Helper/ComplexMenu.h:
+../src/GUI/ComplexMenu.h:
 
-../src/UI_Helper/ComplexItem.h:
+../src/GUI/../GUI/ComplexItem.h:
 
-../src/UI_Helper/../UI_Helper/SimpleMenu.h:
+../src/GUI/../GUI/../GUI/SimpleMenu.h:
 
-../src/UI_Helper/ComplexItem.h:
+../src/GUI/ComplexItem.h:
 
-../src/Interrupt_Handler/systick.h:
+../src/InterruptHandler/systick.h:
 
 ../src/Sensor/TemperatureSensor.h:
 
 ../src/Sensor/SensorInterface.h:
 
-../src/Sensor/../Interrupt_Handler/systick.h:
+../src/Sensor/../InterruptHandler/systick.h:
+
+../src/Sensor/PressureSensor.h:
+
+../src/Sensor/I2C.h:
+
+../src/Sensor/CO2Sensor.h:
+
+../src/ABBDrive/ABBDrive.h:
+
+../src/ABBDrive/ModbusMaster.h:
+
+../src/ABBDrive/word.h:
+
+../src/ABBDrive/../ABBDrive/SerialPort.h:
+
+../src/ABBDrive/../InterruptHandler/systick.h:
+
+../src/Controller/Controller.h:

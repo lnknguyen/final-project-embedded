@@ -4,16 +4,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../src/Sensor/CO2Sensor.cpp \
 ../src/Sensor/I2C.cpp \
 ../src/Sensor/PressureSensor.cpp \
 ../src/Sensor/TemperatureSensor.cpp 
 
 OBJS += \
+./src/Sensor/CO2Sensor.o \
 ./src/Sensor/I2C.o \
 ./src/Sensor/PressureSensor.o \
 ./src/Sensor/TemperatureSensor.o 
 
 CPP_DEPS += \
+./src/Sensor/CO2Sensor.d \
 ./src/Sensor/I2C.d \
 ./src/Sensor/PressureSensor.d \
 ./src/Sensor/TemperatureSensor.d 
