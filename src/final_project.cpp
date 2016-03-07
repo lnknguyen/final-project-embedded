@@ -201,17 +201,14 @@ int main(void) {
 
 		Chip_ADC_StartSequencer(LPC_ADC0, ADC_SEQA_IDX);
 
-		runningTemperature.setDesiredValue(temperatureDesired.getValue());
-		runningTemperature.displaySensorValue(temperatureSensor.toValue());
 		temperatureDifference = temperatureDesired.getValue()-temperatureSensor.toValue();
-		runningTemperature.displayDifferenceValue(temperatureDifference);
-		runningTemperature.displayIncrementValue(controller.increment(temperatureDifference));
-
+		runningTemperature.setDesiredValue(temperatureDesired.getValue());
+		runningTemperature.displaySensorValue(temperatureSensor.toValue(),controller.increment(temperatureDifference),temperatureDifference);
 		runningPressure.setDesiredValue(pressureDesired.getValue());
-		runningPressure.displaySensorValue(pressureSensor.toValue());
+		//runningPressure.displaySensorValue(pressureSensor.toValue());
 
 		runningCO2.setDesiredValue(co2Desired.getValue());
-		runningCO2.displaySensorValue(co2Sensor.toValue());
+		//runningCO2.displaySensorValue(co2Sensor.toValue());
 
 		k = isPressed();
 		if(k >0) {

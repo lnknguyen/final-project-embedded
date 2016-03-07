@@ -72,49 +72,14 @@ void RunningMode::setDesiredValue(float value) {
 		}
 }
 
-void RunningMode::displaySensorValue(float value) {
+void RunningMode::displaySensorValue(float value,int value1,int value2) {
 	/*display current value in main loop*/
 	if(focus){
-		if(this->value!=value){
-
-				lcd.clear();
-
 			stringstream lcd_display;
 			lcd.setCursor(0,1);
-			lcd_display << std::fixed <<std::setprecision(1)<<value;
+			lcd_display<<std::fixed <<std::setprecision(1)<<value << " " << value1 << " " <<value2;
 			string str = lcd_display.str();
 			lcd.Print(str);
-		}
-	}
-}
-
-void RunningMode::displayDifferenceValue(int value) {
-	if(focus){
-		if(this->value!=value){
-
-			lcd.clear();
-
-			stringstream lcd_display;
-			lcd.setCursor(5,1);
-			lcd_display << value;
-			string str = lcd_display.str();
-			lcd.Print(str);
-		}
-	}
-}
-
-void RunningMode::displayIncrementValue(int value) {
-	if(focus){
-		if(this->value!=value){
-			if((9.8<= value && value <=10) || (99.8<= value && value <=100) ||(0.8<= value && value <=1)){
-				lcd.clear();
-			}
-			stringstream lcd_display;
-			lcd.setCursor(8,1);
-			lcd_display << value;
-			string str = lcd_display.str();
-			lcd.Print(str);
-		}
 	}
 }
 
