@@ -19,7 +19,7 @@ float PressureSensor::toHz(){
 	return 0;
 }
 
-int PressureSensor::toValue(){
+float PressureSensor::toValue(){
 	if (i2c.transaction(SENSOR_ADDR, &readPressureCmd, 1, pressureData, 3)) {
 		/* Output temperature. */
 		pressure = (pressureData[0] << 8) | pressureData[1];
@@ -30,6 +30,3 @@ int PressureSensor::toValue(){
 	//Sleep(1000);
 	return pressure/SCALE_FACTOR;
 }
-
-
-

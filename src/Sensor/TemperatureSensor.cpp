@@ -26,7 +26,7 @@ float TemperatureSensor::toHz(){
 	return 0;
 }
 
-int TemperatureSensor::toValue(){
+float TemperatureSensor::toValue(){
 
 	a0 = Chip_ADC_GetDataReg(LPC_ADC0, 0);
 	d0 = ADC_DR_RESULT(a0);
@@ -51,5 +51,5 @@ int TemperatureSensor::toValue(){
 	}
 	//printf("min = %.2f, max = %.2f, resistance = %.2f, temperature = %.2f \n",  temperatureMin, temperatureMax,resistance, temperature);
 	//Sleep(10);
-	return (int)temperature;
+	return temperature;
 }

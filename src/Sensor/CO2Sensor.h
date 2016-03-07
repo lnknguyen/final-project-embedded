@@ -17,7 +17,7 @@ class CO2Sensor : public SensorInterface{
 public:
 	CO2Sensor();
 	virtual ~CO2Sensor() {};
-	int toValue();
+	float toValue();
 	float toHz();
 private:
 	float CO2;

@@ -20,7 +20,7 @@ float CO2Sensor::toHz(){
 	return 0;
 }
 
-int CO2Sensor::toValue(){
+float CO2Sensor::toValue(){
 
 	a3 = Chip_ADC_GetDataReg(LPC_ADC0, 3);
 	d3 = ADC_DR_RESULT(a3);
@@ -31,5 +31,5 @@ int CO2Sensor::toValue(){
 		CO2 = -13.31942789 * d3 + 24782.03218;
 	}
 	//Sleep(10);
-	return (int)CO2;
+	return CO2;
 }
