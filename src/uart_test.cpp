@@ -74,20 +74,48 @@ uint32_t millis() {
  * @brief	Main UART program body
  * @return	Always returns 1
  */
-
 void printRegister(ModbusMaster& node, uint16_t reg) {
 	uint8_t result;
 	// slave: read 16-bit registers starting at reg to RX buffer
 	result = node.readHoldingRegisters(reg, 1);
+
+	// do something with data if read is successful
+	if (result == node.ku8MBSuccess)
+	{
+		printf("R%d=%04X\n", reg, node.getResponseBuffer(0));
+	}
+	else {
+		printf("R%d=???\n", reg);
+	}
 }
 
-void setFrequency(ModbusMaster& node, uint16_t freq) {
-
+bool setFrequency(ModbusMaster& node, uint16_t freq) {
+	uint8_t result;
+	int ctr;
+	bool atSetpoint;
+	const int delay = 500;
 
 	node.writeSingleRegister(1, freq); // set motor frequency
 
-	//printf("Set freq = %.1f\n", float(freq/400.00)); // for debugging
+	printf("Set freq = %d\n", freq/40); // for debugging
 
+	// wait until we reach set point or timeout occurs
+	ctr = 0;
+	atSetpoint = false;
+	do {
+		Sleep(delay);
+		// read status word
+		result = node.readHoldingRegisters(3, 1);
+		// check if we are at setpoint
+		if (result == node.ku8MBSuccess) {
+			if(node.getResponseBuffer(0) & 0x0100) atSetpoint = true;
+		}
+		ctr++;
+	} while(ctr < 20 && !atSetpoint);
+
+	printf("Elapsed: %d\n", ctr * delay); // for debugging
+
+	return atSetpoint;
 }
 
 
@@ -140,7 +168,7 @@ void abbModbusTest() {
 			printf("ctr=%d\n",j);
 		}
 
-		Sleep(5000);
+		Sleep(3000);
 		i++;
 		if(i >= 20) {
 			i=0;
@@ -148,52 +176,6 @@ void abbModbusTest() {
 		// frequency is scaled:
 		// 20000 = 50 Hz, 0 = 0 Hz, linear scale 400 units/Hz
 		setFrequency(node, fa[i]);
-	}
-}
-
-void fanControl(int scaledFreq) {
-	ModbusMaster node(2); // Create modbus object that connects to slave id 2
-
-	node.begin(9600); // set transmission rate - other parameters are set inside the object and can't be changed here
-
-	node.writeSingleRegister(0, 0x0406); // prepare for starting
-
-	Sleep(1000); // give converter some time to set up
-	// note: we should have a startup state machine that check converter status and acts per current status
-	//       but we take the easy way out and just wait a while and hope that everything goes well
-
-	node.writeSingleRegister(0, 0x047F); // set drive to start mode
-
-	Sleep(1000); // give converter some time to set up
-	// note: we should have a startup state machine that check converter status and acts per current status
-	//       but we take the easy way out and just wait a while and hope that everything goes well
-
-
-	// frequency is scaled:
-	// 20000 = 50 Hz, 0 = 0 Hz, linear scale 400 units/Hz
-	setFrequency(node, scaledFreq);
-	Sleep(1000);
-	node.writeSingleRegister(0, 1151);
-	while (1) {
-
-		//node.readHoldingRegisters(0, 6);
-		/*
-		printf("CW: %d\n",  node.getResponseBuffer(0));
-		printf("R1: %d\n",  node.getResponseBuffer(1));
-		printf("SW: %d\n",  node.getResponseBuffer(3));
-		printf("F: %d\n",  node.getResponseBuffer(4));
-		printf("I: %d\n\n",  node.getResponseBuffer(5));
-		*/
-		//printf("F: %.1f, I: %.1f \n",  float(node.getResponseBuffer(4)/10.0), float(node.getResponseBuffer(5)/10.0));
-		//Sleep(1000);
-		scaledFreq+=200;
-		if(scaledFreq>5000) scaledFreq = 5000;
-
-		setFrequency(node, scaledFreq);
-		Sleep(3000);
-		node.writeSingleRegister(0, 1151);
-		//Sleep(1000);
-		//node.writeSingleRegister(0, 1151);
 	}
 }
 
@@ -223,8 +205,7 @@ int main(void)
 	Board_LED_Set(1, true);
 	printf("Started\n");
 
-	//abbModbusTest();
-	fanControl(0);
+	abbModbusTest();
 	return 1;
 }
 
