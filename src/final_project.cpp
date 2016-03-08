@@ -191,6 +191,7 @@ int main(void) {
 
 	printf("Start\n");
 	int temperatureDifference;
+	int pressureDifference;
 
 	printScreen(lcd, "Welcome!");
 	while(1) {
@@ -202,9 +203,11 @@ int main(void) {
 		Chip_ADC_StartSequencer(LPC_ADC0, ADC_SEQA_IDX);
 
 		temperatureDifference = temperatureDesired.getValue()-temperatureSensor.toValue();
+		pressureDifference = pressureDesired.getValue()-pressureSensor.toValue();
 		runningTemperature.setDesiredValue(temperatureDesired.getValue());
 		runningTemperature.displaySensorValue(temperatureSensor.toValue(),controller.increment(temperatureDifference),temperatureDifference);
 		runningPressure.setDesiredValue(pressureDesired.getValue());
+		runningPressure.displaySensorValue(pressureSensor.toValue(),controller.increment(pressureDifference),pressureDifference);
 		//runningPressure.displaySensorValue(pressureSensor.toValue());
 
 		runningCO2.setDesiredValue(co2Desired.getValue());
