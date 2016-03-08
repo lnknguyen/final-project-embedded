@@ -22,9 +22,7 @@ public:
 	void cancel();
 	void setFocus(bool focus);
 	void display();
-	void displaySensorValue(float value);
-	void displayDifferenceValue(int value);
-	void displayIncrementValue(int value);
+	void displaySensorValue(float value, int value1, int value2);
 	void setDesiredValue(float value);
 	std::string name();
 private:
