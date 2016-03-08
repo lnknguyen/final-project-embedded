@@ -8,8 +8,8 @@
 
 #include "ABBDrive.h"
 
-ABBDrive::ABBDrive(){
-	ModbusMaster node(2);
+ABBDrive::ABBDrive(ModbusMaster _node){
+	node = _node;
 }
 
 void ABBDrive::init(){
@@ -30,19 +30,19 @@ int  ABBDrive::getSingleRegister(int startAddress){
 }
 
 void ABBDrive::setFrequency(float frequency){
-	int scaleFrequency = int((frequency/50.0)*20000);
+	int scaleFrequency = int(frequency*400);
 	node.writeSingleRegister(1, scaleFrequency);
 }
 
 int ABBDrive::getFrequency(){
-	return node.readHoldingRegisters(102, 1);
-	return node.getResponseBuffer(0);
+	node.readHoldingRegisters(102, 1);
+	return int(node.getResponseBuffer(0)/10);
 }
 
 void ABBDrive::setControlWord(int value){
 	node.writeSingleRegister(0, value);
 }
 int  ABBDrive::getStatusWord(){
-	return node.readHoldingRegisters(3, 1);
+	node.readHoldingRegisters(3, 1);
 	return node.getResponseBuffer(0);
 }
