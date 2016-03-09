@@ -123,6 +123,7 @@ int main(void) {
 			Chip_RIT_Init(LPC_RITIMER);
 			Chip_RIT_Enable(LPC_RITIMER);
 			NVIC_EnableIRQ(RITIMER_IRQn);
+			Chip_SWM_MovablePortPinAssign(SWM_SWO_O, 1, 2); // Needed for SWO printf
 		#endif
 
 	#endif
@@ -182,43 +183,44 @@ int main(void) {
 	PressureSensor pressureSensor(i2c);
 	CO2Sensor co2Sensor;
 
-	/*
-	ABBDrive abbDrive;
+	ModbusMaster node(2);
+	ABBDrive abbDrive(node);
 	abbDrive.init();
-	int freq;
-	*/
-	Controller controller(2,1);
+	int frequency=0;
+	int frequencyIncrement=0;
+
+	Controller controller(1,1);
 
 	printf("Start\n");
 	int temperatureDifference;
-<<<<<<< HEAD
-	int pressureDifference;
-=======
->>>>>>> c49298ebfbb3e76d20cbffb852cb531db09976c9
 
 	printScreen(lcd, "Welcome!");
 	while(1) {
-		/*abbDrive.setFrequency(12.5);
-		freq = abbDrive.getFrequency();
-		printf("Freq: %d\n", freq);
-		printf("CO2: %d\n", co2.getValue());*/
-
 		Chip_ADC_StartSequencer(LPC_ADC0, ADC_SEQA_IDX);
 
+		//////TEMPERATURE//////
+		//Calculate difference between Desired Temperature and Actual Sensor Temperature
 		temperatureDifference = temperatureDesired.getValue()-temperatureSensor.toValue();
-<<<<<<< HEAD
-		pressureDifference = pressureDesired.getValue()-pressureSensor.toValue();
+		//Controller output the ABB Drive frequency increment based on Temperature Difference
+		frequencyIncrement = controller.increment(temperatureDifference);
+		//Display Desired Temperature value in Running Mode
 		runningTemperature.setDesiredValue(temperatureDesired.getValue());
-		runningTemperature.displaySensorValue(temperatureSensor.toValue(),controller.increment(temperatureDifference),temperatureDifference);
+		//Display Actual Sensor Temperature, Temperature Difference, and Frequency Increment
+		runningTemperature.displaySensorValue(temperatureSensor.toValue() ,temperatureDifference, frequencyIncrement);
+
+		//Add Frequency Increment to Current Frequency;
+		frequency += frequencyIncrement;
+		//Set Current Frequency to ABB Drive
+		abbDrive.setFrequency(frequency);
+		//Read and print Frequency Feedback from ABB Drive
+		frequency = abbDrive.getFrequency();
+		printf("Current frequency: %d\n",frequency);
+
+		//////PRESSURE//////
 		runningPressure.setDesiredValue(pressureDesired.getValue());
-		runningPressure.displaySensorValue(pressureSensor.toValue(),controller.increment(pressureDifference),pressureDifference);
-=======
-		runningTemperature.setDesiredValue(temperatureDesired.getValue());
-		runningTemperature.displaySensorValue(temperatureSensor.toValue(),controller.increment(temperatureDifference),temperatureDifference);
-		runningPressure.setDesiredValue(pressureDesired.getValue());
->>>>>>> c49298ebfbb3e76d20cbffb852cb531db09976c9
 		//runningPressure.displaySensorValue(pressureSensor.toValue());
 
+		//////CO2//////
 		runningCO2.setDesiredValue(co2Desired.getValue());
 		//runningCO2.displaySensorValue(co2Sensor.toValue());
 
