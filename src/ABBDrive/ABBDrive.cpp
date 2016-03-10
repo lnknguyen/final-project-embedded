@@ -32,11 +32,7 @@ int  ABBDrive::getSingleRegister(int startAddress){
 }
 
 void ABBDrive::setFrequency(float frequency){
-
-
-
 	int scaleFrequency = int(frequency*400);
-
 	node.writeSingleRegister(1, scaleFrequency);
 }
 
