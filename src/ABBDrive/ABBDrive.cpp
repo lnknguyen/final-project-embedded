@@ -17,9 +17,9 @@ ABBDrive::ABBDrive(ModbusMaster _node){
 void ABBDrive::init(){
 	node.begin(9600);
 	node.writeSingleRegister(0, 0x0406);
-	Sleep(4000);
+	Sleep(1000);
 	node.writeSingleRegister(0, 0x047F);
-	Sleep(4000);
+	Sleep(1000);
 }
 
 void ABBDrive::setSingleRegister(int startAddress, int value){

@@ -187,11 +187,11 @@ int main(void) {
 	PressureSensor pressureSensor(i2c);
 	CO2Sensor co2Sensor;
 
-	/*
+
 	ABBDrive abbDrive;
 	abbDrive.init();
 	int freq;
-	 */
+
 	Controller controller(2,1);
 
 	printf("Start\n");
