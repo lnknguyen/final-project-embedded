@@ -12,11 +12,11 @@
 
 class ABBDrive {
 public:
-<<<<<<< HEAD
+
 	ABBDrive();
-=======
+
 	ABBDrive(ModbusMaster _node);
->>>>>>> c49298ebfbb3e76d20cbffb852cb531db09976c9
+
 	virtual ~ABBDrive() {};
 	void init();
 	void setSingleRegister(int startAddress, int value);
