@@ -6,14 +6,14 @@
 	Copyright   : $(copyright)
 	Description : main definition
 	===============================================================================
-*/
+ */
 
 #if defined (__USE_LPCOPEN)
-	#if defined(NO_BOARD_LIB)
-		#include "chip.h"
-		#else
-		#include "board.h"
-	#endif
+#if defined(NO_BOARD_LIB)
+#include "chip.h"
+#else
+#include "board.h"
+#endif
 #endif
 
 #include "LCD/LiquidCrystal.h"
@@ -76,12 +76,12 @@ int isPressed(void){
 }
 
 #ifdef __cplusplus
-    extern "C"
-    {
+extern "C"
+{
 #endif
-    	char *  itoa ( int value, char * str, int base );
+char *  itoa ( int value, char * str, int base );
 #ifdef __cplusplus
-    }
+}
 #endif
 
 void printScreen(LiquidCrystal &lcd,std::string a){
@@ -111,22 +111,7 @@ void ADC0A_IRQHandler(void)
 }
 }
 
-int main(void) {
-
-	#if defined (__USE_LPCOPEN)
-		// Read clock settings and update SystemCoreClock variable
-		SystemCoreClockUpdate();
-		#if !defined(NO_BOARD_LIB)
-			// Set up and initialize all required blocks and
-			// functions related to the board hardware
-			Board_Init();
-			Chip_RIT_Init(LPC_RITIMER);
-			Chip_RIT_Enable(LPC_RITIMER);
-			NVIC_EnableIRQ(RITIMER_IRQn);
-		#endif
-
-	#endif
-
+void init_ADC(void){
 	Chip_ADC_Init(LPC_ADC0, 0);
 	Chip_ADC_SetClockRate(LPC_ADC0, ADC_MAX_SAMPLE_RATE);
 	Chip_ADC_SetupSequencer(LPC_ADC0, ADC_SEQA_IDX, (ADC_SEQ_CTRL_CHANSEL(0) | ADC_SEQ_CTRL_CHANSEL(3) | ADC_SEQ_CTRL_MODE_EOS));
@@ -140,9 +125,29 @@ int main(void) {
 	Chip_ADC_EnableInt(LPC_ADC0, ADC_INTEN_SEQA_ENABLE);
 	NVIC_EnableIRQ(ADC0_SEQA_IRQn);
 	Chip_ADC_EnableSequencer(LPC_ADC0, ADC_SEQA_IDX);
+}
+
+int main(void) {
+
+#if defined (__USE_LPCOPEN)
+	// Read clock settings and update SystemCoreClock variable
+	SystemCoreClockUpdate();
+#if !defined(NO_BOARD_LIB)
+	// Set up and initialize all required blocks and
+	// functions related to the board hardware
+	Board_Init();
+	Chip_RIT_Init(LPC_RITIMER);
+	Chip_RIT_Enable(LPC_RITIMER);
+	NVIC_EnableIRQ(RITIMER_IRQn);
+#endif
+
+#endif
+
+
 
 	uint32_t sysTickRate;
 	InitButton();
+	init_ADC();
 	Chip_Clock_SetSysTickClockDiv(1);
 	sysTickRate = Chip_Clock_GetSysTickClockRate();
 	SysTick_Config(sysTickRate / TICKRATE_HZ);
@@ -186,7 +191,7 @@ int main(void) {
 	ABBDrive abbDrive;
 	abbDrive.init();
 	int freq;
-	*/
+	 */
 	Controller controller(2,1);
 
 	printf("Start\n");
