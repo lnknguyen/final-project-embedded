@@ -22,7 +22,7 @@ public:
 private:
 	uint8_t pressureData[3];
 	uint8_t readPressureCmd ;
-	float pressure;
+	int16_t pressure;
 	I2C& i2c;
 };
 
