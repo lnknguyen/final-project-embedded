@@ -7,7 +7,7 @@
 
 
 #include "ABBDrive.h"
-
+#include <math.h>
 
 ABBDrive::ABBDrive(ModbusMaster _node){
 	node = _node;
@@ -31,29 +31,21 @@ int  ABBDrive::getSingleRegister(int startAddress){
 	return node.getResponseBuffer(0);
 }
 
-void ABBDrive::setFrequency(float frequency){
-	int scaleFrequency = int(frequency*400);
+void ABBDrive::setFrequency(uint16_t frequency){
+	uint16_t scaleFrequency = frequency*400;
 	node.writeSingleRegister(1, scaleFrequency);
 }
 
-int ABBDrive::getFrequency(){
-
-	return node.readHoldingRegisters(102, 1);
-	return node.getResponseBuffer(0);
-
+uint16_t ABBDrive::getFrequency(){
 	node.readHoldingRegisters(102, 1);
-	return int(node.getResponseBuffer(0)/10);
-
+	uint16_t temp = node.getResponseBuffer(0);
+	return uint16_t(temp/10);
 }
 
 void ABBDrive::setControlWord(int value){
 	node.writeSingleRegister(0, value);
 }
 int  ABBDrive::getStatusWord(){
-
-	return node.readHoldingRegisters(3, 1);
-
 	node.readHoldingRegisters(3, 1);
-
 	return node.getResponseBuffer(0);
 }

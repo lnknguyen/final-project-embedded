@@ -186,8 +186,8 @@ int main(void) {
 	ModbusMaster node(2);
 	ABBDrive abbDrive(node);
 	abbDrive.init();
-	int frequency=0;
-	int frequencyIncrement=0;
+	uint16_t frequency=0;
+	int16_t frequencyIncrement=0;
 
 	Controller controller(1,1);
 

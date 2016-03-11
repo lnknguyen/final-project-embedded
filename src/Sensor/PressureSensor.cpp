@@ -28,5 +28,5 @@ float PressureSensor::toValue(){
 		assert(pressureData!=NULL);
 	}
 	//Sleep(1000);
-	return pressure/SCALE_FACTOR;
+	return (float)pressure/SCALE_FACTOR;
 }
