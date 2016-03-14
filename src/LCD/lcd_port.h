@@ -7,9 +7,7 @@
 
 #ifndef LCD_PORT_H_
 #define LCD_PORT_H_
-
-#ifndef INTERRUPT_HANDLER_H_
-#endif
+#include "../InterruptHandler/systick.h"
 
 /* Definitions needed by Arduino LiquidCrystal library
  *
@@ -18,13 +16,15 @@
 #define OUTPUT 1
 #define HIGH 1
 #define LOW 0
+#define TICKRATE_HZ (1000)
+#include <string>
+#include <cstring>
+using namespace std;
 
-volatile static bool RIT_flag;
 
 void digitalWrite(uint8_t pin, uint8_t val);
 void pinMode(uint8_t pin, uint8_t mode);
 void delayMicroseconds(int us);
-extern "C" void RIT_IRQHandler(void);
 
 
 #endif /* LCD_PORT_H_ */

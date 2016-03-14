@@ -32,3 +32,7 @@ void ComplexMenu::baseEvent(ComplexItem::menuBaseEvent e) {
 		items[position]->baseEvent(ComplexItem::show);
 	}
 }
+
+int ComplexMenu::getPosition(){
+	return position;
+}

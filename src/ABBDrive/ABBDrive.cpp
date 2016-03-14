@@ -31,15 +31,16 @@ int  ABBDrive::getSingleRegister(int startAddress){
 	return node.getResponseBuffer(0);
 }
 
-void ABBDrive::setFrequency(uint16_t frequency){
-	uint16_t scaleFrequency = frequency*400;
+void ABBDrive::setFrequency(float frequency){
+	int scaleFrequency = int(frequency*400);
 	node.writeSingleRegister(1, scaleFrequency);
 }
 
-uint16_t ABBDrive::getFrequency(){
+int ABBDrive::getFrequency(){
 	node.readHoldingRegisters(102, 1);
-	uint16_t temp = node.getResponseBuffer(0);
-	return uint16_t(temp/10);
+	Sleep(1);
+	int temp = node.getResponseBuffer(0);
+	return int(temp/10);
 }
 
 void ABBDrive::setControlWord(int value){

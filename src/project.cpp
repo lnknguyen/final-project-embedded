@@ -75,79 +75,72 @@ int isPressed(void){
 	}
 }
 
-#ifdef __cplusplus
-    extern "C"
-    {
+void systemInit(){
+#if defined (__USE_LPCOPEN)
+	// Read clock settings and update SystemCoreClock variable
+	SystemCoreClockUpdate();
+#if !defined(NO_BOARD_LIB)
+	// Set up and initialize all required blocks and
+	// functions related to the board hardware
+	Board_Init();
 #endif
-    	char *  itoa ( int value, char * str, int base );
-#ifdef __cplusplus
-    }
 #endif
+	/* Set up SWO to PIO1_2 */
+	Chip_SWM_MovablePortPinAssign(SWM_SWO_O, 1, 2);
 
-void printScreen(LiquidCrystal &lcd,std::string a){
-	int length = a.length();
-	length = (16-length)/2;
-	lcd.setCursor(length,0);
-	lcd.Print(a);
+	// TODO: insert code here
+	/* Setup ADC for 12-bit mode and normal power */
+	Chip_ADC_Init(LPC_ADC0, 0);
+
+	/* Setup for maximum ADC clock rate */
+	Chip_ADC_SetClockRate(LPC_ADC0, ADC_MAX_SAMPLE_RATE);
+
+	/* For ADC0, sequencer A will be used without threshold events.
+	   It will be triggered manually  */
+	Chip_ADC_SetupSequencer(LPC_ADC0, ADC_SEQA_IDX, (ADC_SEQ_CTRL_CHANSEL(0) | ADC_SEQ_CTRL_CHANSEL(3) | ADC_SEQ_CTRL_MODE_EOS));
+
+	/* For ADC0, select analog input pint for channel 0 on ADC0 */
+	Chip_ADC_SetADC0Input(LPC_ADC0, 0);
+
+	/* Use higher voltage trim for both ADC */
+	Chip_ADC_SetTrim(LPC_ADC0, ADC_TRIM_VRANGE_HIGHV);
+
+	/* Assign ADC0_0 to PIO1_8 via SWM (fixed pin) and ADC0_3 to PIO0_5 */
+	Chip_SWM_EnableFixedPin(SWM_FIXED_ADC0_0);
+	Chip_SWM_EnableFixedPin(SWM_FIXED_ADC0_3);
+
+	/* Need to do a calibration after initialization and trim */
+	Chip_ADC_StartCalibration(LPC_ADC0);
+	while (!(Chip_ADC_IsCalibrationDone(LPC_ADC0))) {}
+
+	/* Clear all pending interrupts and status flags */
+	Chip_ADC_ClearFlags(LPC_ADC0, Chip_ADC_GetFlags(LPC_ADC0));
+
+	/* Enable sequence A completion interrupts for ADC0 */
+	Chip_ADC_EnableInt(LPC_ADC0, ADC_INTEN_SEQA_ENABLE);
+
+	/* Enable related ADC NVIC interrupts */
+	NVIC_EnableIRQ(ADC0_SEQA_IRQn);
+
+	/* Enable sequencer */
+	Chip_ADC_EnableSequencer(LPC_ADC0, ADC_SEQA_IDX);
+
+	/* Configure systick timer */
+	SysTick_Config((Chip_Clock_GetSysTickClockRate() / TICKRATE_HZ));
+
+	/* Enable RIT*/
+    Chip_RIT_Init(LPC_RITIMER);
+    NVIC_EnableIRQ(RITIMER_IRQn);
+
+	InitButton();
 }
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-void ADC0A_IRQHandler(void)
-{
-	uint32_t pending;
-
-	/* Get pending interrupts */
-	pending = Chip_ADC_GetFlags(LPC_ADC0);
-
-	/* Sequence A completion interrupt */
-	if (pending & ADC_FLAGS_SEQA_INT_MASK) {
-		//adcdone = true;
-	}
-
-	/* Clear any pending interrupts */
-	Chip_ADC_ClearFlags(LPC_ADC0, pending);
-}
-}
 
 int main(void) {
 
-	#if defined (__USE_LPCOPEN)
-		// Read clock settings and update SystemCoreClock variable
-		SystemCoreClockUpdate();
-		#if !defined(NO_BOARD_LIB)
-			// Set up and initialize all required blocks and
-			// functions related to the board hardware
-			Board_Init();
-			Chip_RIT_Init(LPC_RITIMER);
-			Chip_RIT_Enable(LPC_RITIMER);
-			NVIC_EnableIRQ(RITIMER_IRQn);
-			Chip_SWM_MovablePortPinAssign(SWM_SWO_O, 1, 2); // Needed for SWO printf
-		#endif
+	systemInit();
 
-	#endif
 
-	Chip_ADC_Init(LPC_ADC0, 0);
-	Chip_ADC_SetClockRate(LPC_ADC0, ADC_MAX_SAMPLE_RATE);
-	Chip_ADC_SetupSequencer(LPC_ADC0, ADC_SEQA_IDX, (ADC_SEQ_CTRL_CHANSEL(0) | ADC_SEQ_CTRL_CHANSEL(3) | ADC_SEQ_CTRL_MODE_EOS));
-	Chip_ADC_SetADC0Input(LPC_ADC0, 0);
-	Chip_ADC_SetTrim(LPC_ADC0, ADC_TRIM_VRANGE_HIGHV);
-	Chip_SWM_EnableFixedPin(SWM_FIXED_ADC0_0);
-	Chip_SWM_EnableFixedPin(SWM_FIXED_ADC0_3);
-	Chip_ADC_StartCalibration(LPC_ADC0);
-	while (!(Chip_ADC_IsCalibrationDone(LPC_ADC0))) {}
-	Chip_ADC_ClearFlags(LPC_ADC0, Chip_ADC_GetFlags(LPC_ADC0));
-	Chip_ADC_EnableInt(LPC_ADC0, ADC_INTEN_SEQA_ENABLE);
-	NVIC_EnableIRQ(ADC0_SEQA_IRQn);
-	Chip_ADC_EnableSequencer(LPC_ADC0, ADC_SEQA_IDX);
-
-	uint32_t sysTickRate;
-	InitButton();
-	Chip_Clock_SetSysTickClockDiv(1);
-	sysTickRate = Chip_Clock_GetSysTickClockRate();
-	SysTick_Config(sysTickRate / TICKRATE_HZ);
-	I2C i2c(0, 100000);
 
 	LiquidCrystal lcd(8, 9, 10, 11, 12, 13);
 	lcd.begin(16, 2);
@@ -162,11 +155,11 @@ int main(void) {
 
 	RunningMode runningTemperature(lcd,21);
 	RunningMode runningPressure(lcd,80);
-	RunningMode runningCO2(lcd,40);
+	RunningMode runningCO2(lcd,400);
 
 	ValueEdit temperatureDesired(lcd, std::string("Temperature"), 21);
 	ValueEdit pressureDesired(lcd, std::string("Pressure"),80);
-	ValueEdit co2Desired(lcd, std::string("CO2"),40);
+	ValueEdit co2Desired(lcd, std::string("CO2"),400);
 
 	menuTemperature.addItem(new MenuItem(temperatureDesired));
 	menuTemperature.addItem(new MenuItem(runningTemperature));
@@ -179,36 +172,65 @@ int main(void) {
 	mainMenu.addItem(new ComplexItem(menuPressure));
 	mainMenu.addItem(new ComplexItem(menuCO2));
 
+	I2C i2c(0, 100000);
 	TemperatureSensor temperatureSensor;
 	PressureSensor pressureSensor(i2c);
 	CO2Sensor co2Sensor;
 
+
 	ModbusMaster node(2);
 	ABBDrive abbDrive(node);
 	abbDrive.init();
-	uint16_t frequency=0;
-	int16_t frequencyIncrement=0;
+	float frequency=0;
+	float frequencyIncrement=0;
 
 	Controller controller(1,1);
+
 
 	printf("Start\n");
 	int temperatureDifference;
 	int pressureDifference;
+	int co2Difference;
 
-	printScreen(lcd, "Welcome!");
+	lcd.printString("Welcome");
 	while(1) {
-		Chip_ADC_StartSequencer(LPC_ADC0, ADC_SEQA_IDX);
 
-		//////TEMPERATURE//////
+		if(mainMenu.getPosition()==0){
+			//////TEMPERATURE//////
+			//Calculate difference between Desired Temperature and Actual Sensor Temperature
+			temperatureDifference = int(temperatureDesired.getValue()-temperatureSensor.toValue());
+			//Controller output the ABB Drive frequency increment based on Temperature Difference
+			frequencyIncrement = -controller.increment(temperatureDifference);
+			//Display Desired Temperature value in Running Mode
+			runningTemperature.setDesiredValue(temperatureDesired.getValue());
+			//Display Actual Sensor Temperature, Temperature Difference, and Frequency Increment
+			runningTemperature.displaySensorValue(temperatureSensor.toValue() ,temperatureDifference, frequencyIncrement);
+			//runningTemperature.displaySensorValue(temperatureSensor.toValue() ,temperatureDifference, 0);
+		}else if(mainMenu.getPosition()==1){
+			//////PRESSURE//////
+			//Calculate difference between Desired Pressure and Actual Sensor Pressure
+			pressureDifference = int(pressureDesired.getValue()-pressureSensor.toValue());
+			//Controller output the ABB Drive frequency increment based on Pressure Difference
+			frequencyIncrement = controller.increment(pressureDifference);
+			//Display Desired Pressure value in Running Mode
+			runningPressure.setDesiredValue(pressureDesired.getValue());
+			//Display Actual Sensor Pressure, Pressure Difference, and Frequency Increment
+			runningPressure.displaySensorValue(int(pressureSensor.toValue()) ,pressureDifference, frequencyIncrement);
+			//runningPressure.displaySensorValue(pressureSensor.toValue() ,pressureDifference, -1);
+		}else if(mainMenu.getPosition()==2){
+			//////CO2//////
+			//Calculate difference between Desired CO2 and Actual Sensor CO2
+			co2Difference = int(co2Desired.getValue()-co2Sensor.toValue());
+			//Controller output the ABB Drive frequency increment based on CO2 Difference
+			frequencyIncrement = controller.increment(co2Difference);
+			//Display Desired CO2 value in Running Mode
+			runningCO2.setDesiredValue(co2Desired.getValue());
+			//Display Actual Sensor CO2, CO2 Difference, and Frequency Increment
+			runningPressure.displaySensorValue(int(pressureSensor.toValue()) ,pressureDifference, frequencyIncrement);
+			//runningCO2.displaySensorValue(int(co2Sensor.toValue()) ,co2Difference, -1);
+		}
 
-		//Calculate difference between Desired Temperature and Actual Sensor Temperature
-		temperatureDifference = temperatureDesired.getValue()-temperatureSensor.toValue();
-		//Controller output the ABB Drive frequency increment based on Temperature Difference
-		//frequencyIncrement = -controller.increment(temperatureDifference);
-		//Display Desired Temperature value in Running Mode
-		runningTemperature.setDesiredValue(temperatureDesired.getValue());
-		//Display Actual Sensor Temperature, Temperature Difference, and Frequency Increment
-		runningTemperature.displaySensorValue(temperatureSensor.toValue() ,temperatureDifference, frequencyIncrement);
+
 
 		//Add Frequency Increment to Current Frequency;
 		//frequency += frequencyIncrement;
@@ -217,29 +239,6 @@ int main(void) {
 		//Read and print Frequency Feedback from ABB Drive
 		//frequency = abbDrive.getFrequency();
 		//printf("Current frequency: %d\n",frequency);
-
-
-		//////PRESSURE//////
-		//Calculate difference between Desired Temperature and Actual Sensor Temperature
-		pressureDifference = pressureDesired.getValue()-int(pressureSensor.toValue());
-		//Controller output the ABB Drive frequency increment based on Temperature Difference
-		frequencyIncrement = controller.increment(pressureDifference);
-		//Display Desired Temperature value in Running Mode
-		runningPressure.setDesiredValue(pressureDesired.getValue());
-		//Display Actual Sensor Temperature, Temperature Difference, and Frequency Increment
-		runningPressure.displaySensorValue(int(pressureSensor.toValue()) ,pressureDifference, frequencyIncrement);
-
-		//Add Frequency Increment to Current Frequency;
-		frequency += frequencyIncrement;
-		//Set Current Frequency to ABB Drive
-		abbDrive.setFrequency(frequency);
-		//Read and print Frequency Feedback from ABB Drive
-		frequency = abbDrive.getFrequency();
-		printf("Current frequency: %d\n",frequency);
-
-		//////CO2//////
-		runningCO2.setDesiredValue(co2Desired.getValue());
-		//runningCO2.displaySensorValue(co2Sensor.toValue());
 
 		k = isPressed();
 		if(k >0) {
@@ -260,6 +259,9 @@ int main(void) {
 			}
 		}
 		Sleep(10);
+		printf("%d\n", mainMenu.getPosition() );
 	}
+
+
 	return 0 ;
 }

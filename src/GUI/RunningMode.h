@@ -8,13 +8,13 @@
 #ifndef RUNNINGMODE_H_
 #define RUNNINGMODE_H_
 
-#include "../Protocol/PropertyEdit.h"
+#include "PropertyEdit.h"
 #include "../LCD/LiquidCrystal.h"
 #include <string>
 
 class RunningMode:public PropertyEdit {
 public:
-	RunningMode(LiquidCrystal& lcd_, float value);
+	RunningMode(LiquidCrystal& lcd_, float value_);
 	virtual ~RunningMode();
 	void increment();
 	void decrement();
@@ -26,7 +26,7 @@ public:
 	void setDesiredValue(float value);
 	std::string name();
 private:
-	std::string run ="Run now?";
+	std::string startRun ="Start now?";
 	std::string running = "Running...";
 	void save();
 	void displayEditValue();

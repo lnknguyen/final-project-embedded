@@ -17,6 +17,7 @@ public:
 	~ComplexMenu();
 	void addItem(ComplexItem *item);
 	void baseEvent(ComplexItem::menuBaseEvent e);
+	int getPosition();
 private:
 	std::vector<ComplexItem *> items;
 	int position;

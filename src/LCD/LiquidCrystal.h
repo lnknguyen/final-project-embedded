@@ -87,6 +87,7 @@ public:
   //using Print::write;
   void Print(std::string& s);
   void Print(char *s);
+  void printString(std::string a);
 private:
   void send(uint8_t, uint8_t);
   void write4bits(uint8_t);

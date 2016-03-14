@@ -14,7 +14,7 @@
 
 using namespace std;
 
-RunningMode::RunningMode(LiquidCrystal& lcd_,float value): lcd(lcd_), value(value) {
+RunningMode::RunningMode(LiquidCrystal& lcd_,float value_): lcd(lcd_), value(value_) {
 	focus = false;
 }
 
@@ -44,7 +44,7 @@ void RunningMode::display() {
 		if(focus) {
 			lcd.Print(running);
 		} else{
-			lcd.Print(run);
+			lcd.Print(startRun);
 		}
 		stringstream lcd_display;
 		lcd.setCursor(0,1);

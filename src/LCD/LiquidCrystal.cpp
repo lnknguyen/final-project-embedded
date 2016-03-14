@@ -324,3 +324,11 @@ void LiquidCrystal::Print(char *s){
 	write(s_Write);
 }
 
+
+void LiquidCrystal::printString(std::string a){
+	int length = a.length();
+	length = (16-length)/2;
+	setCursor(length,0);
+	Print(a);
+}
+

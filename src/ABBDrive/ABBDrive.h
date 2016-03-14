@@ -21,8 +21,8 @@ public:
 	void init();
 	void setSingleRegister(int startAddress, int value);
 	int  getSingleRegister(int startAddress);
-	void setFrequency(uint16_t frequency);
-	uint16_t  getFrequency();
+	void setFrequency(float frequency);
+	int  getFrequency();
 	void setControlWord(int value);
 	int  getStatusWord();
 

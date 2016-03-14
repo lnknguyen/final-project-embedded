@@ -8,7 +8,7 @@
 #ifndef VALUEEDIT_H_
 #define VALUEEDIT_H_
 
-#include "../Protocol/PropertyEdit.h"
+#include "PropertyEdit.h"
 #include "../LCD/LiquidCrystal.h"
 #include <string>
 
