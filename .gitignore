@@ -5,7 +5,8 @@
 *.obj
 *.d
 *.ld
-*.ori.
+*.orig
+*.launch
 .DS_Store
 # Precompiled Headers
 *.gch
