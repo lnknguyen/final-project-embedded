@@ -153,11 +153,11 @@ int main(void) {
 	SimpleMenu menuPressure(lcd, "Pressure");
 	SimpleMenu menuCO2(lcd, "CO2");
 
-	RunningMode runningTemperature(lcd,21);
+	RunningMode runningTemperature(lcd,11);
 	RunningMode runningPressure(lcd,80);
 	RunningMode runningCO2(lcd,400);
 
-	ValueEdit temperatureDesired(lcd, std::string("Temperature"), 21);
+	ValueEdit temperatureDesired(lcd, std::string("Temperature"), 11);
 	ValueEdit pressureDesired(lcd, std::string("Pressure"),80);
 	ValueEdit co2Desired(lcd, std::string("CO2"),400);
 
@@ -233,11 +233,12 @@ int main(void) {
 
 
 		//Add Frequency Increment to Current Frequency;
-		//frequency += frequencyIncrement;
+		frequency += frequencyIncrement;
 		//Set Current Frequency to ABB Drive
-		//abbDrive.setFrequency(frequency);
+		if (abbDrive.setFrequency(frequency)==0 ){
 		//Read and print Frequency Feedback from ABB Drive
-		//frequency = abbDrive.getFrequency();
+			frequency < abbDrive.getFrequency() ? frequency = frequency : frequency = abbDrive.getFrequency();
+		}
 		//printf("Current frequency: %d\n",frequency);
 
 		k = isPressed();
