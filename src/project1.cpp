@@ -53,39 +53,6 @@
 #define MAXBUTTONS 4
 volatile static int preventOverlap = 0;
 volatile static int menuLayout = 0;
-static const uint8_t buttonport[] = {0,0,1,0};
-static const uint8_t buttonpins[] = {10,16,3,0};
-
-void InitButton(void)
-{
-	int idx;
-	for (idx = 0; idx < MAXBUTTONS; idx++) {
-		Chip_IOCON_PinMuxSet(LPC_IOCON, buttonport[idx], buttonpins[idx], (IOCON_MODE_PULLUP | IOCON_DIGMODE_EN | IOCON_INV_EN));
-		Chip_GPIO_SetPinDIRInput(LPC_GPIO, buttonport[idx],  buttonpins[idx]);
-	}
-
-
-
-}
-
-int isPressed(void){
-	if(Chip_GPIO_GetPinState(LPC_GPIO, buttonport[0], buttonpins[0])==1){
-		return 1;
-	}
-	else if(Chip_GPIO_GetPinState(LPC_GPIO, buttonport[1], buttonpins[1])==1){
-		return 2;
-	}
-	else if (Chip_GPIO_GetPinState(LPC_GPIO, buttonport[2], buttonpins[2])==1){
-		return 3;
-	}
-	else if ( Chip_GPIO_GetPinState(LPC_GPIO, buttonport[3], buttonpins[3])==1){
-		return 4;
-	}
-	else {
-		preventOverlap =0;
-		return -1;
-	}
-}
 
 void systemInit(){
 #if defined (__USE_LPCOPEN)
