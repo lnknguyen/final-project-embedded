@@ -22,7 +22,7 @@ public:
 	void setSingleRegister(int startAddress, int value);
 	int  getSingleRegister(int startAddress);
 	void setFrequency(float frequency);
-	int  getFrequency();
+	float  getFrequency();
 	void setControlWord(int value);
 	int  getStatusWord();
 

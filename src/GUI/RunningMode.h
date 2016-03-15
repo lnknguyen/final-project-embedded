@@ -22,7 +22,8 @@ public:
 	void cancel();
 	void setFocus(bool focus);
 	void display();
-	void displaySensorValue(float value, int value1, int value2);
+	void displaySensorValue(float value, float value1, float value2);
+	void display0Precision(float value,float value1,float value2);
 	void setDesiredValue(float value);
 	std::string name();
 private:

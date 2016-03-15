@@ -17,9 +17,9 @@ ABBDrive::ABBDrive(ModbusMaster _node){
 void ABBDrive::init(){
 	node.begin(9600);
 	node.writeSingleRegister(0, 0x0406);
-	Sleep(1000);
+	Sleep(3000);
 	node.writeSingleRegister(0, 0x047F);
-	Sleep(1000);
+	Sleep(3000);
 }
 
 void ABBDrive::setSingleRegister(int startAddress, int value){
@@ -36,11 +36,10 @@ void ABBDrive::setFrequency(float frequency){
 	node.writeSingleRegister(1, scaleFrequency);
 }
 
-int ABBDrive::getFrequency(){
+float ABBDrive::getFrequency(){
 	node.readHoldingRegisters(102, 1);
-	Sleep(1);
 	int temp = node.getResponseBuffer(0);
-	return int(temp/10);
+	return temp/10.0;
 }
 
 void ABBDrive::setControlWord(int value){
