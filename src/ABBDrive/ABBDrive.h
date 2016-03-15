@@ -21,14 +21,13 @@ public:
 	void init();
 	void setSingleRegister(int startAddress, int value);
 	int  getSingleRegister(int startAddress);
-	uint8_t setFrequency(float frequency);
+	void setFrequency(float frequency);
 	float  getFrequency();
 	void setControlWord(int value);
 	int  getStatusWord();
 
 private:
 	ModbusMaster node;
-	int last;
 };
 
 

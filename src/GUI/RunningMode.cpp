@@ -72,12 +72,23 @@ void RunningMode::setDesiredValue(float value) {
 		}
 }
 
-void RunningMode::displaySensorValue(float value,int value1,int value2) {
+void RunningMode::displaySensorValue(float value,float value1,float value2) {
 	/*display current value in main loop*/
 	if(focus){
 			stringstream lcd_display;
 			lcd.setCursor(0,1);
 			lcd_display<<std::fixed <<std::setprecision(1)<<value << " " << value1 << " " <<value2;
+			string str = lcd_display.str();
+			lcd.Print(str);
+	}
+}
+
+void RunningMode::display0Precision(float value,float value1,float value2) {
+	/*display current value in main loop*/
+	if(focus){
+			stringstream lcd_display;
+			lcd.setCursor(0,1);
+			lcd_display<<std::fixed <<std::setprecision(0)<<value << " " << value1 << " " <<value2;
 			string str = lcd_display.str();
 			lcd.Print(str);
 	}

@@ -6,18 +6,19 @@
 	Copyright   : $(copyright)
 	Description : main definition
 	===============================================================================
-*/
+ */
 
 #if defined (__USE_LPCOPEN)
-	#if defined(NO_BOARD_LIB)
-		#include "chip.h"
-		#else
-		#include "board.h"
-	#endif
+#if defined(NO_BOARD_LIB)
+#include "chip.h"
+#else
+#include "board.h"
+#endif
 #endif
 
 #include "LCD/LiquidCrystal.h"
 #include "LCD/lcd_port.h"
+
 #include "GUI/MenuItem.h"
 #include "GUI/ValueEdit.h"
 #include "GUI/RunningMode.h"
@@ -25,12 +26,20 @@
 #include "GUI/BarGraph.h"
 #include "GUI/ComplexMenu.h"
 #include "GUI/ComplexItem.h"
+
 #include "InterruptHandler/systick.h"
+
 #include "Sensor/TemperatureSensor.h"
 #include "Sensor/PressureSensor.h"
 #include "Sensor/CO2Sensor.h"
+
 #include "ABBDrive/ABBDrive.h"
+
 #include "Controller/Controller.h"
+
+#include "Buttons/DebouncedInput.h"
+#include "Buttons/DigitalIoPin.h"
+#include "Buttons/PinEvent.h"
 
 #include <cr_section_macros.h>
 #include <iostream>
@@ -54,6 +63,9 @@ void InitButton(void)
 		Chip_IOCON_PinMuxSet(LPC_IOCON, buttonport[idx], buttonpins[idx], (IOCON_MODE_PULLUP | IOCON_DIGMODE_EN | IOCON_INV_EN));
 		Chip_GPIO_SetPinDIRInput(LPC_GPIO, buttonport[idx],  buttonpins[idx]);
 	}
+
+
+
 }
 
 int isPressed(void){
@@ -86,7 +98,7 @@ void systemInit(){
 #endif
 #endif
 	/* Set up SWO to PIO1_2 */
-	Chip_SWM_MovablePortPinAssign(SWM_SWO_O, 1, 2);
+	//Chip_SWM_MovablePortPinAssign(SWM_SWO_O, 1, 2);
 
 	// TODO: insert code here
 	/* Setup ADC for 12-bit mode and normal power */
@@ -129,10 +141,10 @@ void systemInit(){
 	SysTick_Config((Chip_Clock_GetSysTickClockRate() / TICKRATE_HZ));
 
 	/* Enable RIT*/
-    Chip_RIT_Init(LPC_RITIMER);
-    NVIC_EnableIRQ(RITIMER_IRQn);
+	Chip_RIT_Init(LPC_RITIMER);
+	NVIC_EnableIRQ(RITIMER_IRQn);
 
-	InitButton();
+	//InitButton();
 }
 
 
@@ -147,123 +159,126 @@ int main(void) {
 	lcd.setCursor(0,0);
 	int k;
 
+	DebouncedInput up_btn(4,100);
+	DebouncedInput down_btn(5,100);
+	DebouncedInput ok_btn(6,100);
+	DebouncedInput back_btn(7,100);
+
+	PinEvent up(up_btn),down(down_btn),ok(ok_btn),back(back_btn);
+
 	ComplexMenu mainMenu;
 
-	SimpleMenu menuTemperature(lcd, "Temperature");
 	SimpleMenu menuPressure(lcd, "Pressure");
+	SimpleMenu menuTemperature(lcd, "Temperature");
 	SimpleMenu menuCO2(lcd, "CO2");
 
+	RunningMode runningPressure(lcd,30);
 	RunningMode runningTemperature(lcd,11);
-	RunningMode runningPressure(lcd,80);
 	RunningMode runningCO2(lcd,400);
 
+	ValueEdit pressureDesired(lcd, std::string("Pressure"),30);
 	ValueEdit temperatureDesired(lcd, std::string("Temperature"), 11);
-	ValueEdit pressureDesired(lcd, std::string("Pressure"),80);
 	ValueEdit co2Desired(lcd, std::string("CO2"),400);
 
-	menuTemperature.addItem(new MenuItem(temperatureDesired));
-	menuTemperature.addItem(new MenuItem(runningTemperature));
 	menuPressure.addItem(new MenuItem(pressureDesired));
 	menuPressure.addItem(new MenuItem(runningPressure));
+	menuTemperature.addItem(new MenuItem(temperatureDesired));
+	menuTemperature.addItem(new MenuItem(runningTemperature));
 	menuCO2.addItem(new MenuItem(co2Desired));
 	menuCO2.addItem(new MenuItem(runningCO2));
 
-	mainMenu.addItem(new ComplexItem(menuTemperature));
 	mainMenu.addItem(new ComplexItem(menuPressure));
+	mainMenu.addItem(new ComplexItem(menuTemperature));
 	mainMenu.addItem(new ComplexItem(menuCO2));
 
 	I2C i2c(0, 100000);
-	TemperatureSensor temperatureSensor;
 	PressureSensor pressureSensor(i2c);
+	TemperatureSensor temperatureSensor;
 	CO2Sensor co2Sensor;
 
-
+	/*
 	ModbusMaster node(2);
 	ABBDrive abbDrive(node);
 	abbDrive.init();
+
 	float frequency=0;
+	 */
 	float frequencyIncrement=0;
 
-	Controller controller(1.5,10);
+	Controller controller(.1,2);
 
 
-	printf("Start\n");
-	int temperatureDifference;
-	int pressureDifference;
-	int co2Difference;
+	//printf("Start\n");
+	float temperatureDifference;
+	float pressureDifference;
+	float co2Difference;
 
 	lcd.printString("Welcome");
 	while(1) {
 
 		if(mainMenu.getPosition()==0){
-			//////TEMPERATURE//////
-			//Calculate difference between Desired Temperature and Actual Sensor Temperature
-			temperatureDifference = int(temperatureDesired.getValue()-temperatureSensor.toValue());
-			//Controller output the ABB Drive frequency increment based on Temperature Difference
-			frequencyIncrement = -controller.increment(temperatureDifference);
-			//Display Desired Temperature value in Running Mode
-			runningTemperature.setDesiredValue(temperatureDesired.getValue());
-			//Display Actual Sensor Temperature, Temperature Difference, and Frequency Increment
-			runningTemperature.displaySensorValue(temperatureSensor.toValue() ,temperatureDifference, frequencyIncrement);
-			//runningTemperature.displaySensorValue(temperatureSensor.toValue() ,temperatureDifference, 0);
-		}else if(mainMenu.getPosition()==1){
 			//////PRESSURE//////
 			//Calculate difference between Desired Pressure and Actual Sensor Pressure
-			pressureDifference = int(pressureDesired.getValue()-pressureSensor.toValue());
+			pressureDifference = pressureDesired.getValue()-pressureSensor.toValue();
 			//Controller output the ABB Drive frequency increment based on Pressure Difference
 			frequencyIncrement = controller.increment(pressureDifference);
 			//Display Desired Pressure value in Running Mode
 			runningPressure.setDesiredValue(pressureDesired.getValue());
 			//Display Actual Sensor Pressure, Pressure Difference, and Frequency Increment
-			runningPressure.displaySensorValue(int(pressureSensor.toValue()) ,pressureDifference, frequencyIncrement);
-			//runningPressure.displaySensorValue(pressureSensor.toValue() ,pressureDifference, -1);
+			//runningPressure.displaySensorValue(pressureSensor.toValue() ,pressureDifference, frequencyIncrement);
+			runningPressure.display0Precision(pressureSensor.toValue() ,pressureDifference, frequencyIncrement);
+
+		}else if(mainMenu.getPosition()==1){
+			//////TEMPERATURE//////
+			//Calculate difference between Desired Temperature and Actual Sensor Temperature
+			temperatureDifference = temperatureDesired.getValue()-temperatureSensor.toValue();
+			//Controller output the ABB Drive frequency increment based on Temperature Difference
+			frequencyIncrement = -controller.increment(temperatureDifference);
+			//Display Desired Temperature value in Running Mode
+			runningTemperature.setDesiredValue(temperatureDesired.getValue());
+			//Display Actual Sensor Temperature, Temperature Difference, and Frequency Increment
+			//runningTemperature.displaySensorValue(temperatureSensor.toValue() ,temperatureDifference, frequencyIncrement);
+			runningTemperature.display0Precision(temperatureSensor.toValue() ,temperatureDifference, frequencyIncrement);
 		}else if(mainMenu.getPosition()==2){
 			//////CO2//////
 			//Calculate difference between Desired CO2 and Actual Sensor CO2
-			co2Difference = int(co2Desired.getValue()-co2Sensor.toValue());
+			co2Difference = co2Desired.getValue()-co2Sensor.toValue();
 			//Controller output the ABB Drive frequency increment based on CO2 Difference
 			frequencyIncrement = controller.increment(co2Difference);
 			//Display Desired CO2 value in Running Mode
 			runningCO2.setDesiredValue(co2Desired.getValue());
 			//Display Actual Sensor CO2, CO2 Difference, and Frequency Increment
-			runningPressure.displaySensorValue(int(pressureSensor.toValue()) ,pressureDifference, frequencyIncrement);
-			//runningCO2.displaySensorValue(int(co2Sensor.toValue()) ,co2Difference, -1);
+			//runningPressure.displaySensorValue(pressureSensor.toValue() ,pressureDifference, frequencyIncrement);
+			runningPressure.display0Precision(co2Sensor.toValue() ,co2Difference, frequencyIncrement);
 		}
 
 
 
 		//Add Frequency Increment to Current Frequency;
-		frequency += frequencyIncrement;
+		//frequency += frequencyIncrement;
 		//Set Current Frequency to ABB Drive
-		if (abbDrive.setFrequency(frequency)==0 ){
+		//abbDrive.setFrequency(frequency);
 		//Read and print Frequency Feedback from ABB Drive
-			//if (frequencyIncrement>0)
-				frequency < abbDrive.getFrequency() ? frequency = frequency : frequency = abbDrive.getFrequency();
-			//else
-				//frequency > abbDrive.getFrequency() ? frequency = frequency : frequency = abbDrive.getFrequency();
-		}
+		//frequency = abbDrive.getFrequency();
+		//Sleep(50);
 		//printf("Current frequency: %d\n",frequency);
 
-		k = isPressed();
-		if(k >0) {
-			preventOverlap++;
-			if(preventOverlap==1 || preventOverlap >7){
-				if(k==1){
-					mainMenu.baseEvent(ComplexItem::up);
-				}
-				else if(k==2){
-					mainMenu.baseEvent(ComplexItem::down);
-				}
-				else if(k==3){
-					if(preventOverlap==1) mainMenu.baseEvent(ComplexItem::ok);
-				}
-				else if(k==4){
-					if(preventOverlap==1) mainMenu.baseEvent(ComplexItem::back);
-				}
-			}
+
+		if(up_btn.read()){
+			mainMenu.baseEvent(ComplexItem::up);
 		}
+		if(down_btn.read()){
+			mainMenu.baseEvent(ComplexItem::down);
+		}
+		if(ok_btn.read()){
+			mainMenu.baseEvent(ComplexItem::ok);
+		}
+		if(back_btn.read()){
+			mainMenu.baseEvent(ComplexItem::back);
+		}
+
 		Sleep(10);
-		printf("%d\n", mainMenu.getPosition() );
+		//printf("%d\n", mainMenu.getPosition() );
 	}
 
 
