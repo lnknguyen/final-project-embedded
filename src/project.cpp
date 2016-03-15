@@ -184,7 +184,7 @@ int main(void) {
 	float frequency=0;
 	float frequencyIncrement=0;
 
-	Controller controller(1,1);
+	Controller controller(1.5,10);
 
 
 	printf("Start\n");
@@ -237,7 +237,10 @@ int main(void) {
 		//Set Current Frequency to ABB Drive
 		if (abbDrive.setFrequency(frequency)==0 ){
 		//Read and print Frequency Feedback from ABB Drive
-			frequency < abbDrive.getFrequency() ? frequency = frequency : frequency = abbDrive.getFrequency();
+			//if (frequencyIncrement>0)
+				frequency < abbDrive.getFrequency() ? frequency = frequency : frequency = abbDrive.getFrequency();
+			//else
+				//frequency > abbDrive.getFrequency() ? frequency = frequency : frequency = abbDrive.getFrequency();
 		}
 		//printf("Current frequency: %d\n",frequency);
 
