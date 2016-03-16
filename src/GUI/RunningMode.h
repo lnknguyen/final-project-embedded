@@ -14,7 +14,7 @@
 
 class RunningMode:public PropertyEdit {
 public:
-	RunningMode(LiquidCrystal& lcd_, float value_);
+	RunningMode(LiquidCrystal& lcd_);
 	virtual ~RunningMode();
 	void increment();
 	void decrement();

@@ -14,7 +14,7 @@
 
 using namespace std;
 
-RunningMode::RunningMode(LiquidCrystal& lcd_,float value_): lcd(lcd_), value(value_) {
+RunningMode::RunningMode(LiquidCrystal& lcd_): lcd(lcd_){
 	focus = false;
 }
 
