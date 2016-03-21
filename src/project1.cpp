@@ -51,8 +51,6 @@
 
 #define TICKRATE_HZ (100)
 #define MAXBUTTONS 4
-volatile static int preventOverlap = 0;
-volatile static int menuLayout = 0;
 
 void systemInit(){
 #if defined (__USE_LPCOPEN)
@@ -67,7 +65,6 @@ void systemInit(){
 	/* Set up SWO to PIO1_2 */
 	//Chip_SWM_MovablePortPinAssign(SWM_SWO_O, 1, 2);
 
-	// TODO: insert code here
 	/* Setup ADC for 12-bit mode and normal power */
 	Chip_ADC_Init(LPC_ADC0, 0);
 
