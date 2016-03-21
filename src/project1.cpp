@@ -110,8 +110,6 @@ void systemInit(){
 	/* Enable RIT*/
 	Chip_RIT_Init(LPC_RITIMER);
 	NVIC_EnableIRQ(RITIMER_IRQn);
-
-	//InitButton();
 }
 
 
@@ -166,8 +164,8 @@ int main(void) {
 	ABBDrive abbDrive(node);
 	abbDrive.init();
 
-	float frequency=0;
 
+	float frequency=0;
 	float frequencyIncrement=0;
 
 	Controller controller(.1,2);
@@ -190,8 +188,11 @@ int main(void) {
 			//Display Desired Pressure value in Running Mode
 			runningPressure.setDesiredValue(pressureDesired.getValue());
 			//Display Actual Sensor Pressure, Pressure Difference, and Frequency Increment
-			//runningPressure.displaySensorValue(pressureSensor.toValue() ,pressureDifference, frequencyIncrement);
-			runningPressure.display0Precision(pressureSensor.toValue() ,pressureDifference, frequencyIncrement);
+			runningPressure.displayValue(pressureSensor.toValue() ,0 ,0 ,1);
+			runningPressure.displayValue(pressureDifference ,0 ,4, 1);
+			runningPressure.displayValue(frequencyIncrement ,1 ,8, 1);
+			runningPressure.displayValue(pressureDesired.getValue() ,0 ,12, 1);
+
 
 		}else if(mainMenu.getPosition()==1){
 			//////TEMPERATURE//////
@@ -203,7 +204,10 @@ int main(void) {
 			runningTemperature.setDesiredValue(temperatureDesired.getValue());
 			//Display Actual Sensor Temperature, Temperature Difference, and Frequency Increment
 			//runningTemperature.displaySensorValue(temperatureSensor.toValue() ,temperatureDifference, frequencyIncrement);
-			runningTemperature.display0Precision(temperatureSensor.toValue() ,temperatureDifference, frequencyIncrement);
+			runningTemperature.displayValue(temperatureSensor.toValue() ,0 ,0 ,1);
+			runningTemperature.displayValue(temperatureDifference ,0 ,4, 1);
+			runningTemperature.displayValue(frequencyIncrement ,1 ,8, 1);
+			runningTemperature.displayValue(temperatureDesired.getValue() ,0 ,12, 1);
 		}else if(mainMenu.getPosition()==2){
 			//////CO2//////
 			//Calculate difference between Desired CO2 and Actual Sensor CO2
@@ -214,7 +218,10 @@ int main(void) {
 			runningCO2.setDesiredValue(co2Desired.getValue());
 			//Display Actual Sensor CO2, CO2 Difference, and Frequency Increment
 			//runningPressure.displaySensorValue(pressureSensor.toValue() ,pressureDifference, frequencyIncrement);
-			runningCO2.display0Precision(co2Sensor.toValue() ,co2Difference, frequencyIncrement);
+			runningCO2.displayValue(co2Sensor.toValue() ,0 ,0 ,1);
+			runningCO2.displayValue(co2Difference ,0 ,4, 1);
+			runningCO2.displayValue(frequencyIncrement ,1 ,8, 1);
+			runningCO2.displayValue(co2Desired.getValue() ,0 ,12, 1);
 
 		}
 
@@ -228,7 +235,6 @@ int main(void) {
 		//frequency = abbDrive.getFrequency();
 
 		Sleep(15);
-		//printf("Current frequency: %d\n",frequency);
 
 		if(up_btn.read()){
 			mainMenu.baseEvent(ComplexItem::up);
