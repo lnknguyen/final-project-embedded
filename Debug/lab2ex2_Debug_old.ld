@@ -4,7 +4,7 @@
  * (c) NXP Semiconductors 2013-2016
  * Generated linker script file for LPC1549
  * Created from generic_cpp.ld (8.0.0 ())
- * By LPCXpresso v8.0.0 [Build 526] [2015-11-23]  on Wed Mar 23 10:31:51 EET 2016
+ * By LPCXpresso v8.0.0 [Build 526] [2015-11-23]  on Wed Mar 23 12:02:17 EET 2016
  */
 
 

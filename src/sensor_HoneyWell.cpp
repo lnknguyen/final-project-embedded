@@ -16,6 +16,7 @@
 #endif
 #endif
 
+#include <math.h>
 #include <cr_section_macros.h>
 #include <stdlib.h>
 #include <cstdio>
@@ -49,18 +50,25 @@ void Sleep(int ms)
 
 void i2cTest() {
 	I2C i2c(0, 100000);
-	uint8_t humidityData[4];
+	uint8_t humidityData[6];
 	uint8_t readHumidityCmd = 0x1;
-	int16_t humidity = 0;
+	uint16_t humidity = 0;
+	int16_t temperature = 0;
+	int16_t scale_factor = (1 << 14) -1;
+
 	while(1) {
 
-
+		//int scale_factor = pow(2,14) -2;
 
 		if (i2c.transaction(0x27, &readHumidityCmd, 1, humidityData, 4)) {
 			/* Output temperature. */
-			//humidity = (humidityData[0] << 10) | humidityData[1];
-			//DEBUGOUT("Humidity: %.1f Pa\r\n",	humidity);
-			DEBUGOUT("Humidity 0: %d Pa\r\n",	humidityData[0]);
+			//humidity = (((~0 >> 10) & humidityData[0]) << 8) | humidityData[1];
+			humidity = (  humidityData[0] << 6) | humidityData[1];
+			temperature = ((humidityData[2] << 8) | humidityData[3])>>2;
+			DEBUGOUT("Humidity: %.3f %\r\n",	(float)humidity/scale_factor);
+			//DEBUGOUT("Humidity: %d %\r\n",	humidityData[0][2]);
+			//DEBUGOUT("fff: %d Pa\r\n",	(humidityData[0] & ( 1 << 7 )) >> 6);
+			DEBUGOUT("Temp: %.3f C\r\n",	(float)temperature/scale_factor*165-40);
 		}
 		else {
 			DEBUGOUT("Error reading pressure.\r\n");
