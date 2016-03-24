@@ -112,40 +112,49 @@ void systemInit(){
 
 int main(void) {
 
+	//Initialize ADC, systick and RIT
 	systemInit();
 
+	//Create a lcd object and initialize
 	LiquidCrystal lcd(8, 9, 10, 11, 12, 13);
 	lcd.begin(16, 2);
 	lcd.setCursor(0,0);
 
-
+	//Create 4 debounced buttons
 	DebouncedInput up_btn(4,1);
 	DebouncedInput down_btn(5,1);
 	DebouncedInput ok_btn(6,1);
 	DebouncedInput back_btn(7,1);
 
+	//Define pin events for 4 buttons
 	PinEvent up(up_btn),down(down_btn),ok(ok_btn),back(back_btn);
 
+	//Create main menu for UI
 	ComplexMenu mainMenu;
 
+	//Create sub menus for UI
 	SimpleMenu menuPressure(lcd, "Pressure");
 	SimpleMenu menuTemperature(lcd, "Temperature");
 	SimpleMenu menuCO2(lcd, "CO2");
 
+	//Create Run Mode objects for each sensors
 	RunningMode runningPressure(lcd);
 	RunningMode runningTemperature(lcd);
 	RunningMode runningCO2(lcd);
 
+	//Create Editable Sensor Value objects
 	ValueEdit pressureDesired(lcd, std::string("Pressure"),30,0,135,1.0);
 	ValueEdit temperatureDesired(lcd, std::string("Temperature"), 28,0.0,100.0,0.1);
 	ValueEdit co2Desired(lcd, std::string("CO2"),400,100.0,5000.0,10.0);
 
+	//Add Run Mode and Editable Sensor Value objects to the sub menu items
 	menuPressure.addItem(new MenuItem(pressureDesired));
 	menuPressure.addItem(new MenuItem(runningPressure));
 	menuTemperature.addItem(new MenuItem(temperatureDesired));
 	menuTemperature.addItem(new MenuItem(runningTemperature));
 	menuCO2.addItem(new MenuItem(co2Desired));
 	menuCO2.addItem(new MenuItem(runningCO2));
+
 
 	mainMenu.addItem(new ComplexItem(menuPressure));
 	mainMenu.addItem(new ComplexItem(menuTemperature));
