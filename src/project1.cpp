@@ -179,10 +179,10 @@ int main(void) {
 	float temperatureDifference;
 	float pressureDifference;
 	float co2Difference;
-
+	float valueDifference;
 	lcd.printString("Welcome");
 	while(1) {
-
+/*
 		if(mainMenu.getPosition()==0){
 			//////PRESSURE//////
 			//Calculate difference between Desired Pressure and Actual Sensor Pressure
@@ -196,7 +196,6 @@ int main(void) {
 			//runningPressure.displayValue(pressureDifference ,0 ,4, 1);
 			//runningPressure.displayValue(frequencyIncrement ,1 ,8, 1);
 			runningPressure.displayValue(pressureDesired.getValue() ,0 ,12, 1);
-
 
 		}else if(mainMenu.getPosition()==1){
 			//////TEMPERATURE//////
@@ -228,9 +227,44 @@ int main(void) {
 			runningCO2.displayValue(co2Desired.getValue() ,0 ,12, 1);
 
 		}
+*/
+		if(mainMenu.getPosition()==0){
+				//////PRESSURE//////
+				//Calculate difference between Desired Pressure and Actual Sensor Pressure
+				valueDifference = pressureDesired.getValue()-pressureSensor.toValue();
+				//Controller output the ABB Drive frequency increment based on Pressure Difference
+
+				//Display Desired Pressure value in Running Mode
+				runningPressure.setDesiredValue(pressureDesired.getValue());
+				//Display Actual Sensor Pressure, Pressure Difference, and Frequency Increment
+				runningPressure.displayValue(pressureSensor.toValue() ,0 ,0 ,1);
+				runningPressure.displayValue(pressureDesired.getValue() ,0 ,12, 1);
+
+			}else if(mainMenu.getPosition()==1){
+				//////TEMPERATURE//////
+				//Calculate difference between Desired Temperature and Actual Sensor Temperature
+				valueDifference = temperatureDesired.getValue()-temperatureSensor.toValue();
+
+				//Display Desired Temperature value in Running Mode
+				runningTemperature.setDesiredValue(temperatureDesired.getValue());
+				//Display Actual Sensor Temperature, Temperature Difference, and Frequency Increment
+				runningTemperature.displayValue(temperatureSensor.toValue() ,0 ,0 ,1);
+				runningTemperature.displayValue(temperatureDesired.getValue() ,0 ,12, 1);
+			}else if(mainMenu.getPosition()==2){
+				//////CO2//////
+				//Calculate difference between Desired CO2 and Actual Sensor CO2
+				valueDifference = co2Desired.getValue()-co2Sensor.toValue();
+				//Controller output the ABB Drive frequency increment based on CO2 Difference
+				//Display Desired CO2 value in Running Mode
+				runningCO2.setDesiredValue(co2Desired.getValue());
+				//Display Actual Sensor CO2, CO2 Difference, and Frequency Increment
+				runningCO2.displayValue(co2Sensor.toValue() ,0 ,0 ,1);
+				runningCO2.displayValue(co2Desired.getValue() ,0 ,12, 1);
+
+			}
 
 
-
+		frequencyIncrement = controller.increment(valueDifference);
 		//Add Frequency Increment to Current Frequency;
 		frequency += frequencyIncrement;
 		//Set Current Frequency to ABB Drive
