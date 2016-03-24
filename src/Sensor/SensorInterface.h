@@ -13,7 +13,7 @@ class SensorInterface{
 public:
 	SensorInterface() {}
 	virtual ~SensorInterface() {};
-	virtual float toHz() =0;
+	virtual float toHz()=0;
 	virtual float toValue() =0;
 };
 
