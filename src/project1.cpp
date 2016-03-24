@@ -167,8 +167,6 @@ int main(void) {
 
 	Controller controller(.1,2);
 
-
-	//printf("Start\n");
 	float temperatureDifference;
 	float pressureDifference;
 	float co2Difference;
@@ -186,8 +184,8 @@ int main(void) {
 			runningPressure.setDesiredValue(pressureDesired.getValue());
 			//Display Actual Sensor Pressure, Pressure Difference, and Frequency Increment
 			runningPressure.displayValue(pressureSensor.toValue() ,0 ,0 ,1);
-			runningPressure.displayValue(pressureDifference ,0 ,4, 1);
-			runningPressure.displayValue(frequencyIncrement ,1 ,8, 1);
+			//runningPressure.displayValue(pressureDifference ,0 ,4, 1);
+			//runningPressure.displayValue(frequencyIncrement ,1 ,8, 1);
 			runningPressure.displayValue(pressureDesired.getValue() ,0 ,12, 1);
 
 
@@ -202,8 +200,8 @@ int main(void) {
 			//Display Actual Sensor Temperature, Temperature Difference, and Frequency Increment
 			//runningTemperature.displaySensorValue(temperatureSensor.toValue() ,temperatureDifference, frequencyIncrement);
 			runningTemperature.displayValue(temperatureSensor.toValue() ,0 ,0 ,1);
-			runningTemperature.displayValue(temperatureDifference ,0 ,4, 1);
-			runningTemperature.displayValue(frequencyIncrement ,1 ,8, 1);
+			//runningTemperature.displayValue(temperatureDifference ,0 ,4, 1);
+			//runningTemperature.displayValue(frequencyIncrement ,1 ,8, 1);
 			runningTemperature.displayValue(temperatureDesired.getValue() ,0 ,12, 1);
 		}else if(mainMenu.getPosition()==2){
 			//////CO2//////
@@ -216,8 +214,8 @@ int main(void) {
 			//Display Actual Sensor CO2, CO2 Difference, and Frequency Increment
 			//runningPressure.displaySensorValue(pressureSensor.toValue() ,pressureDifference, frequencyIncrement);
 			runningCO2.displayValue(co2Sensor.toValue() ,0 ,0 ,1);
-			runningCO2.displayValue(co2Difference ,0 ,4, 1);
-			runningCO2.displayValue(frequencyIncrement ,1 ,8, 1);
+			//runningCO2.displayValue(co2Difference ,0 ,4, 1);
+			//runningCO2.displayValue(frequencyIncrement ,1 ,8, 1);
 			runningCO2.displayValue(co2Desired.getValue() ,0 ,12, 1);
 
 		}
