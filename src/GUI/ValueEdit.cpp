@@ -13,7 +13,9 @@
 #include "../GUI/ValueEdit.h"
 using namespace std;
 
-ValueEdit::ValueEdit(LiquidCrystal& lcd_, std::string editTitle, float value): lcd(lcd_), title(editTitle),value(value) {
+ValueEdit::ValueEdit(LiquidCrystal& lcd_, std::string editTitle, float value, float lower, float upper, float step): lcd(lcd_), title(editTitle),value(value),step(step) {
+	upperLimit = upper;
+	lowerLimit = lower;
 	if (value <=upperLimit && value >= lowerLimit){
 		setValue(value);
 	} else{
@@ -26,16 +28,16 @@ ValueEdit::~ValueEdit() {
 }
 
 void ValueEdit::increment() {
-	if (edit <=upperLimit-0.1 ){
-		edit=edit + 0.1;
+	if (edit <=upperLimit-step ){
+		edit=edit + step;
 	} else if(99.9<= edit && edit <=99.91){
 		edit = 100;
 	}
 }
 
 void ValueEdit::decrement() {
-	if (edit >=lowerLimit+0.1){
-		edit=edit - 0.1;
+	if (edit >=lowerLimit+step){
+		edit=edit - step;
 	} else if(0.09<= edit && edit <=0.1){
 		edit = 0; // because 0.1 is actually 0.998...
 	}

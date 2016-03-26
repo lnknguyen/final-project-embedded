@@ -14,7 +14,7 @@
 
 class ValueEdit:public PropertyEdit {
 public:
-	ValueEdit(LiquidCrystal& lcd_, std::string editTitle, float value);
+	ValueEdit(LiquidCrystal& lcd_, std::string editTitle, float value, float upper, float lower,float step);
 	virtual ~ValueEdit();
 	void increment();
 	void decrement();
@@ -33,8 +33,9 @@ private:
 	float value;
 	float edit;
 	bool focus;
-	float upperLimit = 100;
-	float lowerLimit = 0;
+	float upperLimit;
+	float lowerLimit;
+	float step;
 };
 
 #endif /* VALUEEDIT_H_ */

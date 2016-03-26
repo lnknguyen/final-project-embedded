@@ -14,7 +14,7 @@
 
 class RunningMode:public PropertyEdit {
 public:
-	RunningMode(LiquidCrystal& lcd_, float value_);
+	RunningMode(LiquidCrystal& lcd_);
 	virtual ~RunningMode();
 	void increment();
 	void decrement();
@@ -22,8 +22,7 @@ public:
 	void cancel();
 	void setFocus(bool focus);
 	void display();
-	void displaySensorValue(float value, float value1, float value2);
-	void display0Precision(float value,float value1,float value2);
+	void displayValue(float value,int precision,int lcdCol,int lcdRow);
 	void setDesiredValue(float value);
 	std::string name();
 private:

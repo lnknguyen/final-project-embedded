@@ -14,7 +14,7 @@
 
 using namespace std;
 
-RunningMode::RunningMode(LiquidCrystal& lcd_,float value_): lcd(lcd_), value(value_) {
+RunningMode::RunningMode(LiquidCrystal& lcd_): lcd(lcd_){
 	focus = false;
 }
 
@@ -46,49 +46,24 @@ void RunningMode::display() {
 		} else{
 			lcd.Print(startRun);
 		}
-		stringstream lcd_display;
-		lcd.setCursor(0,1);
-		lcd_display << std::fixed <<std::setprecision(1)<<value;;
-		string str = lcd_display.str();
-		lcd.Print(str);
+		displayValue(value,0,0,1);
+
 }
 
 void RunningMode::setDesiredValue(float value) {
 	/*display set value in main loop*/
 		this->value = value;
-		if(focus){
-			//handle the code for RPM here.
-			stringstream lcd_display;
-			if(value<=9){
-				lcd.setCursor(13,1);
-			} else if(value >9 && value <=99){
-				lcd.setCursor(12,1);
-			} else if(value>99){
-				lcd.setCursor(11,1);
-			}
-			lcd_display << std::fixed <<std::setprecision(1)<<value;
-			string str = lcd_display.str();
-			lcd.Print(str);
-		}
+
 }
 
-void RunningMode::displaySensorValue(float value,float value1,float value2) {
-	/*display current value in main loop*/
-	if(focus){
-			stringstream lcd_display;
-			lcd.setCursor(0,1);
-			lcd_display<<std::fixed <<std::setprecision(1)<<value << " " << value1 << " " <<value2;
-			string str = lcd_display.str();
-			lcd.Print(str);
-	}
-}
 
-void RunningMode::display0Precision(float value,float value1,float value2) {
+void RunningMode::displayValue(float value,int precision,int lcdCol,int lcdRow) {
 	/*display current value in main loop*/
+	//lcd.clear();
 	if(focus){
 			stringstream lcd_display;
-			lcd.setCursor(0,1);
-			lcd_display<<std::fixed <<std::setprecision(0)<<value << " " << value1 << " " <<value2;
+			lcd.setCursor(lcdCol,lcdRow);
+			lcd_display<<std::fixed <<std::setprecision(precision)<<value;
 			string str = lcd_display.str();
 			lcd.Print(str);
 	}
