@@ -184,6 +184,7 @@ int main(void) {
 	while(1) {
 		if(mainMenu.getPosition()==0){
 			//////PRESSURE//////
+			//lcd.clear();
 			handleRunning(runningPressure,pressureSensor,pressureDesired,valueDifference);
 		}else if(mainMenu.getPosition()==1){
 			//////TEMPERATURE//////
