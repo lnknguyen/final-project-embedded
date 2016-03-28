@@ -23,7 +23,7 @@ float CO2Sensor::toHz(){
 float CO2Sensor::toValue(){
 	a3 = Chip_ADC_GetDataReg(LPC_ADC0, 3);
 	d3 = ADC_DR_RESULT(a3);
-	CO2 = -7.545 * d3 + 16343;
-	//CO2 = -4.125 * d3 + 8416;
+	//CO2 = d3;
+	CO2 = -4.899 * d3 + 12014;
 	return CO2;
 }

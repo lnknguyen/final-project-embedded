@@ -182,6 +182,7 @@ int main(void) {
 	HWTemperatureSensor hwTemperatureSensor(i2c);
 	HWHumiditySensor hwHumiditySensor(i2c);
 
+
 	//Create Modbus Master object
 	ModbusMaster node(2);
 	//Create ABB Drive object and initialize
@@ -214,7 +215,6 @@ int main(void) {
 			runningPressure.displayValue(pressureDesired.getValue() ,0 ,12, 1);
 			//runningPressure.displayValue(valueDifference ,0 ,4, 1);
 			//runningPressure.displayValue(frequencyIncrement ,1 ,8, 1);
-
 		}else if(mainMenu.getPosition()==1){
 			//////TEMPERATURE//////
 			valueDifference = temperatureDesired.getValue()-temperatureSensor.toValue();
@@ -222,7 +222,6 @@ int main(void) {
 			runningTemperature.setDesiredValue(temperatureDesired.getValue());
 			runningTemperature.displayValue(temperatureSensor.toValue() ,1 ,0 ,1);
 			runningTemperature.displayValue(temperatureDesired.getValue() ,0 ,12, 1);
-
 		}else if(mainMenu.getPosition()==2){
 			//////CO2//////
 			valueDifference = co2Desired.getValue()-co2Sensor.toValue();
@@ -269,6 +268,8 @@ int main(void) {
 		if(back_btn.read()){
 			mainMenu.baseEvent(ComplexItem::back);
 		}
+
+
 		//printf("%d\n", mainMenu.getPosition() );
 	}
 
