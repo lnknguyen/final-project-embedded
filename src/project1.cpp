@@ -174,7 +174,7 @@ int main(void) {
 	float frequency=0;
 	float frequencyIncrement=0;
 
-	Controller controller(.1,2);
+	Controller controller(.1,5);
 
 	float temperatureDifference;
 	float pressureDifference;
