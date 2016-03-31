@@ -190,7 +190,9 @@ int main(void) {
 	abbDrive.init();
 
 	//Create Controller object
-	Controller controller(.1,5);
+	float incrementStep = 0.1;
+	float tolerance = 5;
+	Controller controller(incrementStep,tolerance);
 
 	float frequency=0;
 	float frequencyIncrement=0;
